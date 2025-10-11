@@ -12,6 +12,7 @@ import DashboardGallery from "./pages/DashboardGallery";
 import DashboardEventDetails from "./pages/DashboardEventDetails";
 import Auth from "./pages/Auth";
 import NotFound from "./pages/NotFound";
+import EventWizard from "./pages/EventWizard";
 
 const queryClient = new QueryClient();
 
@@ -24,6 +25,7 @@ const App = () => (
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/auth" element={<Auth />} />
+          <Route path="/event-wizard" element={<EventWizard />} />
           <Route path="/dashboard" element={<Dashboard />} />
           <Route path="/dashboard/events" element={<DashboardEvents />} />
           <Route path="/dashboard/events/:id" element={<DashboardEventDetails />} />
