@@ -16,6 +16,9 @@ const Sidebar = () => {
   const menuItems = [
     { title: "Dashboard", icon: LayoutDashboard, path: "/dashboard" },
     { title: "Events", icon: Calendar, path: "/dashboard/events" },
+    { title: "Bookings", icon: Users, path: "/dashboard/bookings" },
+    { title: "Financials", icon: BarChart3, path: "/dashboard/financials" },
+    { title: "Gallery", icon: Calendar, path: "/dashboard/gallery" },
     { title: "Analytics", icon: BarChart3, path: "/dashboard/analytics" },
     { title: "Calendar", icon: CalendarDays, path: "/dashboard/calendar" },
     { title: "Organizers", icon: Users, path: "/dashboard/organizers" },
@@ -42,7 +45,7 @@ const Sidebar = () => {
           <p className="text-xs font-semibold text-foreground/50 uppercase tracking-wider mb-3 px-4">
             Main
           </p>
-          {menuItems.slice(0, 4).map((item) => (
+          {menuItems.slice(0, 7).map((item) => (
             <Link
               key={item.path}
               to={item.path}
@@ -59,7 +62,7 @@ const Sidebar = () => {
           <p className="text-xs font-semibold text-foreground/50 uppercase tracking-wider mb-3 mt-6 px-4">
             CRM
           </p>
-          {menuItems.slice(4, 6).map((item) => (
+          {menuItems.slice(7, 9).map((item) => (
             <Link
               key={item.path}
               to={item.path}

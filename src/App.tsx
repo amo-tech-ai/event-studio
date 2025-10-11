@@ -7,6 +7,9 @@ import Home from "./pages/Home";
 import Dashboard from "./pages/Dashboard";
 import DashboardEvents from "./pages/DashboardEvents";
 import DashboardBookings from "./pages/DashboardBookings";
+import DashboardFinancials from "./pages/DashboardFinancials";
+import DashboardGallery from "./pages/DashboardGallery";
+import DashboardEventDetails from "./pages/DashboardEventDetails";
 import Auth from "./pages/Auth";
 import NotFound from "./pages/NotFound";
 
@@ -23,7 +26,10 @@ const App = () => (
           <Route path="/auth" element={<Auth />} />
           <Route path="/dashboard" element={<Dashboard />} />
           <Route path="/dashboard/events" element={<DashboardEvents />} />
+          <Route path="/dashboard/events/:id" element={<DashboardEventDetails />} />
           <Route path="/dashboard/bookings" element={<DashboardBookings />} />
+          <Route path="/dashboard/financials" element={<DashboardFinancials />} />
+          <Route path="/dashboard/gallery" element={<DashboardGallery />} />
           <Route path="/dashboard/analytics" element={<Dashboard />} />
           <Route path="/dashboard/calendar" element={<Dashboard />} />
           <Route path="/dashboard/organizers" element={<Dashboard />} />

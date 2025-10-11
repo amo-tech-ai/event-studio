@@ -1,15 +1,23 @@
-import { Calendar, DollarSign, TrendingUp, Users, MoreVertical, Bell, Settings, Search } from "lucide-react";
+import { MoreVertical, Bell, Settings, Search, User, Calendar, TrendingUp, Users } from "lucide-react";
 import Sidebar from "@/components/Sidebar";
 import { Card } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { Button } from "@/components/ui/button";
+import { Badge } from "@/components/ui/badge";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 
 const Dashboard = () => {
   const stats = [
-    { label: "Total Events", value: "0", icon: Calendar, change: "+0%", iconBg: "bg-primary/10" },
-    { label: "Total Bookings", value: "0", icon: Users, change: "+0%", iconBg: "bg-primary/10" },
-    { label: "Revenue", value: "$0", icon: DollarSign, change: "+0%", iconBg: "bg-primary/10" },
-    { label: "Tickets Sold", value: "0", icon: TrendingUp, change: "+0%", iconBg: "bg-primary/10" }
+    { label: "Upcoming Events", value: "345", icon: "📅", color: "bg-pink-500" },
+    { label: "Total Bookings", value: "1,798", icon: "📊", color: "bg-purple-500" },
+    { label: "Tickets Sold", value: "1,250", icon: "🎫", color: "bg-pink-400" }
   ];
 
   const recentActivity = [
@@ -80,50 +88,129 @@ const Dashboard = () => {
             </div>
 
             {/* Stats Grid */}
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
               {stats.map((stat, i) => (
-                <Card key={i} className="p-6 hover-lift cursor-pointer transition-all">
+                <Card key={i} className="p-6 hover-lift transition-all">
                   <div className="flex items-start justify-between mb-4">
-                    <div className={`w-12 h-12 rounded-xl flex items-center justify-center ${stat.iconBg}`}>
-                      <stat.icon className="w-6 h-6 text-primary" />
+                    <div className={`w-14 h-14 rounded-2xl ${stat.color} flex items-center justify-center text-2xl`}>
+                      {stat.icon}
                     </div>
                     <button className="text-muted-foreground hover:text-foreground">
                       <MoreVertical className="w-4 h-4" />
                     </button>
                   </div>
-                  <h3 className="text-3xl font-bold mb-1">{stat.value}</h3>
-                  <p className="text-sm text-muted-foreground mb-2">{stat.label}</p>
-                  <span className="text-xs text-primary font-medium">{stat.change}</span>
+                  <p className="text-sm text-muted-foreground mb-1">{stat.label}</p>
+                  <h3 className="text-4xl font-bold">{stat.value}</h3>
                 </Card>
               ))}
             </div>
 
-            {/* Charts Row */}
-            <div className="grid lg:grid-cols-2 gap-6 mb-8">
-              {/* Revenue Trend */}
+            {/* Charts and Upcoming Event Row */}
+            <div className="grid lg:grid-cols-3 gap-6 mb-8">
+              {/* Ticket Sales */}
               <Card className="p-6">
                 <div className="flex items-center justify-between mb-6">
-                  <div>
-                    <h3 className="text-lg font-bold mb-1">Revenue Trend</h3>
-                    <p className="text-sm text-muted-foreground">Last 30 days</p>
+                  <h3 className="text-lg font-bold">Ticket Sales</h3>
+                  <Select defaultValue="week">
+                    <SelectTrigger className="w-[120px]">
+                      <SelectValue />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="week">This Week</SelectItem>
+                      <SelectItem value="month">This Month</SelectItem>
+                    </SelectContent>
+                  </Select>
+                </div>
+                <div className="flex items-center justify-center h-48">
+                  <div className="relative">
+                    <div className="w-40 h-40 rounded-full border-[20px] border-primary/20" style={{ borderTopColor: 'hsl(var(--primary))', borderRightColor: 'hsl(var(--primary))' }}></div>
+                    <div className="absolute inset-0 flex flex-col items-center justify-center">
+                      <p className="text-sm text-muted-foreground">Total Ticket</p>
+                      <p className="text-3xl font-bold">2,780</p>
+                    </div>
                   </div>
                 </div>
-                <div className="h-64 flex items-center justify-center border-2 border-dashed border-border rounded-lg">
-                  <p className="text-muted-foreground">Chart: Revenue over time</p>
+                <div className="mt-6 space-y-3">
+                  <div className="flex items-center justify-between">
+                    <div className="flex items-center gap-2">
+                      <div className="w-3 h-3 rounded-full bg-pink-500"></div>
+                      <span className="text-sm">Sold Out</span>
+                    </div>
+                    <span className="font-semibold">1,251</span>
+                    <span className="text-sm text-muted-foreground">45%</span>
+                  </div>
+                  <div className="flex items-center justify-between">
+                    <div className="flex items-center gap-2">
+                      <div className="w-3 h-3 rounded-full bg-blue-900"></div>
+                      <span className="text-sm">Fully Booked</span>
+                    </div>
+                    <span className="font-semibold">834</span>
+                    <span className="text-sm text-muted-foreground">30%</span>
+                  </div>
+                  <div className="flex items-center justify-between">
+                    <div className="flex items-center gap-2">
+                      <div className="w-3 h-3 rounded-full bg-gray-300"></div>
+                      <span className="text-sm">Available</span>
+                    </div>
+                    <span className="font-semibold">695</span>
+                    <span className="text-sm text-muted-foreground">25%</span>
+                  </div>
                 </div>
               </Card>
 
-              {/* Popular Events */}
+              {/* Sales Revenue */}
               <Card className="p-6">
                 <div className="flex items-center justify-between mb-6">
-                  <div>
-                    <h3 className="text-lg font-bold mb-1">Popular Events</h3>
-                    <p className="text-sm text-muted-foreground">By ticket sales</p>
+                  <h3 className="text-lg font-bold">Sales Revenue</h3>
+                  <Select defaultValue="6months">
+                    <SelectTrigger className="w-[140px]">
+                      <SelectValue />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="6months">Last 6 Months</SelectItem>
+                      <SelectItem value="year">This Year</SelectItem>
+                    </SelectContent>
+                  </Select>
+                </div>
+                <div className="mb-4">
+                  <p className="text-sm text-muted-foreground mb-1">Total Revenue</p>
+                  <p className="text-3xl font-bold">$348,805</p>
+                </div>
+                <div className="h-48 flex items-end justify-between gap-2">
+                  {[45, 38, 52, 48, 58, 55, 62, 48].map((height, i) => (
+                    <div key={i} className="flex-1 flex flex-col gap-1">
+                      <div className="bg-gradient-to-t from-pink-400 to-pink-500 rounded-t" style={{ height: `${height}%` }}></div>
+                      <div className="bg-gray-200 rounded-b" style={{ height: `${100 - height}%` }}></div>
+                    </div>
+                  ))}
+                </div>
+              </Card>
+
+              {/* Upcoming Event */}
+              <Card className="p-6 overflow-hidden">
+                <div className="flex items-center justify-between mb-4">
+                  <h3 className="text-lg font-bold">Upcoming Event</h3>
+                  <button className="text-muted-foreground hover:text-foreground">
+                    <MoreVertical className="w-4 h-4" />
+                  </button>
+                </div>
+                <div className="relative rounded-xl overflow-hidden mb-4 h-40 bg-gradient-to-br from-purple-600 to-pink-500">
+                  <Badge className="absolute top-3 left-3 bg-pink-500">Music</Badge>
+                  <div className="absolute inset-0 bg-black/20"></div>
+                </div>
+                <h4 className="font-bold text-lg mb-2">Rhythm & Beats Music Festival</h4>
+                <p className="text-sm text-muted-foreground mb-4">Sunset Park, Los Angeles, CA</p>
+                <p className="text-xs text-muted-foreground mb-4 line-clamp-2">
+                  Immerse yourself in electrifying performances by top pop, rock, EDM, and hip-hop artists.
+                </p>
+                <div className="flex items-center justify-between mb-4">
+                  <div className="flex items-center gap-2 text-sm">
+                    <Calendar className="w-4 h-4 text-muted-foreground" />
+                    <span>Apr 20, 2029</span>
                   </div>
+                  <span className="text-xs text-muted-foreground">12:00 PM - 11:00 PM</span>
                 </div>
-                <div className="h-64 flex items-center justify-center border-2 border-dashed border-border rounded-lg">
-                  <p className="text-muted-foreground">Chart: Top events</p>
-                </div>
+                <Button className="w-full bg-pink-500 hover:bg-pink-600">View Details</Button>
               </Card>
             </div>
 
