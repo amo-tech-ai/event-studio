@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Inter:wght@300;400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
 
 @tailwind base;
 @tailwind components;
@@ -8,95 +8,75 @@
 
 @layer base {
   :root {
-    /* Brand Colors - Coral & Cream Theme */
-    --background: 30 43% 97%; /* Cream #FAF6F3 */
-    --foreground: 0 0% 12%; /* Charcoal #1E1E1E */
+    /* Breef-inspired Design System */
+    --background: 40 23% 96%; /* #F9F7F3 */
+    --foreground: 27 91% 5%; /* #120902 */
 
-    --card: 0 0% 100%; /* White cards */
-    --card-foreground: 0 0% 12%;
+    --card: 0 0% 100%; /* White */
+    --card-foreground: 27 91% 5%;
 
     --popover: 0 0% 100%;
-    --popover-foreground: 0 0% 12%;
+    --popover-foreground: 27 91% 5%;
 
-    --primary: 9 76% 62%; /* Coral #E76F51 */
+    --primary: 20 67% 52%; /* #D96E34 */
     --primary-foreground: 0 0% 100%;
+    --primary-dark: 20 62% 26%; /* #6D371A */
 
-    --secondary: 30 43% 97%; /* Cream */
-    --secondary-foreground: 0 0% 12%;
+    --secondary: 50 8% 31%; /* #56544B */
+    --secondary-foreground: 0 0% 100%;
 
-    --muted: 30 11% 90%; /* Light accent #E8E6E4 */
-    --muted-foreground: 0 0% 45%;
+    --muted: 45 14% 90%; /* #E9E8E1 */
+    --muted-foreground: 40 2% 49%; /* #7D7C7A */
 
-    --accent: 9 76% 62%; /* Coral accent */
+    --accent: 20 67% 52%;
     --accent-foreground: 0 0% 100%;
 
     --destructive: 0 84% 60%;
     --destructive-foreground: 0 0% 100%;
 
-    --border: 30 11% 90%;
-    --input: 30 11% 90%;
-    --ring: 9 76% 62%;
+    --border: 45 14% 90%;
+    --input: 45 14% 90%;
+    --ring: 20 67% 52%;
 
-    --radius: 0.5rem;
+    --radius: 0.25rem;
     
-    /* Custom Tokens */
-    --coral-dark: 9 76% 52%;
-    --cream-dark: 30 20% 92%;
-    --footer-bg: 15 18% 9%; /* Dark footer #1B1513 */
+    /* Footer */
+    --footer-bg: 27 91% 5%;
     
-    /* Gradients */
-    --gradient-coral: linear-gradient(135deg, hsl(9 76% 62%) 0%, hsl(9 76% 52%) 100%);
-    --gradient-cream: linear-gradient(180deg, hsl(0 0% 100%) 0%, hsl(30 43% 97%) 100%);
-    --gradient-hero: linear-gradient(135deg, hsl(30 43% 97%) 0%, hsl(0 0% 100%) 50%, hsl(30 43% 97%) 100%);
-    
-    /* Shadows */
-    --shadow-soft: 0 4px 24px rgba(0, 0, 0, 0.06);
-    --shadow-card: 0 2px 16px rgba(0, 0, 0, 0.04);
-    --shadow-hover: 0 8px 32px rgba(231, 111, 81, 0.12);
-    
-    /* Transitions */
-    --transition-base: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-    --transition-smooth: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-
+    /* Sidebar */
     --sidebar-background: 0 0% 98%;
-
     --sidebar-foreground: 240 5.3% 26.1%;
-
     --sidebar-primary: 240 5.9% 10%;
-
     --sidebar-primary-foreground: 0 0% 98%;
-
     --sidebar-accent: 240 4.8% 95.9%;
-
     --sidebar-accent-foreground: 240 5.9% 10%;
-
     --sidebar-border: 220 13% 91%;
-
     --sidebar-ring: 217.2 91.2% 59.8%;
   }
 
   .dark {
-    --background: 15 18% 9%;
-    --foreground: 30 43% 97%;
+    --background: 27 91% 5%;
+    --foreground: 40 23% 96%;
 
-    --card: 15 18% 12%;
-    --card-foreground: 30 43% 97%;
+    --card: 27 50% 8%;
+    --card-foreground: 40 23% 96%;
 
-    --primary: 9 76% 62%;
+    --primary: 20 67% 52%;
     --primary-foreground: 0 0% 100%;
+    --primary-dark: 20 62% 26%;
 
-    --secondary: 15 18% 15%;
-    --secondary-foreground: 30 43% 97%;
+    --secondary: 50 8% 31%;
+    --secondary-foreground: 40 23% 96%;
 
-    --muted: 15 18% 18%;
-    --muted-foreground: 30 11% 70%;
+    --muted: 50 8% 15%;
+    --muted-foreground: 40 2% 60%;
 
-    --accent: 9 76% 62%;
+    --accent: 20 67% 52%;
     --accent-foreground: 0 0% 100%;
 
-    --border: 15 18% 18%;
-    --input: 15 18% 18%;
-    --ring: 9 76% 62%;
+    --border: 50 8% 15%;
+    --input: 50 8% 15%;
+    --ring: 20 67% 52%;
   }
 }
 
@@ -106,77 +86,87 @@
   }
 
   body {
-    @apply bg-background text-foreground font-sans;
-    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    @apply bg-background text-foreground;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    font-synthesis: none;
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    font-size: 16px;
+    line-height: 1.6;
+    letter-spacing: 0.015em;
   }
 
   h1, h2, h3, h4, h5, h6 {
-    font-family: 'Playfair Display', serif;
+    font-family: 'Inter', sans-serif;
     font-weight: 600;
+    letter-spacing: -0.02em;
+    line-height: 1.2;
   }
 }
 
 @layer components {
-  /* Hero Section */
-  .section-hero {
-    @apply relative py-20 md:py-32 overflow-hidden;
-    background: var(--gradient-hero);
-  }
-
-  /* Card Variants */
-  .card-soft {
-    @apply bg-card rounded-2xl p-8 transition-all duration-300;
-    box-shadow: var(--shadow-card);
-  }
-
-  .card-soft:hover {
-    box-shadow: var(--shadow-hover);
-    transform: translateY(-4px);
-  }
-
-  .card-feature {
-    @apply card-soft text-center;
-  }
-
-  /* Button Variants */
-  .btn-hero {
-    @apply inline-flex items-center justify-center rounded-lg px-8 py-4 text-base font-semibold;
-    @apply bg-primary text-primary-foreground shadow-md;
-    @apply hover:shadow-lg transition-all duration-300;
-    box-shadow: 0 4px 16px rgba(231, 111, 81, 0.3);
-  }
-
-  .btn-hero:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 6px 24px rgba(231, 111, 81, 0.4);
-  }
-
-  .btn-outline-hero {
-    @apply inline-flex items-center justify-center rounded-lg px-8 py-4 text-base font-semibold;
-    @apply border-2 border-foreground text-foreground bg-transparent;
-    @apply hover:bg-foreground hover:text-background transition-all duration-300;
-  }
-
-  /* Icon Containers */
-  .icon-box {
-    @apply w-12 h-12 rounded-xl flex items-center justify-center mb-4;
-    background: linear-gradient(135deg, hsl(9 76% 62% / 0.1) 0%, hsl(9 76% 62% / 0.2) 100%);
+  /* Container - Breef Style (max 1740px) */
+  .container-custom {
+    @apply max-w-[1740px] mx-auto px-6 lg:px-20;
   }
 
   /* Section Spacing */
   .section-padding {
-    @apply py-16 md:py-24 px-4;
+    @apply py-20 md:py-24 lg:py-32;
   }
 
-  /* Container */
-  .container-custom {
-    @apply max-w-7xl mx-auto px-4 sm:px-6 lg:px-8;
+  .section-hero {
+    @apply pt-32 pb-20 md:pt-40 md:pb-32 bg-background;
+  }
+
+  /* Card Variants - Minimal Breef Style */
+  .card-feature {
+    @apply bg-card rounded p-12 text-center border border-border transition-all duration-300;
+  }
+
+  .card-soft {
+    @apply bg-card rounded p-8 border border-border transition-all duration-300;
+  }
+
+  /* Buttons - Breef Style */
+  .btn-hero {
+    @apply inline-flex items-center justify-center px-8 py-4 text-base font-medium;
+    @apply bg-primary text-primary-foreground rounded transition-all duration-300;
+  }
+
+  .btn-hero:hover {
+    background: hsl(var(--primary-dark));
+  }
+
+  .btn-outline-hero {
+    @apply inline-flex items-center justify-center px-8 py-4 text-base font-medium;
+    @apply border border-foreground text-foreground rounded bg-transparent;
+    @apply transition-all duration-300;
+  }
+
+  .btn-outline-hero:hover {
+    @apply bg-foreground text-background;
+  }
+
+  /* Icon Containers */
+  .icon-box {
+    @apply w-12 h-12 rounded bg-muted flex items-center justify-center mb-6;
   }
 
   /* Footer */
   .footer-dark {
     @apply text-white;
     background: hsl(var(--footer-bg));
+  }
+
+  /* Minimal Hover Effects */
+  .hover-lift {
+    @apply transition-all duration-300;
+  }
+
+  .hover-lift:hover {
+    @apply border-foreground/20;
   }
 
   /* Animations */
@@ -187,7 +177,7 @@
   @keyframes fadeInUp {
     from {
       opacity: 0;
-      transform: translateY(30px);
+      transform: translateY(20px);
     }
     to {
       opacity: 1;
@@ -195,17 +185,9 @@
     }
   }
 
-  .hover-lift {
-    @apply transition-transform duration-300;
-  }
-
-  .hover-lift:hover {
-    transform: translateY(-4px);
-  }
-
   /* Sidebar */
   .sidebar-nav {
-    @apply flex items-center gap-3 px-4 py-3 rounded-lg text-sm font-medium;
+    @apply flex items-center gap-3 px-4 py-3 rounded text-sm font-medium;
     @apply transition-all duration-200;
   }
 
