@@ -1,0 +1,43 @@
+# Task ID: 6
+# Title: Stage 3 - Venue Selection Interface
+# Status: pending
+# Dependencies: 5
+# Priority: medium
+# Description: Build venue selection interface with search, filtering, capacity validation, and multi-select capability for events requiring multiple spaces.
+# Details:
+Create Stage3.tsx with venue search input (debounced), filter components for capacity/location/amenities, venue cards displaying images and details, multi-select functionality for multiple venues, real-time capacity validation against attendee count from Stage 1. Use existing venue data from database. Implement search with Supabase full-text search. Code: const Stage3 = () => { const [searchTerm, setSearchTerm] = useState(''); const debouncedSearch = useDebounce(searchTerm, 300); const { data: venues } = useQuery(['venues', debouncedSearch], () => searchVenues(debouncedSearch)); return (<div><Input placeholder='Search venues...' onChange={(e) => setSearchTerm(e.target.value)} /><VenueGrid venues={venues} onSelect={handleVenueSelect} /></div>); };
+
+# Test Strategy:
+Test venue search with debouncing, verify filter functionality, test capacity validation against attendee count, validate multi-select venue functionality, test venue card display and selection, verify search performance with large datasets.
+
+# Subtasks:
+## 1. Create Stage3 component with search and filter UI [pending]
+### Dependencies: None
+### Description: Build the main Stage3.tsx component with venue search input, filter controls, and basic layout structure.
+### Details:
+Create Stage3.tsx component with debounced search input using useDebounce hook, filter components for capacity/location/amenities, and responsive layout. Include FormCard wrapper for consistency with other stages. Implement controlled input state management and basic UI structure following existing wizard patterns.
+
+## 2. Implement venue search API integration with Supabase [pending]
+### Dependencies: 6.1
+### Description: Create venue search functionality using Supabase full-text search with React Query integration.
+### Details:
+Implement searchVenues API function using Supabase full-text search capabilities. Create React Query hook for venue fetching with proper caching and error handling. Include search by name, location, and amenities. Handle empty states and loading indicators. Follow existing API patterns from the codebase.
+
+## 3. Build VenueGrid component with venue cards and selection [pending]
+### Dependencies: 6.2
+### Description: Create venue display grid with individual venue cards showing images, details, and selection functionality.
+### Details:
+Build VenueGrid component displaying venues in responsive grid layout. Create VenueCard component with venue images, capacity, location, amenities, and pricing. Implement single and multi-select functionality with visual selection indicators. Include venue details modal or expandable sections. Follow existing card design patterns.
+
+## 4. Implement capacity validation against attendee count [pending]
+### Dependencies: 6.3
+### Description: Add real-time capacity validation that checks selected venues against attendee count from Stage 1.
+### Details:
+Implement capacity validation logic that compares total selected venue capacity against attendee count from wizardStore Stage 1 data. Show validation errors when capacity is insufficient. Add visual indicators for capacity status on venue cards. Include aggregate capacity display for multiple venue selections.
+
+## 5. Integrate venue selection with wizard store and navigation [pending]
+### Dependencies: 6.4
+### Description: Connect venue selection to Zustand store with auto-save and implement stage navigation controls.
+### Details:
+Integrate venue selection state with wizardStore, implementing updateStage function for Stage 3 data. Add auto-save functionality on venue selection changes. Implement stage navigation with validation checks. Include progress indicators and next/previous buttons following wizard navigation patterns. Handle venue data persistence and restoration.
+

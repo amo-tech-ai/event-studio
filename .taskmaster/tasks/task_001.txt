@@ -1,0 +1,43 @@
+# Task ID: 1
+# Title: Database Schema Setup - Wizard Sessions Table
+# Status: pending
+# Dependencies: None
+# Priority: high
+# Description: Create the wizard_sessions table with proper schema, indexes, and RLS policies to support the 6-stage event creation wizard with auto-save functionality.
+# Details:
+Create migration file for wizard_sessions table with fields: id (UUID PK), user_id (UUID FK to profiles), event_id (UUID nullable FK to events), stage (INTEGER 1-6), status (TEXT: in_progress/completed/abandoned), state (JSONB for form data), started_at, last_saved_at, completed_at (all TIMESTAMPTZ). Add indexes on user_id, status, last_saved_at for performance. Implement RLS policy allowing users to only access their own sessions. SQL: CREATE TABLE wizard_sessions (...); CREATE INDEX idx_wizard_sessions_user_id ON wizard_sessions(user_id); CREATE POLICY wizard_sessions_policy ON wizard_sessions FOR ALL USING (auth.uid() = user_id);
+
+# Test Strategy:
+Test table creation, verify indexes exist, test RLS policy by attempting cross-user access, validate all field types and constraints, test foreign key relationships.
+
+# Subtasks:
+## 1. Create Supabase Migration File for wizard_sessions Table [pending]
+### Dependencies: None
+### Description: Create a new Supabase migration file to define the wizard_sessions table schema with all required fields and constraints.
+### Details:
+Create migration file in supabase/migrations/ directory with SQL to create wizard_sessions table. Include fields: id (UUID PRIMARY KEY DEFAULT gen_random_uuid()), user_id (UUID REFERENCES profiles(id) ON DELETE CASCADE), event_id (UUID REFERENCES events(id) ON DELETE SET NULL), stage (INTEGER CHECK (stage >= 1 AND stage <= 6)), status (TEXT CHECK (status IN ('in_progress', 'completed', 'abandoned'))), state (JSONB NOT NULL DEFAULT '{}'), started_at (TIMESTAMPTZ DEFAULT NOW()), last_saved_at (TIMESTAMPTZ DEFAULT NOW()), completed_at (TIMESTAMPTZ).
+
+## 2. Add Database Indexes for Performance Optimization [pending]
+### Dependencies: 1.1
+### Description: Create database indexes on wizard_sessions table for optimal query performance on frequently accessed columns.
+### Details:
+Add indexes in the same migration file: CREATE INDEX idx_wizard_sessions_user_id ON wizard_sessions(user_id); CREATE INDEX idx_wizard_sessions_status ON wizard_sessions(status); CREATE INDEX idx_wizard_sessions_last_saved_at ON wizard_sessions(last_saved_at); CREATE INDEX idx_wizard_sessions_user_status ON wizard_sessions(user_id, status) for composite queries.
+
+## 3. Implement Row Level Security (RLS) Policies [pending]
+### Dependencies: 1.2
+### Description: Set up RLS policies on wizard_sessions table to ensure users can only access their own wizard session data.
+### Details:
+Enable RLS and create policies: ALTER TABLE wizard_sessions ENABLE ROW LEVEL SECURITY; CREATE POLICY wizard_sessions_policy ON wizard_sessions FOR ALL USING (auth.uid() = user_id); CREATE POLICY wizard_sessions_insert_policy ON wizard_sessions FOR INSERT WITH CHECK (auth.uid() = user_id); Test policy enforcement for SELECT, INSERT, UPDATE, DELETE operations.
+
+## 4. Create Database Helper Functions and Triggers [pending]
+### Dependencies: 1.3
+### Description: Implement database functions and triggers for automatic timestamp updates and session state management.
+### Details:
+Create trigger function to automatically update last_saved_at on state changes: CREATE OR REPLACE FUNCTION update_wizard_session_timestamp() RETURNS TRIGGER AS $$ BEGIN NEW.last_saved_at = NOW(); RETURN NEW; END; $$ LANGUAGE plpgsql; CREATE TRIGGER update_wizard_session_timestamp BEFORE UPDATE ON wizard_sessions FOR EACH ROW EXECUTE FUNCTION update_wizard_session_timestamp();
+
+## 5. Validate Complete Schema Integration [pending]
+### Dependencies: 1.4
+### Description: Perform comprehensive testing of the complete wizard_sessions table setup including all constraints, relationships, and policies.
+### Details:
+Run full integration tests: test table creation with sample data, validate all field constraints work correctly, test foreign key relationships with profiles and events tables, verify RLS policies function properly, test index performance with sample queries, validate triggers execute correctly, test edge cases like null values and boundary conditions.
+

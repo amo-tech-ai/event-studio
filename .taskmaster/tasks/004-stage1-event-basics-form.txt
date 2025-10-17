@@ -1,0 +1,43 @@
+# Task ID: 4
+# Title: Stage 1 - Event Basics Form Implementation
+# Status: pending
+# Dependencies: 3
+# Priority: medium
+# Description: Build the first wizard stage for event basics including event type selection, name input, date/time picker, attendee count, description, and cover image upload with validation.
+# Details:
+Create Stage1.tsx component using existing FormCard, RadioCard components. Implement event type selection (6 radio options), text input for event name with character counter, date/time picker (react-datepicker) with future date validation, number input for attendee count with min/max, textarea for description with character counter, file upload for cover image with preview and size validation. Integrate with Zustand store and Zod validation. Add mobile-responsive design. Code: const Stage1 = () => { const { wizardState, updateStage } = useWizardStore(); const form = useForm({ resolver: zodResolver(stage1Schema), defaultValues: wizardState.stage1 }); return (<FormCard><RadioCard options={eventTypes} /><Input {...register('name')} /></FormCard>); };
+
+# Test Strategy:
+Test all form fields render correctly, verify validation triggers on blur and submit, test file upload with size limits, validate mobile responsiveness, test integration with Zustand store, verify auto-save triggers on field changes.
+
+# Subtasks:
+## 1. Create Stage1 component structure and basic form setup [pending]
+### Dependencies: None
+### Description: Set up the Stage1.tsx component with form initialization, Zustand store integration, and basic component structure using existing FormCard wrapper.
+### Details:
+Create Stage1.tsx component file with useForm hook configured with zodResolver for stage1Schema validation. Initialize form with defaultValues from wizardState.stage1. Set up FormCard wrapper component and basic form structure. Import and configure useWizardStore hook for state management. Add form submission handler that calls updateStage method.
+
+## 2. Implement event type selection with RadioCard components [pending]
+### Dependencies: 4.1
+### Description: Build the event type selection interface using existing RadioCard components with 6 predefined event type options and proper validation.
+### Details:
+Create eventTypes array with 6 options (conference, workshop, networking, social, corporate, other) each with label, value, and description. Implement RadioCard component integration with react-hook-form register. Add proper styling and layout for mobile responsiveness. Ensure selection updates form state and triggers validation. Add visual feedback for selected state.
+
+## 3. Build event name input with character counter and validation [pending]
+### Dependencies: 4.1
+### Description: Implement event name text input field with real-time character counter, validation feedback, and proper error messaging for 5-100 character limit.
+### Details:
+Create controlled Input component with register('name') binding. Add character counter display showing current/max characters (5-100). Implement real-time validation with error message display below input. Add proper styling for error states and success states. Ensure input is accessible with proper labels and aria attributes. Add debounced auto-save functionality.
+
+## 4. Implement date/time picker with future date validation [pending]
+### Dependencies: 4.1
+### Description: Build date and time selection using react-datepicker with validation to ensure only future dates can be selected, including proper timezone handling.
+### Details:
+Install and configure react-datepicker component. Create custom DateTimePicker wrapper component with form integration. Implement minDate validation to prevent past date selection. Add timezone handling and display. Style picker to match design system. Add proper error handling and validation messages. Ensure mobile-friendly date picker interface.
+
+## 5. Build attendee count, description, and cover image upload components [pending]
+### Dependencies: 4.1
+### Description: Implement number input for attendee count (10-10000), textarea for description with character counter (50-500), and file upload for cover image with preview and size validation.
+### Details:
+Create number input component for attendee count with min/max validation (10-10000). Build textarea component for description with character counter (50-500 chars) and real-time validation. Implement file upload component for cover image with drag-and-drop, preview functionality, size validation (max 5MB), and file type restrictions (jpg, png, webp). Add proper error handling and loading states for all components. Ensure mobile responsiveness.
+

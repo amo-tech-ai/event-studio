@@ -1,0 +1,93 @@
+{
+	"meta": {
+		"generatedAt": "2025-10-13T13:45:33.567Z",
+		"tasksAnalyzed": 10,
+		"totalTasks": 10,
+		"analysisCount": 10,
+		"thresholdScore": 5,
+		"projectName": "Taskmaster",
+		"usedResearch": false
+	},
+	"complexityAnalysis": [
+		{
+			"taskId": 1,
+			"taskTitle": "Database Schema Setup - Wizard Sessions Table",
+			"complexityScore": 4,
+			"recommendedSubtasks": 5,
+			"expansionPrompt": "Break down the database schema creation into migration file creation, index optimization, RLS policy implementation, trigger functions, and comprehensive validation testing. Each subtask should focus on a specific aspect of the database setup with proper testing and validation.",
+			"reasoning": "Database schema setup is moderately complex requiring SQL knowledge, understanding of Supabase RLS policies, proper indexing strategy, and foreign key relationships. The task is well-defined with clear requirements but needs careful attention to security and performance considerations."
+		},
+		{
+			"taskId": 2,
+			"taskTitle": "Zustand Store and Auto-Save System",
+			"complexityScore": 7,
+			"recommendedSubtasks": 5,
+			"expansionPrompt": "Divide the store implementation into core store structure, auto-save hook with debouncing, session management functions, offline support with localStorage, and visual indicators. Focus on proper state management patterns, error handling, and user experience considerations.",
+			"reasoning": "High complexity due to multiple interconnected systems: Zustand store management, debounced auto-save, React Query integration, offline handling, and visual feedback. Requires deep understanding of React state management, async operations, and error recovery mechanisms."
+		},
+		{
+			"taskId": 3,
+			"taskTitle": "Zod Validation Schemas for All Wizard Stages",
+			"complexityScore": 6,
+			"recommendedSubtasks": 5,
+			"expansionPrompt": "Structure validation schema creation by stage pairs (1&2, 3&4, 5&6), implement real-time validation hooks, and create accessible error messaging system. Each subtask should focus on specific validation requirements and cross-stage dependencies.",
+			"reasoning": "Moderately high complexity involving comprehensive validation rules across 6 stages, cross-stage dependencies, real-time validation with debouncing, and accessibility compliance. Requires thorough understanding of Zod schemas and form validation patterns."
+		},
+		{
+			"taskId": 4,
+			"taskTitle": "Stage 1 - Event Basics Form Implementation",
+			"complexityScore": 5,
+			"recommendedSubtasks": 5,
+			"expansionPrompt": "Break down form implementation into component structure setup, event type selection, event name with validation, date/time picker implementation, and attendee count/description/image upload components. Each subtask should focus on specific form elements with proper validation and integration.",
+			"reasoning": "Moderate complexity involving multiple form components, file upload handling, date/time validation, integration with existing UI components, and store management. Requires good understanding of React forms, validation, and file handling."
+		},
+		{
+			"taskId": 5,
+			"taskTitle": "Stage 2 - Event Details Form Implementation",
+			"complexityScore": 5,
+			"recommendedSubtasks": 5,
+			"expansionPrompt": "Organize implementation into component structure, detailed description textarea, event format selection, accessibility requirements and special requirements, and color picker with logo upload. Focus on component integration and validation requirements.",
+			"reasoning": "Moderate complexity with diverse form elements including color picker integration, multi-select components, file upload, and accessibility considerations. Similar complexity to Stage 1 but with different component types requiring specific libraries and validation."
+		},
+		{
+			"taskId": 6,
+			"taskTitle": "Stage 3 - Venue Selection Interface",
+			"complexityScore": 6,
+			"recommendedSubtasks": 5,
+			"expansionPrompt": "Structure venue selection into search and filter UI, Supabase search API integration, venue grid with selection, capacity validation logic, and wizard store integration. Focus on search performance, validation logic, and user experience.",
+			"reasoning": "Moderately high complexity involving search functionality, database integration, real-time validation against other stages, multi-select capability, and performance considerations. Requires understanding of search optimization and complex validation logic."
+		},
+		{
+			"taskId": 7,
+			"taskTitle": "Stage 4 - Dynamic Ticketing System",
+			"complexityScore": 8,
+			"recommendedSubtasks": 5,
+			"expansionPrompt": "Break down ticketing system into dynamic tier management, ticket tier forms, Canadian tax calculations, early bird and group discounts, and pricing preview component. Focus on complex calculations, dynamic form arrays, and comprehensive pricing logic.",
+			"reasoning": "High complexity due to dynamic form arrays, complex pricing calculations, Canadian tax system integration, multiple discount types, and real-time pricing updates. Requires advanced React form handling, mathematical calculations, and business logic implementation."
+		},
+		{
+			"taskId": 8,
+			"taskTitle": "Stage 5 - Event Marketing and SEO",
+			"complexityScore": 4,
+			"recommendedSubtasks": 5,
+			"expansionPrompt": "Organize marketing stage into component structure, social media inputs with validation, meta tags with character limits, promotional image upload, and SEO preview component. Focus on URL validation, character limits, and real-time preview functionality.",
+			"reasoning": "Moderate complexity with standard form components, URL validation, character counting, and SEO preview functionality. Less complex than previous stages but requires attention to validation rules and real-time updates."
+		},
+		{
+			"taskId": 9,
+			"taskTitle": "Stage 6 - Review and Publish System",
+			"complexityScore": 7,
+			"recommendedSubtasks": 5,
+			"expansionPrompt": "Structure review system into summary component, cross-stage validation, terms acceptance, event publishing logic, and success page with confirmation. Focus on comprehensive validation, data transformation, and error handling for the publishing process.",
+			"reasoning": "High complexity involving comprehensive data review, cross-stage validation, event publishing logic, data transformation from wizard to event schema, and error handling. Critical stage that requires robust validation and error recovery mechanisms."
+		},
+		{
+			"taskId": 10,
+			"taskTitle": "Session Management and Recovery System",
+			"complexityScore": 8,
+			"recommendedSubtasks": 5,
+			"expansionPrompt": "Divide session management into core utilities, browser event handlers, Supabase Edge Functions, session monitoring system, and wizard store integration. Focus on reliability, error recovery, and seamless user experience across browser sessions.",
+			"reasoning": "High complexity involving session persistence, browser event handling, serverless functions, error recovery mechanisms, and integration with existing systems. Requires deep understanding of browser APIs, session management patterns, and robust error handling strategies."
+		}
+	]
+}

@@ -1,0 +1,43 @@
+# Task ID: 2
+# Title: Zustand Store and Auto-Save System
+# Status: pending
+# Dependencies: 1
+# Priority: high
+# Description: Implement Zustand store for wizard state management with auto-save functionality that saves every 30 seconds, on navigation, and on field blur.
+# Details:
+Create wizardStore.ts with Zustand store containing: wizardState (form data for all 6 stages), currentStage, sessionId, saveStatus (saving/saved/error), lastSaved timestamp. Implement auto-save hook with debouncing (30s), save on stage navigation, save on blur for text inputs. Add visual save indicators. Functions: initializeSession(), saveWizardState(), updateStage(), resetWizard(). Use React Query for API calls to Supabase. Handle offline scenarios with localStorage backup. Code: const useWizardStore = create((set, get) => ({ wizardState: {}, currentStage: 1, saveStatus: 'saved', actions: { saveState: debounce(async () => { ... }, 30000) } }));
+
+# Test Strategy:
+Test auto-save triggers every 30 seconds, verify save on navigation between stages, test save on field blur, validate visual indicators update correctly, test offline/online scenarios, verify localStorage backup functionality.
+
+# Subtasks:
+## 1. Create Zustand Store Structure and Types [pending]
+### Dependencies: None
+### Description: Set up the core Zustand store with TypeScript interfaces and initial state structure for wizard management.
+### Details:
+Create wizardStore.ts with TypeScript interfaces for WizardState, SaveStatus, and store actions. Define the store structure with wizardState (form data for all 6 stages), currentStage, sessionId, saveStatus (saving/saved/error), lastSaved timestamp. Initialize empty state objects for each stage and implement basic getter/setter actions.
+
+## 2. Implement Auto-Save Hook with Debouncing [pending]
+### Dependencies: 2.1
+### Description: Create a custom React hook that handles automatic saving with 30-second debouncing and manual save triggers.
+### Details:
+Create useAutoSave.ts hook that implements debounced saving every 30 seconds using lodash debounce or custom implementation. Include manual save triggers for navigation and field blur events. Integrate with React Query for API calls to Supabase. Handle save status updates and error states in the store.
+
+## 3. Implement Session Management Functions [pending]
+### Dependencies: 2.1
+### Description: Create core session management functions for initializing, saving, updating, and resetting wizard sessions.
+### Details:
+Implement initializeSession() to create new wizard sessions with unique sessionId, saveWizardState() for persisting data to Supabase, updateStage() for navigation between stages, and resetWizard() for clearing state. Include proper error handling and validation for each function.
+
+## 4. Add Offline Support with localStorage Backup [pending]
+### Dependencies: 2.2, 2.3
+### Description: Implement offline functionality that backs up wizard state to localStorage when network is unavailable.
+### Details:
+Create offline detection using navigator.onLine and network event listeners. Implement localStorage backup system that saves wizard state when offline. Add sync mechanism to upload localStorage data when connection is restored. Handle conflict resolution between local and server state.
+
+## 5. Create Visual Save Indicators and Status UI [pending]
+### Dependencies: 2.2
+### Description: Build UI components that show save status, last saved timestamp, and visual feedback for auto-save operations.
+### Details:
+Create SaveIndicator component that displays current save status (saving/saved/error) with appropriate icons and colors. Add LastSaved component showing timestamp of last successful save. Implement loading states and error messages. Include accessibility features like screen reader announcements for save status changes.
+
