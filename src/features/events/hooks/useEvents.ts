@@ -12,12 +12,14 @@ export interface Event {
   id: string;
   name: string;
   slug: string;
-  event_type: string;
+  type: string;              // Fixed: was event_type
   status: string;
   description: string | null;
   start_at: string;
   end_at: string;
   capacity: number | null;
+  price_cents: number;       // Added: price in cents
+  venue_id: string | null;   // Added: venue reference
   created_at: string;
   updated_at: string;
 }
@@ -26,10 +28,10 @@ export interface Event {
  * Fetch all published events
  *
  * @example
- * const { data: events, isLoading, error } = useEvents();
+ * const { data: events, isLoading, error, refetch } = useEvents();
  */
 export function useEvents() {
-  return useQuery({
+  const { data, isLoading, error, refetch } = useQuery({
     queryKey: ['events'],
     queryFn: async () => {
       const { data, error } = await supabase
@@ -43,6 +45,13 @@ export function useEvents() {
     },
     staleTime: 5 * 60 * 1000, // 5 minutes
   });
+
+  return {
+    data,
+    isLoading,
+    error,
+    refetch: () => { refetch(); },
+  };
 }
 
 /**

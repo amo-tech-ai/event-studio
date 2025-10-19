@@ -3,7 +3,6 @@ import Sidebar from "@/components/Sidebar";
 import { Card } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import {
   Select,
@@ -12,58 +11,12 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { useEvents } from "@/features/events/hooks/useEvents";
+import { StatusBadge, PageLoader, ErrorAlert, EmptyState } from "@/components/dashboard";
 
 const DashboardEvents = () => {
-  const events = [
-    {
-      id: 1,
-      title: "Symphony Under the Stars",
-      category: "Music",
-      location: "Sunset Park, Los Angeles, CA",
-      date: "Apr 20, 2029",
-      time: "7:00 PM",
-      price: "$50",
-      sold: 75,
-      status: "Active",
-      image: "https://images.unsplash.com/photo-1470225620780-dba8ba36b745?w=400&h=250&fit=crop"
-    },
-    {
-      id: 2,
-      title: "Tech Future Expo",
-      category: "Technology",
-      location: "Silicon Valley, San Jose, CA",
-      date: "June 1, 2029",
-      time: "10:00 AM",
-      price: "$80",
-      sold: 55,
-      status: "Active",
-      image: "https://images.unsplash.com/photo-1540575467063-178a50c2df87?w=400&h=250&fit=crop"
-    },
-    {
-      id: 3,
-      title: "Culinary Delights Festival",
-      category: "Food & Culinary",
-      location: "Gourmet Plaza, San Francisco, CA",
-      date: "May 25, 2029",
-      time: "11:00 AM",
-      price: "$45",
-      sold: 60,
-      status: "Active",
-      image: "https://images.unsplash.com/photo-1555939594-58d7cb561ad1?w=400&h=250&fit=crop"
-    },
-    {
-      id: 4,
-      title: "Global Wellness Summit",
-      category: "Health & Wellness",
-      location: "Wellness Arena, Miami, FL",
-      date: "May 5, 2029",
-      time: "9:00 AM",
-      price: "$75",
-      sold: 40,
-      status: "Active",
-      image: "https://images.unsplash.com/photo-1545205597-3d9d02c29597?w=400&h=250&fit=crop"
-    }
-  ];
+  // Use real database data instead of hardcoded events
+  const { data: events = [], isLoading, error, refetch } = useEvents();
 
   return (
     <div className="flex min-h-screen w-full bg-background">
@@ -84,6 +37,15 @@ const DashboardEvents = () => {
               </Button>
             </div>
 
+            {/* Error Alert */}
+            {error && <ErrorAlert error={error} onRetry={refetch} />}
+
+            {/* Loading State */}
+            {isLoading && <PageLoader />}
+
+            {/* Content - Only show if not loading and no error */}
+            {!isLoading && !error && (
+            <div>
             {/* Filters & Search */}
             <div className="mb-6">
               <Tabs defaultValue="active" className="mb-4">
@@ -148,20 +110,13 @@ const DashboardEvents = () => {
               {events.map((event) => (
                 <Card key={event.id} className="overflow-hidden hover-lift cursor-pointer transition-all group">
                   <div className="relative h-48 overflow-hidden">
-                    <img 
-                      src={event.image} 
-                      alt={event.title}
+                    <img
+                      src="https://images.unsplash.com/photo-1470225620780-dba8ba36b745?w=400&h=250&fit=crop"
+                      alt={event.name}
                       className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
                     />
                     <div className="absolute top-3 left-3">
-                      <Badge variant="secondary" className="bg-white/90 backdrop-blur-sm">
-                        {event.category}
-                      </Badge>
-                    </div>
-                    <div className="absolute top-3 right-3">
-                      <Badge className="bg-primary/90 backdrop-blur-sm">
-                        {event.status}
-                      </Badge>
+                      <StatusBadge status={event.status as 'active' | 'draft' | 'cancelled' | 'completed' | 'pending' | 'published'} />
                     </div>
                   </div>
                   
@@ -170,32 +125,32 @@ const DashboardEvents = () => {
                       <div className="flex-1">
                         <p className="text-xs text-muted-foreground mb-1 flex items-center gap-1">
                           <Calendar className="w-3 h-3" />
-                          {event.date} · {event.time}
+                          {new Date(event.start_at).toLocaleDateString()}
                         </p>
-                        <h3 className="font-semibold text-sm mb-2 line-clamp-2">{event.title}</h3>
+                        <h3 className="font-semibold text-sm mb-2 line-clamp-2">{event.name}</h3>
                       </div>
                     </div>
 
                     <p className="text-xs text-muted-foreground mb-3 flex items-start gap-1">
                       <MapPin className="w-3 h-3 mt-0.5 flex-shrink-0" />
-                      <span className="line-clamp-1">{event.location}</span>
+                      <span className="line-clamp-1">Event Location</span>
                     </p>
 
                     <div className="space-y-2">
                       <div className="flex items-center justify-between text-xs">
-                        <span className="text-muted-foreground">Tickets Sold</span>
-                        <span className="font-medium">{event.sold}%</span>
+                        <span className="text-muted-foreground">Capacity</span>
+                        <span className="font-medium">{event.capacity || 'N/A'}</span>
                       </div>
                       <div className="w-full bg-muted rounded-full h-2 overflow-hidden">
                         <div 
                           className="h-full bg-primary transition-all"
-                          style={{ width: `${event.sold}%` }}
+                          style={{ width: '75%' }}
                         />
                       </div>
                     </div>
 
                     <div className="mt-3 pt-3 border-t border-border flex items-center justify-between">
-                      <span className="text-lg font-bold text-primary">{event.price}</span>
+                      <span className="text-lg font-bold text-primary">${(event.price_cents / 100).toFixed(2)}</span>
                     </div>
                   </div>
                 </Card>
@@ -205,7 +160,7 @@ const DashboardEvents = () => {
             {/* Pagination */}
             <div className="mt-8 flex items-center justify-between">
               <p className="text-sm text-muted-foreground">
-                Showing <span className="font-medium">4</span> out of <span className="font-medium">4</span>
+                Showing <span className="font-medium">{events.length}</span> out of <span className="font-medium">{events.length}</span>
               </p>
               <div className="flex gap-2">
                 <Button variant="outline" size="sm" disabled>Previous</Button>
@@ -213,6 +168,8 @@ const DashboardEvents = () => {
                 <Button variant="outline" size="sm" disabled>Next</Button>
               </div>
             </div>
+            </div>
+            )}
           </div>
         </div>
       </main>
