@@ -1,4 +1,5 @@
 // Production-ready Supabase client configuration
+// Environment variables are injected at build time by Vite
 import { createClient } from '@supabase/supabase-js';
 import type { Database } from '@/types/database';
 
