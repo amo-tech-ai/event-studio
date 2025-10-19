@@ -1,4 +1,4 @@
-import { MoreVertical, Bell, Settings, Search, User, Calendar, TrendingUp, Users } from "lucide-react";
+import { MoreVertical, Bell, Settings, Search, User, Calendar, TrendingUp, Users, CalendarDays, Ticket } from "lucide-react";
 import Sidebar from "@/components/Sidebar";
 import { Card } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
@@ -13,53 +13,31 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { useDashboardStats } from "@/features/dashboard/hooks/useDashboardStats";
+import { MetricCard, MetricCardSkeleton, ErrorAlert } from "@/components/dashboard";
 
 const Dashboard = () => {
-  const { totalEvents, totalBookings, totalTickets, isLoading, error } = useDashboardStats();
-
-  const stats = [
-    { label: "Upcoming Events", value: isLoading ? "..." : totalEvents.toString(), icon: "📅", color: "bg-pink-500" },
-    { label: "Total Bookings", value: isLoading ? "..." : totalBookings.toString(), icon: "📊", color: "bg-purple-500" },
-    { label: "Tickets Sold", value: isLoading ? "..." : totalTickets.toString(), icon: "🎫", color: "bg-pink-400" }
-  ];
+  const { totalEvents, totalBookings, totalTickets, isLoading, error, refetch } = useDashboardStats();
 
   const recentActivity = [
-    { 
+    {
       user: "Admin Stefanus Weber",
       action: "reviewed a refund request for Invoice ID:",
       detail: "INV1004",
       time: "05:30 PM"
     },
-    { 
+    {
       user: "Wella McGrath",
       action: "updated ticket prices for the event:",
       detail: "Runway Revolution 2024",
       time: "02:00 PM"
     },
-    { 
+    {
       user: "Patrick Cooper",
       action: "cancelled a booking with Invoice ID:",
       detail: "INV10014",
       time: "11:15 AM"
     }
   ];
-
-  // Show error state if there's an error
-  if (error) {
-    return (
-      <div className="flex min-h-screen w-full bg-background">
-        <Sidebar />
-        <main className="flex-1 overflow-auto p-8">
-          <div className="max-w-7xl mx-auto">
-            <Card className="p-6 border-red-200 bg-red-50">
-              <h3 className="text-lg font-bold text-red-900 mb-2">Error Loading Dashboard</h3>
-              <p className="text-red-700">{error.message}</p>
-            </Card>
-          </div>
-        </main>
-      </div>
-    );
-  }
 
   return (
     <div className="flex min-h-screen w-full bg-background">
@@ -107,22 +85,36 @@ const Dashboard = () => {
               <p className="text-muted-foreground">Hello Orlando, welcome back!</p>
             </div>
 
+            {/* Error Alert */}
+            {error && <ErrorAlert error={error} onRetry={refetch} />}
+
             {/* Stats Grid */}
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
-              {stats.map((stat, i) => (
-                <Card key={i} className="p-6 hover-lift transition-all">
-                  <div className="flex items-start justify-between mb-4">
-                    <div className={`w-14 h-14 rounded-2xl ${stat.color} flex items-center justify-center text-2xl`}>
-                      {stat.icon}
-                    </div>
-                    <button className="text-muted-foreground hover:text-foreground">
-                      <MoreVertical className="w-4 h-4" />
-                    </button>
-                  </div>
-                  <p className="text-sm text-muted-foreground mb-1">{stat.label}</p>
-                  <h3 className="text-4xl font-bold">{stat.value}</h3>
-                </Card>
-              ))}
+              {isLoading ? (
+                <>
+                  <MetricCardSkeleton />
+                  <MetricCardSkeleton />
+                  <MetricCardSkeleton />
+                </>
+              ) : (
+                <>
+                  <MetricCard
+                    title="Upcoming Events"
+                    value={totalEvents}
+                    icon={<CalendarDays className="h-5 w-5" />}
+                  />
+                  <MetricCard
+                    title="Total Bookings"
+                    value={totalBookings}
+                    icon={<Users className="h-5 w-5" />}
+                  />
+                  <MetricCard
+                    title="Tickets Sold"
+                    value={totalTickets}
+                    icon={<Ticket className="h-5 w-5" />}
+                  />
+                </>
+              )}
             </div>
 
             {/* Charts and Upcoming Event Row */}

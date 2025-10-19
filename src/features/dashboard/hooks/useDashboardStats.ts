@@ -7,53 +7,47 @@ export interface DashboardStats {
   totalTickets: number;
   isLoading: boolean;
   error: Error | null;
+  refetch: () => void;
 }
 
+interface DashboardStatsResponse {
+  total_events: number;
+  total_orders: number;
+  total_tickets: number;
+}
+
+/**
+ * Hook to fetch dashboard statistics using secure SECURITY DEFINER function.
+ *
+ * Security: Uses get_dashboard_stats() function which only returns aggregated counts,
+ * not individual record access. This prevents anonymous users from reading sensitive data.
+ *
+ * @returns Dashboard statistics with loading and error states
+ */
 export const useDashboardStats = (): DashboardStats => {
-  const { data: eventsData, isLoading: eventsLoading, error: eventsError } = useQuery({
-    queryKey: ["dashboard", "events-count"],
+  const { data, isLoading, error, refetch } = useQuery({
+    queryKey: ["dashboard", "stats"],
     queryFn: async () => {
-      const { count, error } = await supabase
-        .from("events")
-        .select("*", { count: "exact", head: true });
+      // Call the secure SECURITY DEFINER function
+      const { data, error } = await supabase.rpc<DashboardStatsResponse>(
+        "get_dashboard_stats"
+      );
 
       if (error) throw error;
-      return count || 0;
+      return data;
     },
+    // Cache for 30 seconds to reduce database load
+    staleTime: 30000,
+    // Retry failed requests up to 2 times
+    retry: 2,
   });
-
-  const { data: ordersData, isLoading: ordersLoading, error: ordersError } = useQuery({
-    queryKey: ["dashboard", "orders-count"],
-    queryFn: async () => {
-      const { count, error } = await supabase
-        .from("orders")
-        .select("*", { count: "exact", head: true });
-
-      if (error) throw error;
-      return count || 0;
-    },
-  });
-
-  const { data: ticketsData, isLoading: ticketsLoading, error: ticketsError } = useQuery({
-    queryKey: ["dashboard", "tickets-count"],
-    queryFn: async () => {
-      const { count, error } = await supabase
-        .from("tickets")
-        .select("*", { count: "exact", head: true });
-
-      if (error) throw error;
-      return count || 0;
-    },
-  });
-
-  const isLoading = eventsLoading || ordersLoading || ticketsLoading;
-  const error = eventsError || ordersError || ticketsError;
 
   return {
-    totalEvents: eventsData || 0,
-    totalBookings: ordersData || 0,
-    totalTickets: ticketsData || 0,
+    totalEvents: data?.total_events || 0,
+    totalBookings: data?.total_orders || 0,
+    totalTickets: data?.total_tickets || 0,
     isLoading,
     error: error as Error | null,
+    refetch: () => { refetch(); },
   };
 };
