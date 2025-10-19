@@ -15,6 +15,7 @@ dist-ssr
 # Editor directories and files
 .vscode/*
 !.vscode/extensions.json
+.vscode
 .idea
 .DS_Store
 *.suo
@@ -22,22 +23,22 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+.cursor/
+.claude/
+.claude-plugin/
 
 dev-debug.log
+
 # Dependency directories
 node_modules/
+
 # Environment variables
 .env
 .env.*
 !.env.example
-.vscode
-# OS specific
 
-# Task files
-# tasks.json
-# tasks/
+# Project-specific directories
 open-lovable/
 hi.events/
 .playwright-mcp/
-.env
-.vercel
+.vercel/
