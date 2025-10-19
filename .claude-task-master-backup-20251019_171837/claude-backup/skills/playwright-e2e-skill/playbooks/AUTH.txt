@@ -1,0 +1,163 @@
+# EventOS Authentication Tests - Auth Flow Validation
+# Purpose: Test authentication, protected routes, session management
+# Runtime: ~5-7 minutes
+# Priority: P1 (run before merging auth changes)
+
+# ==============================================================================
+# TEST 1: Auth Bypass Works (Development Mode)
+# ==============================================================================
+# Validates: VITE_DISABLE_AUTH=true environment variable works
+
+NAVIGATE: /dashboard
+
+WAIT_FOR: "Dashboard" -> Should NOT redirect to /auth
+
+SNAPSHOT: -> Verify we're on dashboard, not auth page
+
+VALIDATE: URL does not contain "/auth"
+
+CONSOLE_MESSAGES: -> Check for auth warning: "Authentication is DISABLED"
+
+SCREENSHOT: auth-bypassed.png
+
+# Expected: Dashboard loads directly, no redirect to login
+
+# ==============================================================================
+# TEST 2: Protected Routes Redirect (Production Mode)
+# ==============================================================================
+# Validates: ProtectedRoute component redirects unauthenticated users
+# Note: Only run if VITE_DISABLE_AUTH=false
+
+NAVIGATE: /dashboard
+
+WAIT: time=2 -> Allow redirect to complete
+
+SNAPSHOT: -> Should be on /auth page now
+
+VALIDATE: URL contains "/auth" or "login"
+
+WAIT_FOR: "Sign In" -> Login form should display
+
+SCREENSHOT: protected-route-redirect.png
+
+# Expected: Unauthenticated users redirected to login
+
+# ==============================================================================
+# TEST 3: Login Form Renders
+# ==============================================================================
+# Validates: Supabase Auth UI loads correctly
+
+NAVIGATE: /auth
+
+WAIT_FOR: "Sign In"
+
+SNAPSHOT: -> Capture login form structure
+
+FILL: ref="input-email", value="test@example.com"
+
+FILL: ref="input-password", value="TestPassword123!"
+
+SCREENSHOT: login-form-filled.png
+
+# Don't submit - just verify form works
+# Expected: Form renders, inputs functional, Supabase Auth loaded
+
+# ==============================================================================
+# TEST 4: RLS Policies Block Unauthorized Access
+# ==============================================================================
+# Validates: Supabase RLS correctly blocks non-public queries
+
+NAVIGATE: /events/new
+
+NETWORK_REQUESTS: -> Monitor Supabase queries
+
+# Try to load page that requires INSERT permissions
+SNAPSHOT: -> See if form loads or shows error
+
+# Check network for blocked requests
+VALIDATE: Network contains 401 or 403 for protected resources
+
+SCREENSHOT: rls-blocking.png
+
+# Expected: Protected operations return 401/403 when not authenticated
+
+# ==============================================================================
+# TEST 5: Public Pages Accessible
+# ==============================================================================
+# Validates: Public routes work without authentication
+
+NAVIGATE: /
+
+WAIT_FOR: "EventOS"
+
+SCREENSHOT: public-home.png
+
+NAVIGATE: /events
+
+WAIT_FOR: "Events" -> Public event list should load
+
+NETWORK_REQUESTS: -> Should have 200 responses
+
+SCREENSHOT: public-events.png
+
+# Expected: Public pages load successfully, no auth required
+
+# ==============================================================================
+# TEST 6: Session Persistence
+# ==============================================================================
+# Validates: After login, session persists across page loads
+# Note: Requires actual login flow
+
+# This test requires real Supabase credentials
+# Skip in smoke tests, run in integration tests
+
+# NAVIGATE: /auth
+# FILL_FORM: email, password
+# CLICK: "Sign In"
+# WAIT_FOR: "Welcome"
+# NAVIGATE: /dashboard
+# VALIDATE: Still authenticated (no redirect)
+
+# ==============================================================================
+# AUTH TEST SUCCESS CRITERIA
+# ==============================================================================
+# ✅ Auth bypass works in development mode
+# ✅ Protected routes redirect when auth enabled
+# ✅ Login form renders correctly
+# ✅ RLS policies block unauthorized access
+# ✅ Public pages accessible without auth
+# ✅ Session persists after login (integration only)
+
+# ==============================================================================
+# ENVIRONMENT SETUP
+# ==============================================================================
+# Development (auth bypass):
+#   VITE_DISABLE_AUTH=true
+#   Run tests 1, 5
+#
+# Production (auth enabled):
+#   VITE_DISABLE_AUTH=false
+#   Run tests 2, 3, 4, 5, 6
+
+# ==============================================================================
+# FAILURE SCENARIOS
+# ==============================================================================
+# Scenario 1: Auth bypass not working
+#   Symptom: Dashboard redirects to /auth even with VITE_DISABLE_AUTH=true
+#   Debug: Check Vercel env vars, rebuild app
+#
+# Scenario 2: RLS policies too permissive
+#   Symptom: Protected resources return 200 when should be 401/403
+#   Debug: Review Supabase RLS policies
+#
+# Scenario 3: Login form not rendering
+#   Symptom: /auth page blank or missing Supabase UI
+#   Debug: Check Supabase config, anon key validity
+
+# ==============================================================================
+# METRICS
+# ==============================================================================
+# Total tests: 6 (4 for dev mode, 6 for production)
+# Expected runtime: 5-7 minutes
+# Failure tolerance: 0 (all must pass)
+# Run frequency: Before merging auth changes

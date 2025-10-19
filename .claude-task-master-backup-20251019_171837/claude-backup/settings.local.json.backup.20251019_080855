@@ -1,0 +1,40 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(supabase status)",
+      "Bash(tree -L 2 /home/sk/event-studio/.claude/skills/)",
+      "Bash(find /home/sk/event-studio/.claude/skills -name \"SKILL.md\" -exec sh -c 'echo \"\"=== {} ===\"\" && head -20 \"\"{}\"\"' ;)",
+      "Bash(for f in /home/sk/event-studio/.claude/agents/*.md)",
+      "Bash(head -10 \"$f\")",
+      "Bash(done)",
+      "Bash(tree -L 3 /home/sk/event-studio/.claude/skills/)",
+      "Bash(for f in /home/sk/event-studio/.claude/skills/*/SKILL.md)",
+      "Bash(do echo \"=== $f ===\")",
+      "Bash(head -20 \"$f\")",
+      "Bash(cat /home/sk/event-studio/.claude/docs/03-skills.md)",
+      "Bash(cat /home/sk/event-studio/.claude/skills/*/SKILL.md)",
+      "Read(//home/sk/.claude/**)",
+      "Bash(cat /home/sk/event-studio/.backup/plugin-cleanup-2025-10-19/.claude-plugin/plugin.json)",
+      "Read(//home/sk/.config/**)",
+      "Read(//home/sk/**)",
+      "mcp__task-master-ai__models",
+      "mcp__desktop-commander__get_config",
+      "mcp__chrome-devtools__list_pages",
+      "mcp__playwright__browser_snapshot",
+      "mcp__ide__getDiagnostics",
+      "Bash(echo $SUPABASE_PERSONAL_ACCESS_TOKEN)",
+      "Bash(for file in /home/sk/event-studio/supabase/migrations/*.sql)"
+    ],
+    "deny": [],
+    "ask": []
+  },
+  "enableAllProjectMcpServers": true,
+  "enabledMcpjsonServers": [
+    "task-master-ai",
+    "desktop-commander",
+    "chrome-devtools",
+    "supabase",
+    "playwright",
+    "vercel-event-studio"
+  ]
+}

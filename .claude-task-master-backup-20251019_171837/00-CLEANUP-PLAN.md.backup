@@ -1,0 +1,247 @@
+# 🧹 Reference Folder Cleanup Plan
+
+**Status:** Ready to Execute
+**Approach:** Simple, Incremental, Best Practices
+**Risk:** Low (all moves are to notes/ for safety)
+
+---
+
+## 📊 Current State
+
+- **44 markdown files** (too many)
+- **19 duplicate files** (need removal)
+- **Mixed content** (research, AI, diagrams, core docs)
+- **Unclear purpose** (hard to find reference materials)
+
+---
+
+## 🎯 Goal
+
+- **6-10 core reference files**
+- **Clear organization**
+- **Single purpose:** True reference materials only
+- **Everything else:** Moved to appropriate folders
+
+---
+
+## ✅ Step-by-Step Plan
+
+### Step 1: Delete Duplicate Files with " 1" Suffix ✅
+**Risk:** None (exact duplicates)
+**Files:** 5 files
+
+```bash
+cd /home/sk/event-studio/mvpe/01-reference
+rm "00-EVENT-WIZARD-PRD 1.md"
+rm "00-MASTER-PLAN 1.md"
+rm "01-PRD-EVENTOS-V3 1.md"
+rm "04-UI-COMPONENTS-PATTERNS 1.md"
+rm "13-SYSTEM-ARCHITECTURE 1.md"
+```
+
+**After:** 39 files remaining
+
+---
+
+### Step 2: Move Core Document Duplicates ✅
+**Risk:** Low (moving to notes, files exist in 01-core/)
+**Files:** 11 files
+
+```bash
+cd /home/sk/event-studio/mvpe/01-reference
+
+# Move to notes/duplicates/
+mv 00-MASTER-PLAN.md ../notes/duplicates/
+mv 01-CORE-SETUP-CHECKLIST.md ../notes/duplicates/
+mv 01-FRONTEND-MASTER-PLAN.md ../notes/duplicates/
+mv 01-PRD-EVENTOS-V3.md ../notes/duplicates/
+mv 04-UI-COMPONENTS-PATTERNS.md ../notes/duplicates/
+mv 05-IMPLEMENTATION-PHASES.md ../notes/duplicates/
+mv 05-IMPLEMENTATION-ROADMAP.md ../notes/duplicates/
+mv 06-UI-COMPONENT-DIAGRAMS.md ../notes/duplicates/
+mv 12-AI-EVENT-SYSTEM-REVISED-PLAN.md ../notes/duplicates/
+mv 13-SYSTEM-ARCHITECTURE.md ../notes/duplicates/
+mv DEVELOPMENT_ROADMAP.md ../notes/duplicates/
+```
+
+**After:** 28 files remaining
+
+---
+
+### Step 3: Move Event Wizard Duplicates ✅
+**Risk:** Low (exist in 04-event-wizard/)
+**Files:** 2 files
+
+```bash
+cd /home/sk/event-studio/mvpe/01-reference
+
+mv 00-EVENT-WIZARD-PRD.md ../notes/duplicates/
+mv 01-ai-events.md ../notes/duplicates/
+```
+
+**After:** 26 files remaining
+
+---
+
+### Step 4: Move Diagram Files to Mermaid ✅
+**Risk:** Low (belong in mermaid folder)
+**Files:** 2 files
+
+```bash
+cd /home/sk/event-studio/mvpe/01-reference
+
+mv 18-JOURNEYS.md ../mermaid/
+mv 19-DIAGRAMS.md ../mermaid/
+```
+
+**After:** 24 files remaining
+
+---
+
+### Step 5: Move Research Materials ✅
+**Risk:** Low (competitive analysis documents)
+**Files:** 3 files
+
+```bash
+cd /home/sk/event-studio/mvpe/01-reference
+
+# Create subfolder if needed
+mkdir -p ../research/competitive-analysis 2>/dev/null
+
+mv 01-breef-design-analysis.md ../research/competitive-analysis/
+mv 01-CopilotKit-Tavily-Event-Management-Analysis.md ../research/competitive-analysis/
+mv 01-EventOS-Complete-Feature-Roadmap.md ../research/competitive-analysis/
+```
+
+**After:** 21 files remaining
+
+---
+
+### Step 6: Move AI Planning Materials ✅
+**Risk:** Low (AI strategy documents)
+**Files:** 4 files
+
+```bash
+cd /home/sk/event-studio/mvpe/01-reference
+
+# Create subfolder if needed
+mkdir -p ../agents/planning 2>/dev/null
+
+mv 01-AI-FEATURES-MASTER-PLAN.md ../agents/planning/
+mv 02-MASTER-AI-FEATURES.md ../agents/planning/
+mv 02-NATURAL_LANGUAGE_TABLES.md ../agents/planning/
+mv 08-AI-EVENT-SYSTEM-PLAN.md ../agents/planning/
+```
+
+**After:** 17 files remaining
+
+---
+
+### Step 7: Review General Documents ✅
+**Risk:** Low (decide keep or move)
+**Files:** 2 files
+
+```bash
+# Review these files:
+# - 002-architecture.md
+# - 02-features.md
+
+# Decision options:
+# A) Keep in reference (if they're reference materials)
+# B) Move to 01-core (if they're core architecture)
+# C) Move to notes (if duplicate/outdated)
+```
+
+**After:** 15-17 files remaining (depending on decision)
+
+---
+
+### Step 8: Update README ✅
+**Risk:** None
+**Files:** Update existing README.md
+
+Create clear, focused README explaining:
+- What belongs in this folder
+- How to find reference materials
+- Links to moved content
+
+---
+
+## 📁 Final Expected Structure
+
+```
+01-reference/
+├── 00-REFERENCE-INDEX.md         ← Inventory (NEW)
+├── 00-CLEANUP-PLAN.md             ← This file (NEW)
+├── README.md                      ← Updated purpose
+│
+├── 📖 Build & Deployment
+│   ├── 04-TECH-STACK.md           ← Tech stack reference
+│   ├── 06-BUILD-GUIDE.md          ← Build instructions
+│   └── 20-BUILD_GUIDE.md          ← Alt build guide
+│
+├── 📋 Product & Planning
+│   ├── MVP-PRD.md                 ← MVP requirements
+│   └── 21-RISKS.md                ← Risk assessment
+│
+├── 📊 Analysis
+│   ├── PLAN-REVIEW-DETECTIVE-ANALYSIS.md ← Plan review
+│   ├── 002-architecture.md        ← Architecture (review)
+│   └── 02-features.md             ← Features (review)
+│
+└── 📝 Prompts & Templates
+    └── prompts/
+        └── taskmaster/             ← 7 TaskMaster prompts
+            ├── 001-taskmaster.md
+            ├── 002-advanced.md
+            ├── 004-team-workflow.md
+            ├── 005-advanced-workflows.md
+            ├── 006-implementation-phases.md
+            ├── 007-production-ready-checklist.md
+            └── homepage-copywriting-suggestions.md
+```
+
+---
+
+## 📊 Summary
+
+| Phase | Action | Files | Status |
+|-------|--------|-------|--------|
+| 1 | Delete " 1" duplicates | 5 | Ready |
+| 2 | Move core duplicates | 11 | Ready |
+| 3 | Move wizard duplicates | 2 | Ready |
+| 4 | Move diagrams | 2 | Ready |
+| 5 | Move research | 3 | Ready |
+| 6 | Move AI materials | 4 | Ready |
+| 7 | Review general docs | 2 | Ready |
+| 8 | Update README | 1 | Ready |
+
+**Total Files:**
+- Before: 44 files
+- After: 10-12 files
+- Reduction: 73-77%
+
+---
+
+## ✅ Benefits
+
+1. **Clear Purpose** - Only true reference materials
+2. **Easy Navigation** - Find what you need quickly
+3. **Proper Organization** - Content in right places
+4. **Reduced Clutter** - 75% fewer files
+5. **Better Maintenance** - Clear what belongs where
+6. **Safe Process** - All moves to notes/ first
+
+---
+
+## 🚀 Ready to Execute
+
+All commands are safe and ready to run.
+Everything moves to `notes/` or appropriate folders.
+No files are permanently deleted (except exact duplicates).
+
+---
+
+**Created:** 2025-10-19
+**Status:** ✅ Ready for Execution
+**Estimated Time:** 5-10 minutes

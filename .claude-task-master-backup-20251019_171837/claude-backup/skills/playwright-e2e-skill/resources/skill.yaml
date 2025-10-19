@@ -1,0 +1,133 @@
+---
+# Playwright E2E Testing Skill Manifest
+# Official MCP skill for browser automation testing
+
+skill:
+  name: playwright-e2e-skill
+  version: 1.0.0
+  description: >
+    Test EventOS web application end-to-end using Playwright browser automation via MCP.
+    Validates user flows, RLS policies, and captures debugging evidence.
+
+  author:
+    name: EventOS Team
+    email: dev@eventos.dev
+
+  mcp:
+    required: true
+    servers:
+      - name: playwright
+        type: stdio
+        command: npx
+        args:
+          - "@playwright/mcp@latest"
+        env:
+          PLAYWRIGHT_BROWSER: chromium
+          PLAYWRIGHT_HEADLESS: "true"
+
+  capabilities:
+    - browser_automation
+    - network_monitoring
+    - screenshot_capture
+    - accessibility_testing
+    - multi_browser_support
+
+  tags:
+    - testing
+    - e2e
+    - browser
+    - playwright
+    - automation
+    - qa
+
+  resources:
+    documentation:
+      - path: resources/FEATURES.md
+        description: Core vs advanced feature comparison
+      - path: SKILL.md
+        description: Main skill documentation
+      - path: scripts/RUNBOOK.md
+        description: Local and CI setup instructions
+
+    playbooks:
+      - path: playbooks/SMOKE.txt
+        description: Critical path smoke tests
+      - path: playbooks/AUTH.txt
+        description: Authentication flow tests
+      - path: playbooks/PITCH_DECK_WIZARD.txt
+        description: Multi-step wizard tests
+
+    examples:
+      - path: resources/examples/inputs.json
+        description: Example test payloads
+
+    configuration:
+      - path: resources/agent.config.json
+        description: Agent configuration template
+
+  environment:
+    required:
+      - PLAYWRIGHT_BASE_URL
+    optional:
+      - PLAYWRIGHT_BROWSER
+      - PLAYWRIGHT_HEADLESS
+      - PLAYWRIGHT_TIMEOUT
+
+  dependencies:
+    npm:
+      - name: "@playwright/mcp"
+        version: ">=0.0.43"
+        description: Official Playwright MCP server
+
+  usage:
+    # When to use this skill proactively
+    triggers:
+      - after_deployment
+      - before_pr_merge
+      - debugging_production
+      - validating_rls_policies
+      - testing_booking_flow
+      - dashboard_changes
+
+    # Example invocations
+    examples:
+      - command: "playwright-e2e-skill"
+        description: "Load skill for interactive testing"
+
+      - command: "playwright-e2e-skill/playbooks/SMOKE.txt"
+        description: "Run smoke tests"
+
+      - command: "npm run test:smoke"
+        description: "Run via package.json script"
+
+  testing:
+    priority:
+      p0:
+        - Dashboard loads without auth
+        - Event list displays
+        - Navigation works
+      p1:
+        - Event creation wizard
+        - Booking flow
+        - Form validation
+      p2:
+        - Multi-browser testing
+        - Responsive layouts
+        - File uploads
+
+  ci_cd:
+    github_actions:
+      workflow: .github/workflows/playwright-tests.yml
+      trigger: on_push_to_main
+
+    vercel:
+      deploy_hook: true
+      post_deploy_command: npm run test:smoke
+
+metadata:
+  created: 2025-10-19
+  last_updated: 2025-10-19
+  status: production_ready
+  compatibility:
+    claude_code: ">=1.0.0"
+    playwright_mcp: ">=0.0.43"

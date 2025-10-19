@@ -1,0 +1,174 @@
+# 📚 Reference Materials
+
+**Purpose:** True reference documentation - tech specs, build guides, requirements, and analysis
+**Last Updated:** 2025-10-19
+**Status:** ✅ Organized & Production Ready
+
+---
+
+## 📖 What Belongs Here
+
+This folder contains **reference materials** that developers, product managers, and stakeholders reference throughout the project:
+
+- **Build & deployment guides**
+- **Technology stack specifications**
+- **Product requirements documents**
+- **Risk assessments**
+- **System analysis**
+- **Reusable prompts & templates**
+
+---
+
+## 📁 Folder Contents
+
+### 🏗️ Architecture & Planning (4 files)
+- **01-ARCHITECTURE.md** - System architecture overview
+- **02-FEATURES.md** - Features specification
+- **05-MVP-PRD.md** - MVP product requirements document
+- **07-PLAN-REVIEW-ANALYSIS.md** - Comprehensive plan review
+
+### 🔧 Technical Reference (3 files)
+- **03-TECH-STACK.md** - Complete technology stack reference
+- **04-BUILD-GUIDE.md** - Comprehensive build instructions
+- **06-RISKS.md** - Project risk assessment and mitigation
+
+### 📝 Prompts & Templates (7 files in subfolder)
+- **prompts/taskmaster/** - TaskMaster workflow prompts
+  - 001-taskmaster.md
+  - 002-advanced.md
+  - 004-team-workflow.md
+  - 005-advanced-workflows.md
+  - 006-implementation-phases.md
+  - 007-production-ready-checklist.md
+  - homepage-copywriting-suggestions.md
+
+### 📚 Navigation (2 files)
+- **00-REFERENCE-INDEX.md** - Complete inventory and analysis
+- **00-CLEANUP-PLAN.md** - Organization and cleanup documentation
+
+---
+
+## 🎯 Quick Reference
+
+### Need to build the project?
+→ Read: `04-BUILD-GUIDE.md`
+
+### Need tech stack info?
+→ Read: `03-TECH-STACK.md`
+
+### Need MVP requirements?
+→ Read: `05-MVP-PRD.md`
+
+### Need architecture overview?
+→ Read: `01-ARCHITECTURE.md`
+
+### Need risk assessment?
+→ Read: `06-RISKS.md`
+
+### Need build instructions?
+→ Read: `04-BUILD-GUIDE.md`
+
+### Need TaskMaster prompts?
+→ Check: `prompts/taskmaster/`
+
+---
+
+## 🔗 Related Folders
+
+### Looking for other types of documentation?
+
+- **Core Planning** → `../01-core/` - Master plans, PRD, architecture
+- **Frontend** → `../02-frontend/` - Frontend architecture & components
+- **Features** → `../04-event-wizard/`, `../06-sponsor-management/`, etc.
+- **AI Materials** → `../agents/` (AI planning moved here)
+- **Diagrams** → `../mermaid/` (diagrams moved here)
+- **Research** → `../research/` (competitive analysis moved here)
+- **Progress** → `../progress/` - Project status and reports
+
+---
+
+## 📝 What Was Removed
+
+During the 2025-10-19 reorganization, the following were moved to appropriate locations:
+
+### Moved to `notes/duplicates/`
+- 16 duplicate files from core, event-wizard, and other folders
+- **20-BUILD_GUIDE.md** (duplicate of 04-BUILD-GUIDE.md)
+
+### Moved to `mermaid/`
+- 18-JOURNEYS.md
+- 19-DIAGRAMS.md
+
+### Moved to `research/competitive-analysis/`
+- 01-breef-design-analysis.md
+- 01-CopilotKit-Tavily-Event-Management-Analysis.md
+- 01-EventOS-Complete-Feature-Roadmap.md
+
+### Moved to `agents/planning/`
+- 01-AI-FEATURES-MASTER-PLAN.md
+- 02-MASTER-AI-FEATURES.md
+- 02-NATURAL_LANGUAGE_TABLES.md
+- 08-AI-EVENT-SYSTEM-PLAN.md
+
+**Result:** Reduced from 44 files to 10 focused reference files (77% reduction)
+
+---
+
+## ✅ Best Practices
+
+### When to Add Files Here
+✅ **DO add:**
+- Build and deployment guides
+- Technology stack documentation
+- Product requirements documents
+- Risk assessments
+- System analysis
+- Reusable templates and prompts
+
+❌ **DON'T add:**
+- Implementation code
+- Feature-specific documentation (use feature folders)
+- Research and competitive analysis (use `research/`)
+- AI planning materials (use `agents/`)
+- Diagrams (use `mermaid/`)
+- Progress reports (use `progress/`)
+- Duplicate documents (check if exists elsewhere first)
+
+### Naming Convention
+- Use descriptive names: `04-TECH-STACK.md`, `MVP-PRD.md`
+- Prefix with numbers for ordering: `01-`, `02-`, etc.
+- Use UPPER-CASE-WITH-HYPHENS for main files
+- Keep names concise but clear
+
+---
+
+## 📊 Folder Statistics
+
+- **Total Files:** 10 markdown files (7 reference + 3 organizational)
+- **Categories:** 2 main categories (Architecture & Planning, Technical Reference)
+- **Organization:** Clean and focused, sequential ordering
+- **Duplicates:** 0 (all removed)
+- **Status:** Production ready
+
+---
+
+## 🆘 Need Help?
+
+### Can't find a document?
+→ Check `00-REFERENCE-INDEX.md` for complete inventory
+
+### Document seems misplaced?
+→ See if it belongs in:
+- `../01-core/` for core planning
+- `../research/` for competitive analysis
+- `../agents/` for AI materials
+- `../mermaid/` for diagrams
+
+### Want to understand the cleanup?
+→ Read `00-CLEANUP-PLAN.md` for details on what was moved and why
+
+---
+
+**Folder Reorganized:** 2025-10-19
+**Status:** ✅ Clean, Organized, Production Ready
+**Purpose:** True reference materials only
