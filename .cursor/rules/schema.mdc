@@ -59,7 +59,7 @@ If you need to use any of the entities below, remember to add them through versi
 - view owner and grants
 - security invoker on views
 - materialized views
-- doesn’t recreate views when altering column type
+- doesn't recreate views when altering column type
 
 ### RLS policies
 

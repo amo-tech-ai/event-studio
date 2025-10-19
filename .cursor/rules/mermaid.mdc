@@ -1,0 +1,214 @@
+---
+description: Comprehensive guidelines for generating Mermaid diagrams for any project
+globs: "**/*.md, **/*.mdc, **/*.mdx"
+alwaysApply: true
+---
+
+# Universal Mermaid Diagram Generator for Claude
+
+## 🎯 **Core Purpose**
+Generate clear, accurate **Mermaid diagrams** to visualize any system, process, or workflow described in documentation.
+
+## 🎨 **Supported Diagram Types**
+
+### 1. **Flowchart** (`graph`)
+- **Use for:** Logical processes, decisions, workflows, system flows
+- **Direction:** `TB` (top-bottom) or `LR` (left-right)
+- **Best for:** Event wizard stages, user journeys, business processes
+
+### 2. **Sequence Diagram** (`sequenceDiagram`)
+- **Use for:** User/system interactions over time, API calls, message passing
+- **Best for:** AI agent interactions, real-time communications, multi-step processes
+
+### 3. **Class Diagram** (`classDiagram`)
+- **Use for:** Software architecture, object relationships, database schemas
+- **Best for:** Database ERDs, system architecture, component relationships
+
+### 4. **State Diagram** (`stateDiagram`)
+- **Use for:** Finite state machines, wizard states, process states
+- **Best for:** Event lifecycle, user authentication flows, order statuses
+
+### 5. **Entity Relationship Diagram (ERD)** (`erDiagram`)
+- **Use for:** Database relationships, data models, table connections
+- **Best for:** Database schema visualization, data flow analysis
+
+### 6. **Gantt Chart** (`gantt`)
+- **Use for:** Project timelines, implementation phases, milestone tracking
+- **Best for:** Development roadmaps, feature rollouts, sprint planning
+
+## 🧩 **Input Processing Rules**
+
+### **When User Describes a Process:**
+1. **Analyze the flow** - Is it linear, branching, or cyclical?
+2. **Identify participants** - Users, systems, databases, AI agents
+3. **Choose diagram type** - Match complexity to appropriate diagram
+4. **Extract relationships** - What connects the components?
+
+### **Example Input Analysis:**
+```
+Input: "User creates event → AI generates content → Saves to Supabase → Sends WhatsApp"
+Analysis: Linear flow with 4 steps, multiple participants (User, AI, DB, Messaging)
+Diagram Type: Sequence Diagram (shows interaction over time)
+```
+
+## 📊 **Output Format Requirements**
+
+### **For Every Diagram Request, Provide:**
+
+1. **🏷️ Diagram Type** - Clear identification of chosen diagram type
+2. **📊 Mermaid Code Block** - Complete, executable Mermaid code
+3. **💬 Explanation** - 1-sentence description of what it shows and why it matters
+
+### **Mermaid Code Block Format:**
+```mermaid
+graph TB
+    A[Start] --> B[Process]
+    B --> C{Decision?}
+    C -->|Yes| D[Action A]
+    C -->|No| E[Action B]
+    D --> F[End]
+    E --> F
+```
+
+## ✅ **Best Practices**
+
+### **Diagram Design:**
+- **Keep simple:** ≤ 10 nodes unless complex system architecture
+- **Consistent direction:** Use `TB` or `LR` consistently
+- **Clear labels:** Use descriptive names for nodes and relationships
+- **Logical flow:** Follow natural reading patterns (left-to-right, top-to-bottom)
+
+### **Naming Conventions:**
+- **Nodes:** Use descriptive names (`User`, `AI Agent`, `Database`)
+- **Relationships:** Use action verbs (`creates`, `sends`, `stores`, `validates`)
+- **Decisions:** Use clear yes/no paths with labels
+
+### **Visual Hierarchy:**
+- **Primary flow:** Use solid lines and standard shapes
+- **Secondary flow:** Use dashed lines for optional paths
+- **Error handling:** Include error paths and fallback scenarios
+
+## 🧱 **Advanced Features**
+
+### **Subgraphs for Complex Systems:**
+```mermaid
+graph TB
+    subgraph "Frontend Layer"
+        A[React App] --> B[Components]
+    end
+    subgraph "AI Processing Layer"
+        C[AI Agent] --> D[Content Generator]
+    end
+    subgraph "Data Layer"
+        E[Supabase DB] --> F[Storage]
+    end
+    
+    A --> C
+    C --> E
+```
+
+### **Color Coding (when needed):**
+- **Success paths:** Use green or default colors
+- **Error paths:** Use red for failures
+- **AI processes:** Use blue for AI-related nodes
+- **User actions:** Use orange for user-initiated actions
+
+## 🎯 **EventOS-Specific Patterns**
+
+### **Common EventOS Flows:**
+1. **Event Creation Wizard:** 6-stage sequential process
+2. **AI Agent Orchestration:** Multiple AI agents working together
+3. **Multi-tenant Architecture:** Account isolation and user management
+4. **Real-time Analytics:** Data flow from events to dashboards
+
+### **Recommended Diagram Types for EventOS:**
+- **Event Wizard:** State diagram or flowchart
+- **AI Workflows:** Sequence diagram with AI agents
+- **Database Schema:** ERD with table relationships
+- **User Journeys:** Flowchart with decision points
+- **Implementation Timeline:** Gantt chart with phases
+
+## 🚨 **Common Mistakes to Avoid**
+
+### **❌ Don't:**
+- Create overly complex diagrams with 20+ nodes
+- Mix different diagram types in one diagram
+- Use unclear or ambiguous labels
+- Forget to include error handling paths
+- Create diagrams without considering the audience
+
+### **✅ Do:**
+- Start simple and add complexity only when needed
+- Use consistent terminology across diagrams
+- Include both happy path and error scenarios
+- Test diagrams in Mermaid live editor
+- Provide context and explanation for complex flows
+
+## 🔧 **Implementation Examples**
+
+### **Event Creation Flow:**
+```mermaid
+graph TB
+    A[User Starts] --> B[Contact Info]
+    B --> C[Event Basics]
+    C --> D[Venue Selection]
+    D --> E[Ticketing Setup]
+    E --> F[Marketing Content]
+    F --> G[Review & Launch]
+    G --> H[Event Published]
+```
+
+### **AI Agent Interaction:**
+```mermaid
+sequenceDiagram
+    participant U as User
+    participant W as Wizard
+    participant AI as AI Agent
+    participant DB as Database
+    
+    U->>W: Enter Event Details
+    W->>AI: Generate Content
+    AI->>DB: Save Generated Content
+    DB->>W: Confirm Save
+    W->>U: Show Preview
+```
+
+### **Database Relationships:**
+```mermaid
+erDiagram
+    EVENTS ||--o{ TICKETS : "has"
+    EVENTS ||--o{ ORDERS : "receives"
+    ORDERS ||--o{ ATTENDEES : "contains"
+    USERS ||--o{ EVENTS : "creates"
+    
+    EVENTS {
+        uuid id PK
+        string title
+        timestamp start_date
+        string status
+    }
+    
+    TICKETS {
+        uuid id PK
+        uuid event_id FK
+        decimal price
+        integer quantity
+    }
+```
+
+## 📝 **Documentation Integration**
+
+### **When to Create Diagrams:**
+- **New features:** Always include a flow diagram
+- **Complex processes:** Break down into visual steps
+- **System architecture:** Show component relationships
+- **User journeys:** Map the complete experience
+- **Database changes:** Include ERD for schema modifications
+
+### **File Naming:**
+- **Flow diagrams:** `FLOW_EVENT_CREATION.md`
+- **Architecture:** `ARCHITECTURE_AI_AGENTS.md`
+- **Database:** `ERD_CORE_TABLES.md`
+- **User journeys:** `USER_JOURNEY_ATTENDEE.md`
+
+This rule ensures all Mermaid diagrams are consistent, clear, and provide maximum value for understanding complex systems and processes.

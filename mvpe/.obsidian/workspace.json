@@ -1,0 +1,204 @@
+{
+  "main": {
+    "id": "1dea9233cee98bfd",
+    "type": "split",
+    "children": [
+      {
+        "id": "3f821876fedddc92",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "c6a157e9662df788",
+            "type": "leaf",
+            "state": {
+              "type": "empty",
+              "state": {},
+              "icon": "lucide-file",
+              "title": "New tab"
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "vertical"
+  },
+  "left": {
+    "id": "834ffb2d46b467d4",
+    "type": "split",
+    "children": [
+      {
+        "id": "775b88678eafb428",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "4ab26ced4a694ad4",
+            "type": "leaf",
+            "state": {
+              "type": "file-explorer",
+              "state": {
+                "sortOrder": "alphabetical",
+                "autoReveal": false
+              },
+              "icon": "lucide-folder-closed",
+              "title": "Files"
+            }
+          },
+          {
+            "id": "2993b943a31d7896",
+            "type": "leaf",
+            "state": {
+              "type": "search",
+              "state": {
+                "query": "",
+                "matchingCase": false,
+                "explainSearch": false,
+                "collapseAll": false,
+                "extraContext": false,
+                "sortOrder": "alphabetical"
+              },
+              "icon": "lucide-search",
+              "title": "Search"
+            }
+          },
+          {
+            "id": "852949aa0a3b7d75",
+            "type": "leaf",
+            "state": {
+              "type": "bookmarks",
+              "state": {},
+              "icon": "lucide-bookmark",
+              "title": "Bookmarks"
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "horizontal",
+    "width": 300
+  },
+  "right": {
+    "id": "ac206b89761b1929",
+    "type": "split",
+    "children": [
+      {
+        "id": "4415771660890af6",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "9c3252a76e9726ba",
+            "type": "leaf",
+            "state": {
+              "type": "backlink",
+              "state": {
+                "collapseAll": false,
+                "extraContext": false,
+                "sortOrder": "alphabetical",
+                "showSearch": false,
+                "searchQuery": "",
+                "backlinkCollapsed": false,
+                "unlinkedCollapsed": true
+              },
+              "icon": "links-coming-in",
+              "title": "Backlinks"
+            }
+          },
+          {
+            "id": "9be59c8665ea57f3",
+            "type": "leaf",
+            "state": {
+              "type": "outgoing-link",
+              "state": {
+                "linksCollapsed": false,
+                "unlinkedCollapsed": true
+              },
+              "icon": "links-going-out",
+              "title": "Outgoing links"
+            }
+          },
+          {
+            "id": "cacbe8386d2cdda0",
+            "type": "leaf",
+            "state": {
+              "type": "tag",
+              "state": {
+                "sortOrder": "frequency",
+                "useHierarchy": true,
+                "showSearch": false,
+                "searchQuery": ""
+              },
+              "icon": "lucide-tags",
+              "title": "Tags"
+            }
+          },
+          {
+            "id": "cf7847e1837a021e",
+            "type": "leaf",
+            "state": {
+              "type": "outline",
+              "state": {
+                "followCursor": false,
+                "showSearch": false,
+                "searchQuery": ""
+              },
+              "icon": "lucide-list",
+              "title": "Outline"
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "horizontal",
+    "width": 300,
+    "collapsed": true
+  },
+  "left-ribbon": {
+    "hiddenItems": {
+      "switcher:Open quick switcher": false,
+      "graph:Open graph view": false,
+      "canvas:Create new canvas": false,
+      "daily-notes:Open today's daily note": false,
+      "templates:Insert template": false,
+      "command-palette:Open command palette": false,
+      "bases:Create new base": false
+    }
+  },
+  "active": "4ab26ced4a694ad4",
+  "lastOpenFiles": [
+    "core/dashboard/tasks/08-week1-dashboard-integration.md",
+    "core/dashboard/tasks/08-week1-dashboard-integration.md.tmp.2450996.1760815291470",
+    "core/dashboard/tasks/07-week1-dashboard-hooks.md",
+    "core/dashboard/tasks/07-week1-dashboard-hooks.md.tmp.2450996.1760815235911",
+    "core/dashboard/plan/dashboard-planning.md",
+    "core/dashboard/plan/05-MASTER-PLAN-REVISION-SUMMARY.md",
+    "core/dashboard/plan/04-AUDIT-REPORT.md",
+    "core/dashboard/plan/03-IMPLEMENTATION-ORDER-AUDIT.md",
+    "core/dashboard/plan/03-AUDIT-REPORT.md",
+    "core/dashboard/plan/02-MISSING-PAGES-ANALYSIS.md",
+    "core/dashboard/plan/01-DASHBOARD-FRONTEND-SETUP-MASTER-PLAN.md",
+    "core/dashboard/plan",
+    "core/dashboard/tasks/06-phase0-infrastructure-testing.md",
+    "core/dashboard/tasks/06-phase0-infrastructure-testing.md.tmp.2450996.1760815180217",
+    "core/dashboard/tasks/DELIVERY-SUMMARY.md",
+    "core/dashboard/tasks/_START-HERE.md",
+    "core/dashboard/tasks/_START-HERE.md.tmp.2450996.1760814808732",
+    "core/dashboard/tasks/05-phase0-shared-components.md",
+    "core/dashboard/tasks/05-phase0-shared-components.md.tmp.2450996.1760814747085",
+    "core/dashboard/tasks/00-TASK-INDEX.md",
+    "core/dashboard/tasks/00-TASK-INDEX.md.tmp.2450996.1760814695733",
+    "core/dashboard/tasks/04-phase0-typescript-types.md",
+    "core/dashboard/tasks/04-phase0-typescript-types.md.tmp.2450996.1760814635437",
+    "core/dashboard/tasks/03-phase0-feature-modules.md",
+    "core/dashboard/tasks/03-phase0-feature-modules.md.tmp.2450996.1760814635009",
+    "core/dashboard/tasks/02-phase0-sample-data.md",
+    "core/dashboard/tasks/02-phase0-sample-data.md.tmp.2450996.1760814561820",
+    "core/dashboard/tasks/01-phase0-database-verification.md",
+    "core/dashboard/tasks/README.md",
+    "core/dashboard/tasks/DAILY-CHECKLIST.md",
+    "core/dashboard/tasks/DASHBOARD-STATUS.md",
+    "core/dashboard/tasks/PROGRESS-TRACKER.md",
+    "core/dashboard/05-MASTER-PLAN-REVISION-SUMMARY.md",
+    "core/dashboard/03-IMPLEMENTATION-ORDER-AUDIT.md",
+    "core/dashboard/04-AUDIT-REPORT.md",
+    "core/dashboard/03-AUDIT-REPORT.md"
+  ]
+}

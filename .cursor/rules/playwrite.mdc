@@ -1,0 +1,432 @@
+---
+description: Playwright MCP integration rules for AI-powered browser automation and testing
+globs: tests/**/*.spec.ts, tests/**/*.ts, playwright.config.ts, .github/agents/*.yml, specs/*.md
+alwaysApply: true
+---
+
+# Playwright MCP Integration Rules
+
+## Core Principles
+
+- **Accessibility-First Automation**: Use Playwright's accessibility tree instead of screenshots or pixel-based selectors
+- **AI Agent Workflow**: Leverage 🎭 Planner → 🎭 Generator → 🎭 Healer agents for test creation and maintenance
+- **Self-Healing Tests**: Write tests that adapt to UI changes automatically via ARIA roles and labels
+- **Fast & Deterministic**: No vision models needed, purely structure-based automation
+
+## MCP Server Configuration
+
+**Standard Setup:**
+```json
+{
+  "mcpServers": {
+    "playwright": {
+      "command": "npx",
+      "args": ["@playwright/mcp@latest"]
+    }
+  }
+}
+```
+
+**Optimized Setup with Capabilities:**
+```bash
+npx @playwright/mcp@latest --caps=tabs,pdf --browser=chromium --headless
+```
+
+**Required for AI Agents:**
+```bash
+npx playwright init-agents --loop=vscode  # For VS Code/Cursor
+npx playwright init-agents --loop=claude  # For Claude Code
+```
+
+## Test Writing Best Practices
+
+### ✅ DO: Use ARIA-First Locators
+
+```typescript
+// ✅ Good: Stable, accessibility-friendly
+await page.getByRole('button', { name: 'Submit' });
+await page.getByLabel('Email Address');
+await page.getByText('Welcome back!');
+await page.getByTestId('checkout-button');
+
+// ❌ Bad: Brittle, breaks on CSS changes
+await page.locator('.btn-primary-large');
+await page.locator('div > div > button:nth-child(3)');
+```
+
+### ✅ DO: Use Web-First Assertions (Auto-Retry)
+
+```typescript
+// ✅ Good: Waits up to 5s, retries automatically
+await expect(page.getByText('Success')).toBeVisible();
+await expect(page.getByRole('button')).toBeEnabled();
+
+// ❌ Bad: No retry, fails immediately
+expect(await page.getByText('Success').isVisible()).toBe(true);
+```
+
+### ✅ DO: Chain and Filter Locators
+
+```typescript
+// ✅ Good: Precise targeting within context
+const product = page
+  .getByRole('listitem')
+  .filter({ hasText: 'Product 2' })
+  .getByRole('button', { name: 'Add to cart' });
+
+await product.click();
+```
+
+### ✅ DO: Use Fixtures for Shared Setup
+
+```typescript
+// tests/fixtures/auth.fixture.ts
+import { test as base } from '@playwright/test';
+
+export const test = base.extend({
+  authenticatedPage: async ({ page }, use) => {
+    // Reuse saved auth state
+    await page.goto('/dashboard');
+    await use(page);
+  },
+});
+```
+
+## AI Agent Workflow
+
+### 🎭 Planner: Generate Test Plans
+
+**Create Seed Test First:**
+```typescript
+// tests/seed.spec.ts
+import { test, expect } from './fixtures';
+
+test('seed', async ({ page }) => {
+  await page.goto('https://app.example.com');
+  await expect(page.getByRole('navigation')).toBeVisible();
+  await expect(page.getByText('Dashboard')).toBeVisible();
+});
+```
+
+**Prompt Planner:**
+```
+"Generate test plan for user checkout flow using tests/seed.spec.ts as baseline"
+```
+
+**Output:** Markdown plan in `specs/checkout-flow.md`
+
+### 🎭 Generator: Create Executable Tests
+
+**Prompt Generator:**
+```
+"Generate tests from specs/checkout-flow.md"
+```
+
+**Output:** Executable Playwright tests in `tests/e2e/checkout/`
+
+### 🎭 Healer: Auto-Repair Failing Tests
+
+**Prompt Healer:**
+```
+"Heal test: tests/e2e/checkout/payment.spec.ts"
+```
+
+**Healer Actions:**
+- Updates locators to use ARIA roles
+- Adds waits for dynamic content
+- Skips tests if functionality is genuinely broken
+
+## Configuration Best Practices
+
+### playwright.config.ts
+
+```typescript
+import { defineConfig, devices } from '@playwright/test';
+
+export default defineConfig({
+  // ✅ Optimize for CI: Chromium only
+  projects: [
+    {
+      name: 'chromium',
+      use: { ...devices['Desktop Chrome'] },
+    },
+    // Add Firefox/WebKit only for full test runs
+    ...(process.env.FULL_BROWSER_TEST ? [
+      { name: 'firefox', use: { ...devices['Desktop Firefox'] } },
+      { name: 'webkit', use: { ...devices['Desktop Safari'] } },
+    ] : []),
+  ],
+
+  // ✅ Retries and traces
+  retries: process.env.CI ? 2 : 0,
+  use: {
+    baseURL: process.env.BASE_URL || 'http://localhost:3000',
+    trace: 'on-first-retry',  // Only trace failing tests
+    screenshot: 'only-on-failure',
+    video: 'retain-on-failure',
+  },
+
+  // ✅ Parallelism
+  fullyParallel: true,
+  workers: process.env.CI ? 4 : undefined,
+
+  // ✅ Timeouts
+  timeout: 30_000,  // 30s per test
+  expect: { timeout: 5_000 },  // 5s for assertions
+});
+```
+
+### Environment Variables
+
+```bash
+# .env (local development)
+BASE_URL=http://localhost:3000
+PLAYWRIGHT_HEADLESS=false
+PLAYWRIGHT_SLOWMO=500
+TEST_USER_EMAIL=test@example.com
+TEST_USER_PASSWORD=password123
+```
+
+### GitHub Actions (CI/CD)
+
+```yaml
+# .github/workflows/playwright.yml
+name: Playwright Tests
+on: [push, pull_request]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        shard: [1, 2, 3, 4]  # 4x parallel execution
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-node@v5
+        with:
+          node-version: 20
+          cache: 'npm'
+      - run: npm ci
+      - run: npx playwright install chromium --with-deps
+      - run: npx playwright test --shard=${{ matrix.shard }}/4
+      - uses: actions/upload-artifact@v4
+        if: failure()
+        with:
+          name: playwright-report-${{ matrix.shard }}
+          path: playwright-report/
+          retention-days: 7
+```
+
+## Browser Interaction Tools
+
+### Core Actions
+- **browser_navigate(url)** - Navigate to URLs
+- **browser_click(element, ref)** - Click elements
+- **browser_type(element, ref, text, submit)** - Type text
+- **browser_fill_form(fields)** - Fill multiple fields at once
+- **browser_snapshot()** - Get accessibility tree (for AI understanding)
+- **browser_wait_for(time, text, textGone)** - Smart waiting
+
+### Advanced Actions
+- **browser_drag(startElement, endElement)** - Drag and drop
+- **browser_file_upload(paths)** - Upload files
+- **browser_handle_dialog(accept, promptText)** - Handle alerts/prompts
+- **browser_select_option(element, values)** - Select dropdowns
+
+### Observability
+- **browser_console_messages(onlyErrors)** - Get console logs
+- **browser_network_requests()** - List all network calls
+- **browser_take_screenshot(filename, fullPage)** - Capture screenshots
+
+### Debugging
+- **browser_start_tracing()** - Record performance trace
+- **browser_stop_tracing()** - Stop trace recording
+- Use Trace Viewer: `npx playwright show-report`
+
+## Project Structure
+
+```
+project/
+├── .github/
+│   ├── agents/              # AI agent definitions
+│   │   ├── planner.yml
+│   │   ├── generator.yml
+│   │   └── healer.yml
+│   └── workflows/
+│       └── playwright.yml
+├── specs/                   # Test plans (Markdown)
+│   └── checkout-flow.md
+├── tests/
+│   ├── fixtures/           # Custom fixtures
+│   ├── setup/              # Setup tests (auth, etc.)
+│   ├── e2e/                # End-to-end tests
+│   │   ├── auth/
+│   │   └── checkout/
+│   └── seed.spec.ts        # Bootstrap test
+├── auth/                    # Saved auth states
+│   └── logged-in.json
+└── playwright.config.ts
+```
+
+## Common Patterns
+
+### Authentication with Storage State
+
+```typescript
+// tests/setup/save-auth.ts
+import { test as setup } from '@playwright/test';
+
+setup('authenticate', async ({ page }) => {
+  await page.goto('/login');
+  await page.getByLabel('Email').fill('test@example.com');
+  await page.getByLabel('Password').fill('password123');
+  await page.getByRole('button', { name: 'Sign in' }).click();
+  await page.waitForURL('**/dashboard');
+  
+  // Save auth state
+  await page.context().storageState({ path: './auth/logged-in.json' });
+});
+```
+
+```typescript
+// playwright.config.ts
+export default defineConfig({
+  use: {
+    storageState: './auth/logged-in.json',  // All tests start logged in
+  },
+});
+```
+
+### Network Interception
+
+```typescript
+// Mock API responses
+await page.route('**/api/users', route => route.fulfill({
+  status: 200,
+  body: JSON.stringify([{ id: 1, name: 'Test User' }]),
+}));
+
+// Block tracking scripts (faster tests)
+await page.route('**/*.{google-analytics,hotjar,mixpanel}.com/**', route => route.abort());
+```
+
+### Visual Regression Testing
+
+```typescript
+// Take baseline screenshot
+await expect(page).toHaveScreenshot('homepage.png');
+
+// Update snapshots
+// npx playwright test --update-snapshots
+```
+
+## Debugging Commands
+
+```bash
+# UI Mode (interactive debugging)
+npx playwright test --ui
+
+# Debug specific test
+npx playwright test tests/example.spec.ts --debug
+
+# Headed mode (see browser)
+npx playwright test --headed
+
+# Generate trace
+npx playwright test --trace on
+
+# Open trace viewer
+npx playwright show-trace test-results/trace.zip
+
+# Open HTML report
+npx playwright show-report
+
+# Codegen (record interactions)
+npx playwright codegen https://example.com
+```
+
+## Performance Optimization
+
+### DO:
+- ✅ Use `--shard` for parallel execution on CI
+- ✅ Install only needed browsers: `npx playwright install chromium --with-deps`
+- ✅ Block analytics/ads: `--blocked-origins="*.analytics.com"`
+- ✅ Use `fullyParallel: true` in config
+- ✅ Cache `node_modules` and browsers on CI
+
+### DON'T:
+- ❌ Install all browsers on CI (wastes 5+ minutes)
+- ❌ Record all traces (`trace: 'on'` - use `'on-first-retry'`)
+- ❌ Use headed mode on CI (no display available)
+- ❌ Screenshot every test (expensive, slow)
+
+## Troubleshooting
+
+| Issue | Solution |
+|-------|----------|
+| "Browser not installed" | Run `npx playwright install --with-deps` |
+| Flaky tests | Use web-first assertions, add explicit waits |
+| Slow tests | Enable parallelism, mock slow APIs, use `--shard` |
+| Tests fail on CI only | Check traces, ensure consistent environment |
+| Healer agent not working | Requires VS Code v1.105+ (Insiders) |
+
+## Resources
+
+- [Research Report](mdc:main/pitch-deckai/mcp/01-playwrite.md) - Full Playwright MCP analysis
+- [Setup Guide](mdc:main/pitch-deckai/mcp/02-playwright-setup-best-practices.md) - Detailed setup instructions
+- [Official Docs](https://playwright.dev/docs/intro) - Playwright documentation
+- [GitHub Repo](https://github.com/microsoft/playwright-mcp) - MCP server source
+- [Test Agents Guide](https://playwright.dev/docs/test-agents) - AI agent documentation
+
+## Quick Start
+
+```bash
+# 1. Install MCP server
+npm install -g @playwright/test@latest
+npx playwright install chromium --with-deps
+
+# 2. Initialize AI agents
+npx playwright init-agents --loop=vscode
+
+# 3. Create seed test
+cat > tests/seed.spec.ts << 'EOF'
+import { test, expect } from '@playwright/test';
+
+test('seed', async ({ page }) => {
+  await page.goto('https://app.example.com');
+  await expect(page.getByRole('navigation')).toBeVisible();
+});
+EOF
+
+# 4. Generate tests with AI
+# Prompt: "Generate test plan for login flow"
+# Prompt: "Generate tests from specs/login-flow.md"
+
+# 5. Run tests
+npx playwright test
+```
+
+## MCP Tools Available in This Project
+
+When using Playwright MCP via Cursor/Claude, these tools are available:
+
+- `browser_navigate` - Navigate to URLs
+- `browser_snapshot` - Get page accessibility tree
+- `browser_click` - Click elements
+- `browser_type` - Type text
+- `browser_fill_form` - Fill multiple form fields
+- `browser_wait_for` - Wait for conditions
+- `browser_take_screenshot` - Capture screenshots
+- `browser_console_messages` - Get console logs
+- `browser_network_requests` - List network activity
+- Plus 30+ more tools (see research report)
+
+**Usage Example:**
+```
+AI: "Navigate to https://example.com and take a snapshot of the login form"
+
+Tool calls:
+1. browser_navigate("https://example.com")
+2. browser_snapshot()
+3. [AI analyzes accessibility tree and reports findings]
+```

@@ -8,18 +8,19 @@
 		  "task-master-ai"
 		],
 		"env": {
-		  "ANTHROPIC_API_KEY": "YOUR_ANTHROPIC_API_KEY_HERE",
-		  "PERPLEXITY_API_KEY": "YOUR_PERPLEXITY_API_KEY_HERE",
-		  "OPENAI_API_KEY": "YOUR_OPENAI_KEY_HERE",
-		  "GOOGLE_API_KEY": "YOUR_GOOGLE_KEY_HERE",
-		  "XAI_API_KEY": "YOUR_XAI_KEY_HERE",
-		  "OPENROUTER_API_KEY": "YOUR_OPENROUTER_KEY_HERE",
-		  "MISTRAL_API_KEY": "YOUR_MISTRAL_KEY_HERE",
-		  "AZURE_OPENAI_API_KEY": "YOUR_AZURE_KEY_HERE",
-		  "OLLAMA_API_KEY": "YOUR_OLLAMA_API_KEY_HERE"
+		  "ANTHROPIC_API_KEY": "${ANTHROPIC_API_KEY}",
+		  "PERPLEXITY_API_KEY": "${PERPLEXITY_API_KEY}",
+		  "OPENAI_API_KEY": "${OPENAI_API_KEY}",
+		  "GOOGLE_API_KEY": "${GOOGLE_API_KEY}",
+		  "XAI_API_KEY": "",
+		  "OPENROUTER_API_KEY": "",
+		  "MISTRAL_API_KEY": "",
+		  "AZURE_OPENAI_API_KEY": "",
+		  "OLLAMA_API_KEY": "${OLLAMA_API_KEY}"
 		}
 	  },
 	  "desktop-commander": {
+		"type": "stdio",
 		"command": "npx",
 		"args": [
 		  "-y",
@@ -27,8 +28,10 @@
 		]
 	  },
 	  "chrome-devtools": {
+		"type": "stdio",
 		"command": "npx",
 		"args": [
+		  "-y",
 		  "chrome-devtools-mcp@latest"
 		]
 	  },
@@ -36,8 +39,16 @@
 		"type": "http",
 		"url": "https://mcp.supabase.com/mcp?project_ref=asrzdtpyrdgyggqdfwwl&features=docs%2Caccount%2Cdatabase%2Cdebugging%2Cdevelopment%2Cfunctions%2Cbranching%2Cstorage",
 		"headers": {
-		  "Authorization": "Bearer sbp_d7a8cb81e7a21e564608b10866f53fb93a4d2a35"
+		  "Authorization": "Bearer ${SUPABASE_PERSONAL_ACCESS_TOKEN}"
 		}
+	  },
+	  "playwright": {
+		"type": "stdio",
+		"command": "npx",
+		"args": [
+		  "-y",
+		  "@playwright/mcp@latest"
+		]
 	  }
 	}
   }

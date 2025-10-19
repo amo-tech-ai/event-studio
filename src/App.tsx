@@ -1,8 +1,20 @@
+/**
+ * Main Application Component
+ *
+ * Sets up the provider tree with authentication, React Query, and routing.
+ * All dashboard routes are protected and require authentication.
+ */
+
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { AuthProvider } from "@/contexts/AuthContext";
+import { ProtectedRoute } from "@/components/ProtectedRoute";
+import { queryClient } from "@/lib/queryClient";
+
+// Page imports
 import Home from "./pages/Home";
 import Dashboard from "./pages/Dashboard";
 import DashboardEvents from "./pages/DashboardEvents";
@@ -14,34 +26,40 @@ import Auth from "./pages/Auth";
 import NotFound from "./pages/NotFound";
 import EventWizard from "./pages/EventWizard";
 
-const queryClient = new QueryClient();
-
 const App = () => (
   <QueryClientProvider client={queryClient}>
-    <TooltipProvider>
-      <Toaster />
-      <Sonner />
-      <BrowserRouter>
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/auth" element={<Auth />} />
-          <Route path="/event-wizard" element={<EventWizard />} />
-          <Route path="/dashboard" element={<Dashboard />} />
-          <Route path="/dashboard/events" element={<DashboardEvents />} />
-          <Route path="/dashboard/events/:id" element={<DashboardEventDetails />} />
-          <Route path="/dashboard/bookings" element={<DashboardBookings />} />
-          <Route path="/dashboard/financials" element={<DashboardFinancials />} />
-          <Route path="/dashboard/gallery" element={<DashboardGallery />} />
-          <Route path="/dashboard/analytics" element={<Dashboard />} />
-          <Route path="/dashboard/calendar" element={<Dashboard />} />
-          <Route path="/dashboard/organizers" element={<Dashboard />} />
-          <Route path="/dashboard/venues" element={<Dashboard />} />
-          <Route path="/dashboard/settings" element={<Dashboard />} />
-          {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
-          <Route path="*" element={<NotFound />} />
-        </Routes>
-      </BrowserRouter>
-    </TooltipProvider>
+    <AuthProvider>
+      <TooltipProvider>
+        <Toaster />
+        <Sonner />
+        <BrowserRouter>
+          <Routes>
+            {/* Public Routes */}
+            <Route path="/" element={<Home />} />
+            <Route path="/auth" element={<Auth />} />
+
+            {/* Protected Routes - Require Authentication */}
+            <Route element={<ProtectedRoute />}>
+              <Route path="/event-wizard" element={<EventWizard />} />
+              <Route path="/dashboard" element={<Dashboard />} />
+              <Route path="/dashboard/events" element={<DashboardEvents />} />
+              <Route path="/dashboard/events/:id" element={<DashboardEventDetails />} />
+              <Route path="/dashboard/bookings" element={<DashboardBookings />} />
+              <Route path="/dashboard/financials" element={<DashboardFinancials />} />
+              <Route path="/dashboard/gallery" element={<DashboardGallery />} />
+              <Route path="/dashboard/analytics" element={<Dashboard />} />
+              <Route path="/dashboard/calendar" element={<Dashboard />} />
+              <Route path="/dashboard/organizers" element={<Dashboard />} />
+              <Route path="/dashboard/venues" element={<Dashboard />} />
+              <Route path="/dashboard/settings" element={<Dashboard />} />
+            </Route>
+
+            {/* 404 - Keep this last */}
+            <Route path="*" element={<NotFound />} />
+          </Routes>
+        </BrowserRouter>
+      </TooltipProvider>
+    </AuthProvider>
   </QueryClientProvider>
 );
 

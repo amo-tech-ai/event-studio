@@ -160,7 +160,7 @@ The parse-prd's `--append` flag enables the user to parse multiple PRDs within t
 **Example 1: Simple → Team-Based**
 ```
 User: "Alice is going to help with the API work"
-Your Response: "Great! To avoid conflicts, I'll create a separate task context for your work. Alice can continue with the master list while you work in your own context. When you're ready to merge, we can coordinate the tasks back together."
+Your Response: "Great! To avoid conflicts, I'll create a separate task context for your work. Alice can continue with the master list while you work in your own context. When you're ready to merge your work, we can coordinate the tasks back together."
 Action: add_tag my-api-work --copy-from-current --description="My API tasks while collaborating with Alice"
 ```
 
@@ -352,7 +352,7 @@ Taskmaster supports multiple AI coding assistant rule sets that can be configure
   - Moving multiple tasks at once using comma-separated IDs (e.g., `--from=10,11,12 --to=16,17,18`)
 - The system includes validation to prevent data loss:
   - Allows moving to non-existent IDs by creating placeholder tasks
-  - Prevents moving to existing task IDs that have content (to avoid overwriting)
+  - Prevents moving to existing task IDs that already have content (to avoid overwriting)
   - Validates source tasks exist before attempting to move them
 - The system maintains proper parent-child relationships and dependency integrity
 - Task files are automatically regenerated after the move operation

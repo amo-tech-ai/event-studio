@@ -12,12 +12,15 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { useDashboardStats } from "@/features/dashboard/hooks/useDashboardStats";
 
 const Dashboard = () => {
+  const { totalEvents, totalBookings, totalTickets, isLoading, error } = useDashboardStats();
+
   const stats = [
-    { label: "Upcoming Events", value: "345", icon: "📅", color: "bg-pink-500" },
-    { label: "Total Bookings", value: "1,798", icon: "📊", color: "bg-purple-500" },
-    { label: "Tickets Sold", value: "1,250", icon: "🎫", color: "bg-pink-400" }
+    { label: "Upcoming Events", value: isLoading ? "..." : totalEvents.toString(), icon: "📅", color: "bg-pink-500" },
+    { label: "Total Bookings", value: isLoading ? "..." : totalBookings.toString(), icon: "📊", color: "bg-purple-500" },
+    { label: "Tickets Sold", value: isLoading ? "..." : totalTickets.toString(), icon: "🎫", color: "bg-pink-400" }
   ];
 
   const recentActivity = [
@@ -41,10 +44,27 @@ const Dashboard = () => {
     }
   ];
 
+  // Show error state if there's an error
+  if (error) {
+    return (
+      <div className="flex min-h-screen w-full bg-background">
+        <Sidebar />
+        <main className="flex-1 overflow-auto p-8">
+          <div className="max-w-7xl mx-auto">
+            <Card className="p-6 border-red-200 bg-red-50">
+              <h3 className="text-lg font-bold text-red-900 mb-2">Error Loading Dashboard</h3>
+              <p className="text-red-700">{error.message}</p>
+            </Card>
+          </div>
+        </main>
+      </div>
+    );
+  }
+
   return (
     <div className="flex min-h-screen w-full bg-background">
       <Sidebar />
-      
+
       <main className="flex-1 overflow-auto">
         {/* Top Header */}
         <header className="sticky top-0 z-10 bg-background border-b border-border px-8 py-4">

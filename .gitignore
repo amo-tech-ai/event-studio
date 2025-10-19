@@ -33,6 +33,7 @@ node_modules/
 
 # Task files
 # tasks.json
-# tasks/ 
+# tasks/
 open-lovable/
+hi.events/
 .env

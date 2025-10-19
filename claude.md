@@ -1269,6 +1269,1021 @@ Proceed? [Yes/No/Discuss]
 
 ---
 
+## 11. Edge Function Development Workflow
+
+### Supabase Edge Functions Architecture
+
+**Edge Functions** are serverless Deno functions that run on Supabase infrastructure. They handle:
+- Payment processing (Stripe integration)
+- Webhook handling (payment confirmations)
+- Email delivery (Resend integration)
+- AI runtime (OpenAI SDK + CopilotKit integration)
+
+**Location:** `supabase/functions/`
+
+**Runtime:** Deno (TypeScript/JavaScript with secure-by-default permissions)
+
+### Development Pipeline
+
+#### 1. Local Development
+
+**Start Local Supabase Stack:**
+```bash
+# Start local Supabase (includes Edge Functions runtime)
+npx supabase start
+
+# Verify services running
+npx supabase status
+# Edge Functions URL: http://localhost:54321/functions/v1
+```
+
+**Serve Function Locally:**
+```bash
+# Serve single function with hot reload
+npx supabase functions serve function-name
+
+# Serve with environment variables
+npx supabase functions serve function-name --env-file .env.local
+
+# Serve all functions
+npx supabase functions serve
+```
+
+**Test with cURL:**
+```bash
+# Test locally
+curl -X POST http://localhost:54321/functions/v1/function-name \
+  -H "Authorization: Bearer ${SUPABASE_ANON_KEY}" \
+  -H "Content-Type: application/json" \
+  -d '{"test": "data"}'
+
+# Test with authentication
+curl -X POST http://localhost:54321/functions/v1/function-name \
+  -H "Authorization: Bearer ${USER_JWT_TOKEN}" \
+  -H "Content-Type: application/json" \
+  -d '{"userId": "123"}'
+```
+
+#### 2. Edge Function Structure Pattern
+
+**Standard Edge Function Template:**
+```typescript
+// supabase/functions/function-name/index.ts
+import { serve } from "https://deno.land/std@0.168.0/http/server.ts"
+import { createClient } from 'https://esm.sh/@supabase/supabase-js@2'
+
+// CORS headers (required for browser requests)
+const corsHeaders = {
+  'Access-Control-Allow-Origin': '*',
+  'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type',
+}
+
+serve(async (req) => {
+  // Handle CORS preflight requests
+  if (req.method === 'OPTIONS') {
+    return new Response('ok', { headers: corsHeaders })
+  }
+
+  try {
+    // Initialize Supabase client with service role (bypasses RLS)
+    const supabaseAdmin = createClient(
+      Deno.env.get('SUPABASE_URL') ?? '',
+      Deno.env.get('SUPABASE_SERVICE_ROLE_KEY') ?? ''
+    )
+
+    // Verify user authentication (optional, for protected endpoints)
+    const authHeader = req.headers.get('Authorization')!
+    const token = authHeader.replace('Bearer ', '')
+    const { data: { user }, error: authError } = await supabaseAdmin.auth.getUser(token)
+
+    if (authError || !user) {
+      throw new Error('Unauthorized')
+    }
+
+    // Parse and validate input
+    const body = await req.json()
+    // TODO: Add Zod validation here
+
+    // Business logic
+    const result = await processRequest(body, user.id)
+
+    // Return success response
+    return new Response(
+      JSON.stringify(result),
+      {
+        headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+        status: 200,
+      },
+    )
+  } catch (error) {
+    // Error handling with logging
+    console.error('Function error:', error)
+
+    return new Response(
+      JSON.stringify({
+        error: error.message,
+        code: error.code || 'INTERNAL_ERROR',
+      }),
+      {
+        headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+        status: error.status || 500,
+      },
+    )
+  }
+})
+
+async function processRequest(data: any, userId: string) {
+  // Implement business logic
+  return { success: true, data }
+}
+```
+
+#### 3. Deployment
+
+**Deploy Single Function:**
+```bash
+# Deploy to remote Supabase project
+npx supabase functions deploy function-name
+
+# Deploy with specific project
+npx supabase functions deploy function-name --project-ref YOUR_PROJECT_REF
+
+# Deploy all functions
+npx supabase functions deploy
+```
+
+**Verify Deployment:**
+```bash
+# List deployed functions
+npx supabase functions list
+
+# Test deployed function
+curl -X POST https://YOUR_PROJECT_REF.supabase.co/functions/v1/function-name \
+  -H "Authorization: Bearer ${SUPABASE_ANON_KEY}" \
+  -d '{"test": "data"}'
+```
+
+#### 4. Environment Variables
+
+**Configure Secrets in Supabase Dashboard:**
+```bash
+# Set secrets via CLI
+npx supabase secrets set STRIPE_SECRET_KEY=sk_test_...
+npx supabase secrets set RESEND_API_KEY=re_...
+npx supabase secrets set OPENAI_API_KEY=sk-...
+
+# List secrets (values are hidden)
+npx supabase secrets list
+
+# Unset a secret
+npx supabase secrets unset SECRET_NAME
+```
+
+**Access in Edge Function:**
+```typescript
+const stripeKey = Deno.env.get('STRIPE_SECRET_KEY')
+const resendKey = Deno.env.get('RESEND_API_KEY')
+const openaiKey = Deno.env.get('OPENAI_API_KEY')
+```
+
+#### 5. Monitoring & Debugging
+
+**View Logs:**
+```bash
+# Real-time logs
+npx supabase functions logs function-name --tail
+
+# Filter by severity
+npx supabase functions logs function-name --level error
+
+# Search logs
+npx supabase functions logs function-name --grep "payment failed"
+
+# View logs for specific time range
+npx supabase functions logs function-name --since "2025-01-15 10:00:00"
+```
+
+**Add Structured Logging:**
+```typescript
+// Use console methods for different log levels
+console.log('Info:', { userId, action: 'checkout' })
+console.warn('Warning:', { issue: 'slow query' })
+console.error('Error:', { error: error.message, userId })
+```
+
+### Testing Edge Functions
+
+#### Unit Tests (Deno Test)
+
+```typescript
+// supabase/functions/function-name/test.ts
+import { assertEquals } from "https://deno.land/std@0.168.0/testing/asserts.ts"
+import { processRequest } from "./index.ts"
+
+Deno.test("processes valid request", async () => {
+  const result = await processRequest({
+    amount: 5000,
+    currency: "usd"
+  }, "user-123")
+
+  assertEquals(result.success, true)
+  assertEquals(result.amount, 5000)
+})
+
+Deno.test("rejects invalid amount", async () => {
+  try {
+    await processRequest({ amount: -100 }, "user-123")
+  } catch (error) {
+    assertEquals(error.message, "Amount must be positive")
+  }
+})
+```
+
+**Run Tests:**
+```bash
+deno test supabase/functions/function-name/test.ts
+```
+
+#### Integration Tests (Stripe CLI, Webhooks)
+
+**Test Stripe Webhooks:**
+```bash
+# Install Stripe CLI
+brew install stripe/stripe-cli/stripe  # macOS
+# Or download from https://stripe.com/docs/stripe-cli
+
+# Login to Stripe
+stripe login
+
+# Forward webhooks to local function
+stripe listen --forward-to http://localhost:54321/functions/v1/stripe-webhook
+
+# Trigger test events
+stripe trigger payment_intent.succeeded
+stripe trigger checkout.session.completed
+stripe trigger customer.subscription.updated
+```
+
+**Verify Webhook Handling:**
+```typescript
+// Check logs for webhook processing
+console.log('Webhook received:', event.type)
+console.log('Payment status:', event.data.object.payment_status)
+```
+
+### Common Patterns
+
+#### Payment Processing (Stripe)
+
+```typescript
+import Stripe from 'https://esm.sh/stripe@14.21.0'
+
+const stripe = new Stripe(Deno.env.get('STRIPE_SECRET_KEY') as string, {
+  apiVersion: '2023-10-16',
+})
+
+// Create checkout session
+const session = await stripe.checkout.sessions.create({
+  payment_method_types: ['card'],
+  line_items: [{
+    price_data: {
+      currency: 'usd',
+      product_data: { name: 'Event Ticket' },
+      unit_amount: 5000, // $50.00
+    },
+    quantity: 2,
+  }],
+  mode: 'payment',
+  success_url: `${origin}/success?session_id={CHECKOUT_SESSION_ID}`,
+  cancel_url: `${origin}/cancel`,
+  metadata: {
+    orderId: 'order-123',
+    userId: 'user-456',
+  },
+})
+
+return session.url // Redirect URL
+```
+
+#### Email Delivery (Resend)
+
+```typescript
+import { Resend } from 'https://esm.sh/resend@2.0.0'
+
+const resend = new Resend(Deno.env.get('RESEND_API_KEY'))
+
+await resend.emails.send({
+  from: 'EventOS <noreply@eventos.app>',
+  to: customerEmail,
+  subject: 'Your Event Tickets',
+  html: `
+    <h1>Your tickets are ready!</h1>
+    <p>Event: ${eventName}</p>
+    <p>Date: ${eventDate}</p>
+    <p>Tickets: ${ticketCount}</p>
+  `,
+  attachments: [
+    {
+      filename: 'tickets.pdf',
+      content: pdfBuffer,
+    }
+  ],
+})
+```
+
+#### Webhook Signature Verification
+
+```typescript
+// Verify Stripe webhook signature
+const signature = req.headers.get('stripe-signature')!
+const webhookSecret = Deno.env.get('STRIPE_WEBHOOK_SECRET')!
+
+let event
+try {
+  event = stripe.webhooks.constructEvent(
+    await req.text(),
+    signature,
+    webhookSecret
+  )
+} catch (err) {
+  console.error('Webhook signature verification failed:', err.message)
+  return new Response('Invalid signature', { status: 400 })
+}
+
+// Process verified event
+if (event.type === 'checkout.session.completed') {
+  const session = event.data.object
+  await handleSuccessfulPayment(session)
+}
+```
+
+### Error Handling Best Practices
+
+```typescript
+serve(async (req) => {
+  try {
+    // Validate input
+    const schema = z.object({
+      amount: z.number().positive(),
+      currency: z.enum(['usd', 'cad']),
+    })
+
+    const body = await req.json()
+    const validated = schema.parse(body) // Throws if invalid
+
+    // Process with explicit error types
+    const result = await processPayment(validated)
+
+    return new Response(JSON.stringify(result), {
+      headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+      status: 200,
+    })
+
+  } catch (error) {
+    // Log for debugging
+    console.error('Payment processing error:', {
+      error: error.message,
+      stack: error.stack,
+      timestamp: new Date().toISOString(),
+    })
+
+    // Return user-friendly error
+    const status = error instanceof z.ZodError ? 400 : 500
+    const message = error instanceof z.ZodError
+      ? 'Invalid input: ' + error.errors.map(e => e.message).join(', ')
+      : 'Payment processing failed. Please try again.'
+
+    return new Response(
+      JSON.stringify({
+        error: message,
+        code: error.code || 'INTERNAL_ERROR',
+      }),
+      {
+        headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+        status,
+      },
+    )
+  }
+})
+```
+
+### Checklist Before Deploying Edge Function
+
+- [ ] CORS headers configured for browser requests
+- [ ] Authentication verified (if required)
+- [ ] Input validation with Zod
+- [ ] Error handling with user-friendly messages
+- [ ] Logging for debugging (console.log, console.error)
+- [ ] Environment variables set in Supabase dashboard
+- [ ] Unit tests pass
+- [ ] Integration tests pass (webhooks, API calls)
+- [ ] Tested locally with `supabase functions serve`
+- [ ] Tested deployed version with curl/Postman
+- [ ] Logs reviewed for errors
+
+---
+
+## 12. Feature Module Architecture
+
+### Frontend Module Organization
+
+**Problem:** Scattered business logic makes code hard to maintain and test.
+
+**Solution:** Organize features into self-contained modules with clear boundaries.
+
+### Standard Module Structure
+
+Every feature must follow this structure:
+
+```
+src/features/{feature-name}/
+├── hooks/                  # Data fetching and mutations
+│   ├── useFeatures.ts     # Fetch list
+│   ├── useFeature.ts      # Fetch single
+│   ├── useCreateFeature.ts # Create mutation
+│   ├── useUpdateFeature.ts # Update mutation
+│   └── useDeleteFeature.ts # Delete mutation
+├── components/            # UI components
+│   ├── FeatureCard.tsx   # Display component
+│   ├── FeatureForm.tsx   # Form component
+│   ├── FeatureList.tsx   # List component
+│   └── FeatureDetail.tsx # Detail view
+├── types/                 # TypeScript interfaces
+│   └── feature.types.ts  # All type definitions
+├── validations/           # Zod schemas
+│   └── feature.schema.ts # Input validation
+├── store/                 # Zustand state (optional)
+│   └── featureStore.ts   # Client-side state
+├── utils/                 # Helper functions (optional)
+│   └── featureHelpers.ts # Pure functions
+└── index.ts              # Public API exports
+```
+
+### Implementation Checklist
+
+**For Each New Feature Module:**
+
+1. **Planning Phase:**
+   - [ ] Define database schema (if new tables needed)
+   - [ ] Document user flows
+   - [ ] Identify required API calls
+   - [ ] List validation rules
+
+2. **Implementation Phase:**
+   - [ ] Create directory structure
+   - [ ] Define TypeScript types in `types/`
+   - [ ] Create Zod schemas in `validations/`
+   - [ ] Implement data hooks in `hooks/`
+   - [ ] Build UI components in `components/`
+   - [ ] Export public API from `index.ts`
+
+3. **Testing Phase:**
+   - [ ] Write unit tests for hooks
+   - [ ] Write unit tests for utilities
+   - [ ] Write E2E tests for user flows
+   - [ ] Test error handling
+   - [ ] Test loading states
+
+4. **Documentation Phase:**
+   - [ ] Add JSDoc comments to complex functions
+   - [ ] Document props for components
+   - [ ] Update feature documentation
+
+### Data Fetching Pattern (TanStack Query)
+
+#### Fetch List
+
+```typescript
+// hooks/useEvents.ts
+import { useQuery } from '@tanstack/react-query'
+import { supabase } from '@/integrations/supabase/client'
+import type { Event } from '../types/event.types'
+
+export function useEvents(filters?: { status?: string; limit?: number }) {
+  return useQuery({
+    queryKey: ['events', filters],
+    queryFn: async () => {
+      let query = supabase
+        .from('events')
+        .select('*')
+        .order('start_time', { ascending: true })
+
+      if (filters?.status) {
+        query = query.eq('status', filters.status)
+      }
+
+      if (filters?.limit) {
+        query = query.limit(filters.limit)
+      }
+
+      const { data, error } = await query
+
+      if (error) throw error
+      return data as Event[]
+    },
+    staleTime: 5 * 60 * 1000, // 5 minutes
+    gcTime: 10 * 60 * 1000, // 10 minutes
+  })
+}
+
+// Usage in component
+const EventList = () => {
+  const { data: events, isLoading, error } = useEvents({ status: 'published' })
+
+  if (isLoading) return <LoadingSpinner />
+  if (error) return <ErrorMessage error={error} />
+
+  return (
+    <div>
+      {events?.map(event => <EventCard key={event.id} event={event} />)}
+    </div>
+  )
+}
+```
+
+#### Fetch Single Item
+
+```typescript
+// hooks/useEvent.ts
+import { useQuery } from '@tanstack/react-query'
+import { supabase } from '@/integrations/supabase/client'
+import type { Event } from '../types/event.types'
+
+export function useEvent(id: string | undefined) {
+  return useQuery({
+    queryKey: ['event', id],
+    queryFn: async () => {
+      if (!id) throw new Error('Event ID required')
+
+      const { data, error } = await supabase
+        .from('events')
+        .select(`
+          *,
+          tickets (
+            id,
+            tier_id,
+            price_cents,
+            status
+          )
+        `)
+        .eq('id', id)
+        .single()
+
+      if (error) throw error
+      return data as Event
+    },
+    enabled: !!id, // Only run if ID exists
+    staleTime: 5 * 60 * 1000,
+  })
+}
+```
+
+### Mutation Pattern (TanStack Query)
+
+#### Create Mutation
+
+```typescript
+// hooks/useCreateEvent.ts
+import { useMutation, useQueryClient } from '@tanstack/react-query'
+import { supabase } from '@/integrations/supabase/client'
+import { eventSchema } from '../validations/event.schema'
+import type { EventInput } from '../types/event.types'
+import { toast } from 'sonner'
+
+export function useCreateEvent() {
+  const queryClient = useQueryClient()
+
+  return useMutation({
+    mutationFn: async (input: EventInput) => {
+      // Validate input with Zod
+      const validated = eventSchema.parse(input)
+
+      // Create event
+      const { data, error } = await supabase
+        .from('events')
+        .insert(validated)
+        .select()
+        .single()
+
+      if (error) throw error
+      return data
+    },
+    onSuccess: (data) => {
+      // Invalidate and refetch events list
+      queryClient.invalidateQueries({ queryKey: ['events'] })
+
+      // Optimistically add to cache
+      queryClient.setQueryData(['event', data.id], data)
+
+      // Show success message
+      toast.success('Event created successfully')
+    },
+    onError: (error) => {
+      // Show error message
+      toast.error('Failed to create event: ' + error.message)
+      console.error('Create event error:', error)
+    },
+  })
+}
+
+// Usage in component
+const CreateEventForm = () => {
+  const createEvent = useCreateEvent()
+
+  const handleSubmit = (formData) => {
+    createEvent.mutate(formData)
+  }
+
+  return (
+    <form onSubmit={handleSubmit}>
+      {/* Form fields */}
+      <button type="submit" disabled={createEvent.isPending}>
+        {createEvent.isPending ? 'Creating...' : 'Create Event'}
+      </button>
+    </form>
+  )
+}
+```
+
+#### Update Mutation
+
+```typescript
+// hooks/useUpdateEvent.ts
+export function useUpdateEvent() {
+  const queryClient = useQueryClient()
+
+  return useMutation({
+    mutationFn: async ({ id, updates }: { id: string; updates: Partial<EventInput> }) => {
+      const validated = eventUpdateSchema.parse(updates)
+
+      const { data, error } = await supabase
+        .from('events')
+        .update(validated)
+        .eq('id', id)
+        .select()
+        .single()
+
+      if (error) throw error
+      return data
+    },
+    onSuccess: (data) => {
+      // Invalidate list queries
+      queryClient.invalidateQueries({ queryKey: ['events'] })
+
+      // Update single event cache
+      queryClient.setQueryData(['event', data.id], data)
+
+      toast.success('Event updated successfully')
+    },
+    onError: (error) => {
+      toast.error('Failed to update event: ' + error.message)
+    },
+  })
+}
+```
+
+### TypeScript Types Pattern
+
+```typescript
+// types/event.types.ts
+
+// Database types (auto-generated from Supabase)
+import type { Database } from '@/integrations/supabase/types'
+
+export type Event = Database['public']['Tables']['events']['Row']
+export type EventInsert = Database['public']['Tables']['events']['Insert']
+export type EventUpdate = Database['public']['Tables']['events']['Update']
+
+// Frontend-specific types
+export interface EventWithTickets extends Event {
+  tickets: Ticket[]
+}
+
+export interface EventFormData {
+  name: string
+  description: string
+  start_time: string
+  end_time: string
+  venue_id?: string
+  capacity: number
+  type: EventType
+}
+
+export type EventType = 'conference' | 'seminar' | 'workshop' | 'networking' | 'corporate_meeting'
+
+export type EventStatus = 'draft' | 'published' | 'cancelled'
+
+// Input types for API calls
+export type EventInput = Omit<EventInsert, 'id' | 'created_at' | 'updated_at'>
+```
+
+### Zod Validation Pattern
+
+```typescript
+// validations/event.schema.ts
+import { z } from 'zod'
+
+export const eventSchema = z.object({
+  name: z.string()
+    .min(5, 'Event name must be at least 5 characters')
+    .max(100, 'Event name must be less than 100 characters'),
+
+  description: z.string()
+    .min(50, 'Description must be at least 50 characters')
+    .max(500, 'Description must be less than 500 characters'),
+
+  type: z.enum(['conference', 'seminar', 'workshop', 'networking', 'corporate_meeting']),
+
+  start_time: z.string()
+    .datetime()
+    .refine(
+      (date) => new Date(date) > new Date(),
+      'Event must start in the future'
+    ),
+
+  end_time: z.string()
+    .datetime(),
+
+  capacity: z.number()
+    .int()
+    .min(10, 'Minimum capacity is 10')
+    .max(10000, 'Maximum capacity is 10,000'),
+
+  venue_id: z.string().uuid().optional(),
+
+  organizer_id: z.string().uuid(),
+}).refine(
+  (data) => new Date(data.end_time) > new Date(data.start_time),
+  {
+    message: 'Event end time must be after start time',
+    path: ['end_time'],
+  }
+)
+
+export const eventUpdateSchema = eventSchema.partial()
+```
+
+### Component Pattern
+
+```typescript
+// components/EventForm.tsx
+import { useForm } from 'react-hook-form'
+import { zodResolver } from '@hookform/resolvers/zod'
+import { eventSchema } from '../validations/event.schema'
+import type { EventFormData } from '../types/event.types'
+
+interface EventFormProps {
+  initialData?: EventFormData
+  onSubmit: (data: EventFormData) => void
+  isLoading?: boolean
+}
+
+export const EventForm = ({ initialData, onSubmit, isLoading }: EventFormProps) => {
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<EventFormData>({
+    resolver: zodResolver(eventSchema),
+    defaultValues: initialData,
+  })
+
+  return (
+    <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
+      <div>
+        <label htmlFor="name">Event Name</label>
+        <input
+          {...register('name')}
+          id="name"
+          className="w-full px-4 py-2 border rounded"
+        />
+        {errors.name && (
+          <p className="text-red-500 text-sm">{errors.name.message}</p>
+        )}
+      </div>
+
+      <div>
+        <label htmlFor="description">Description</label>
+        <textarea
+          {...register('description')}
+          id="description"
+          rows={4}
+          className="w-full px-4 py-2 border rounded"
+        />
+        {errors.description && (
+          <p className="text-red-500 text-sm">{errors.description.message}</p>
+        )}
+      </div>
+
+      {/* More fields... */}
+
+      <button
+        type="submit"
+        disabled={isLoading}
+        className="px-6 py-2 bg-primary text-white rounded hover:bg-primary/90"
+      >
+        {isLoading ? 'Submitting...' : 'Submit'}
+      </button>
+    </form>
+  )
+}
+```
+
+### Public API Pattern
+
+```typescript
+// index.ts
+// Export only what other modules need to consume
+
+// Hooks
+export { useEvents } from './hooks/useEvents'
+export { useEvent } from './hooks/useEvent'
+export { useCreateEvent } from './hooks/useCreateEvent'
+export { useUpdateEvent } from './hooks/useUpdateEvent'
+export { useDeleteEvent } from './hooks/useDeleteEvent'
+
+// Components
+export { EventCard } from './components/EventCard'
+export { EventForm } from './components/EventForm'
+export { EventList } from './components/EventList'
+export { EventDetail } from './components/EventDetail'
+
+// Types (only public-facing types)
+export type {
+  Event,
+  EventInput,
+  EventFormData,
+  EventWithTickets,
+  EventType,
+  EventStatus,
+} from './types/event.types'
+
+// DO NOT export:
+// - Internal utilities
+// - Zod schemas (use in module only)
+// - Store internals
+```
+
+### Usage in Pages
+
+```typescript
+// src/pages/Events.tsx
+import { useEvents, useCreateEvent, EventList, EventForm } from '@/features/events'
+
+const EventsPage = () => {
+  const { data: events, isLoading } = useEvents({ status: 'published' })
+  const createEvent = useCreateEvent()
+
+  const handleCreateEvent = (data) => {
+    createEvent.mutate(data)
+  }
+
+  return (
+    <div>
+      <h1>Events</h1>
+
+      <EventForm
+        onSubmit={handleCreateEvent}
+        isLoading={createEvent.isPending}
+      />
+
+      <EventList events={events} isLoading={isLoading} />
+    </div>
+  )
+}
+```
+
+---
+
+## 13. Production Readiness Checklist
+
+Use this comprehensive checklist before deploying to production. All items must be checked.
+
+### Backend (Edge Functions)
+
+- [ ] **All required edge functions deployed** (minimum 4):
+  - [ ] `create-checkout-session` - Stripe payment processing
+  - [ ] `stripe-webhook` - Payment confirmation handling
+  - [ ] `send-tickets` - Email delivery via Resend
+  - [ ] `copilotkit-runtime` - AI event wizard backend
+
+- [ ] **Environment variables configured** in Supabase dashboard:
+  - [ ] `STRIPE_SECRET_KEY`
+  - [ ] `STRIPE_WEBHOOK_SECRET`
+  - [ ] `RESEND_API_KEY`
+  - [ ] `OPENAI_API_KEY`
+  - [ ] `SUPABASE_SERVICE_ROLE_KEY` (auto-provisioned)
+
+- [ ] **CORS headers** configured correctly for browser requests
+- [ ] **Authentication** validated on protected endpoints
+- [ ] **Error handling** implemented with user-friendly messages
+- [ ] **Logging** configured for debugging
+- [ ] **Rate limiting** configured (if applicable)
+- [ ] **Webhook signatures** verified (Stripe)
+- [ ] **Integration tests** passing
+- [ ] **Deployed versions tested** with curl/Postman
+
+### Frontend (React App)
+
+- [ ] **All feature modules implemented** (minimum 5):
+  - [ ] Events module (create, read, update events)
+  - [ ] Tickets module (purchase flow)
+  - [ ] Orders module (order management)
+  - [ ] Promo Codes module (discount logic)
+  - [ ] CRM module (contact management)
+
+- [ ] **Zero TypeScript errors** (`npm run build` succeeds)
+- [ ] **Zero console errors** in production build
+- [ ] **Bundle size optimized** (< 500KB gzipped)
+- [ ] **Lazy loading** for routes implemented
+- [ ] **Error boundaries** configured for all major sections
+- [ ] **Loading states** for all async operations
+- [ ] **Form validations** with Zod schemas
+- [ ] **Accessibility audit** passed (WCAG 2.1 AA)
+- [ ] **E2E tests** passing for critical user flows
+
+### Database (Supabase)
+
+- [ ] **All migrations applied** successfully
+- [ ] **RLS policies enabled** on all tables
+- [ ] **No overly permissive policies** (audit with `get_advisors`)
+- [ ] **Indexes optimized** (remove unused, add critical)
+- [ ] **Foreign keys configured** for referential integrity
+- [ ] **Sample/test data removed** from production
+- [ ] **Backup configured** (automatic daily backups)
+- [ ] **Connection pooling** configured
+
+### Security
+
+- [ ] **Zero security warnings** from Supabase security advisors
+- [ ] **All secrets in environment variables** (not hardcoded)
+- [ ] **API keys rotated** (production keys separate from test)
+- [ ] **HTTPS enforced** (no HTTP fallback)
+- [ ] **CSP headers configured** (Content Security Policy)
+- [ ] **XSS protection** enabled (React default, but verify)
+- [ ] **CSRF protection** enabled (Supabase handles this)
+- [ ] **SQL injection prevention** verified (parameterized queries only)
+- [ ] **Penetration testing** completed (OWASP top 10)
+
+### Performance
+
+- [ ] **Zero performance warnings** from Supabase performance advisors
+- [ ] **Unused indexes removed** (identified in audit)
+- [ ] **Query performance optimized** (< 100ms average)
+- [ ] **Frontend Lighthouse score** > 90 (Performance, Accessibility, Best Practices, SEO)
+- [ ] **Images optimized** (WebP format, lazy loading, responsive sizes)
+- [ ] **CDN configured** for static assets
+- [ ] **Load testing completed** (1000+ concurrent users)
+- [ ] **Database connection pooling** verified
+
+### Monitoring
+
+- [ ] **Error tracking configured** (Sentry or similar)
+- [ ] **Analytics configured** (PostHog, Plausible, or similar)
+- [ ] **Uptime monitoring configured** (pingdom, UptimeRobot, etc.)
+- [ ] **Log aggregation configured** (Supabase logs + external if needed)
+- [ ] **Alerts configured** for critical errors (email, Slack, etc.)
+- [ ] **Performance monitoring** configured (response times, query times)
+
+### Documentation
+
+- [ ] **API documentation complete** (Edge Functions, endpoints)
+- [ ] **User guide complete** (how to use the platform)
+- [ ] **Deployment guide complete** (how to deploy updates)
+- [ ] **Rollback procedure documented** (how to revert changes)
+- [ ] **Incident response plan documented** (who to contact, what to do)
+
+### Pre-Launch Testing
+
+- [ ] **Smoke tests** for critical paths:
+  - [ ] User registration → Email verification → Login
+  - [ ] Create event → Publish event → View public page
+  - [ ] Select tickets → Checkout → Payment → Email delivery
+  - [ ] AI wizard → Create event → Save draft
+
+- [ ] **Cross-browser testing** (Chrome, Safari, Firefox, Edge)
+- [ ] **Mobile testing** (iOS Safari, Android Chrome)
+- [ ] **Slow connection testing** (3G, throttled)
+- [ ] **Offline behavior** verified (service worker, error messages)
+
+### Launch Day
+
+- [ ] **Production database backed up**
+- [ ] **Rollback plan tested**
+- [ ] **Monitoring dashboards open** (logs, errors, metrics)
+- [ ] **Team on standby** for immediate bug fixes
+- [ ] **Communication plan** ready (status page, social media)
+
+### Post-Launch (First 24 Hours)
+
+- [ ] **Monitor error rates** (target: < 1% of requests)
+- [ ] **Monitor performance metrics** (target: 95% requests < 1s)
+- [ ] **Monitor user feedback** (support channels, social media)
+- [ ] **Fix critical bugs** within 4 hours
+- [ ] **Document known issues** for non-critical bugs
+
+---
+
 ## 🧭 Quick Start Guide (For New Developers)
 
 ### Day 1: Getting Oriented
