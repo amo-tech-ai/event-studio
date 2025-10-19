@@ -1,10 +1,16 @@
-    {
-    "name": "my-first-plugin",
-    "description": "A simple greeting plugin to learn the basics",
-    "version": "1.0.0",
-    "author": {
-    "name": "Your Name"
-    }
-    }
-    EOF
-    
+{
+  "name": "eventos-development-tools",
+  "description": "EventOS development tools and customizations for Claude Code",
+  "version": "1.0.0",
+  "author": {
+    "name": "EventOS Team"
+  },
+  "type": "project-customization",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/eventos/event-studio"
+  },
+  "keywords": ["eventos", "event-management", "supabase", "react", "development"],
+  "license": "MIT",
+  "homepage": "https://eventos.com"
+}

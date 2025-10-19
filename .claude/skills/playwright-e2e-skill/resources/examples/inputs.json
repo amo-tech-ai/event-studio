@@ -1,0 +1,279 @@
+{
+  "description": "Example test inputs for EventOS Playwright E2E testing",
+  "examples": {
+    "smoke_test": {
+      "description": "Basic smoke test configuration",
+      "config": {
+        "baseURL": "https://event-studio-rho.vercel.app",
+        "browser": "chromium",
+        "headless": true,
+        "timeout": 30000
+      },
+      "playbook": "playbooks/SMOKE.txt",
+      "expected_duration_ms": 120000,
+      "critical": true
+    },
+    "auth_test_dev_mode": {
+      "description": "Test auth bypass in development mode",
+      "config": {
+        "baseURL": "https://event-studio-rho.vercel.app",
+        "browser": "chromium",
+        "headless": true,
+        "timeout": 30000
+      },
+      "environment": {
+        "VITE_DISABLE_AUTH": "true"
+      },
+      "playbook": "playbooks/AUTH.txt",
+      "tests_to_run": ["TEST 1", "TEST 5"],
+      "expected_duration_ms": 180000
+    },
+    "auth_test_production": {
+      "description": "Test full auth flow in production mode",
+      "config": {
+        "baseURL": "https://event-studio-rho.vercel.app",
+        "browser": "chromium",
+        "headless": true,
+        "timeout": 30000
+      },
+      "environment": {
+        "VITE_DISABLE_AUTH": "false"
+      },
+      "playbook": "playbooks/AUTH.txt",
+      "tests_to_run": ["TEST 2", "TEST 3", "TEST 4", "TEST 5"],
+      "expected_duration_ms": 300000
+    },
+    "wizard_test": {
+      "description": "Test multi-step wizard form",
+      "config": {
+        "baseURL": "https://event-studio-rho.vercel.app",
+        "browser": "chromium",
+        "headless": false,
+        "timeout": 60000
+      },
+      "playbook": "playbooks/PITCH_DECK_WIZARD.txt",
+      "test_data": {
+        "event": {
+          "name": "Tech Summit 2025",
+          "type": "Conference",
+          "date": "2025-12-15",
+          "venue": "Convention Center"
+        },
+        "agenda_items": [
+          {"title": "Opening Keynote", "time": "09:00 AM"},
+          {"title": "Panel Discussion", "time": "10:30 AM"},
+          {"title": "Lunch Break", "time": "12:00 PM"},
+          {"title": "Workshop Sessions", "time": "01:30 PM"}
+        ],
+        "ticket_tiers": [
+          {"name": "General Admission", "price": 99.00, "quantity": 500},
+          {"name": "VIP Access", "price": 299.00, "quantity": 100}
+        ]
+      },
+      "expected_duration_ms": 480000
+    },
+    "dashboard_validation": {
+      "description": "Validate dashboard stats load correctly",
+      "config": {
+        "baseURL": "https://event-studio-rho.vercel.app",
+        "browser": "chromium",
+        "headless": true,
+        "timeout": 30000
+      },
+      "steps": [
+        {
+          "action": "navigate",
+          "params": {"url": "/dashboard"}
+        },
+        {
+          "action": "snapshot",
+          "params": {}
+        },
+        {
+          "action": "wait_for",
+          "params": {"text": "Total Events"}
+        },
+        {
+          "action": "network_requests",
+          "params": {},
+          "validation": "No 401 or 403 errors"
+        },
+        {
+          "action": "screenshot",
+          "params": {"filename": "dashboard-validation.png"}
+        }
+      ],
+      "expected_duration_ms": 60000
+    },
+    "event_creation_flow": {
+      "description": "Create new event end-to-end",
+      "config": {
+        "baseURL": "https://event-studio-rho.vercel.app",
+        "browser": "chromium",
+        "headless": false,
+        "timeout": 60000
+      },
+      "steps": [
+        {
+          "action": "navigate",
+          "params": {"url": "/events/new"}
+        },
+        {
+          "action": "fill_form",
+          "params": {
+            "fields": [
+              {"name": "Event Name", "ref": "input-name", "value": "E2E Test Event"},
+              {"name": "Date", "ref": "input-date", "value": "2025-12-01"},
+              {"name": "Venue", "ref": "select-venue", "value": "Test Venue"}
+            ]
+          }
+        },
+        {
+          "action": "click",
+          "params": {"element": "Create Event button", "ref": "btn-submit"}
+        },
+        {
+          "action": "wait_for",
+          "params": {"text": "Event created successfully"}
+        },
+        {
+          "action": "screenshot",
+          "params": {"filename": "event-created.png"}
+        }
+      ],
+      "expected_duration_ms": 120000
+    },
+    "booking_flow": {
+      "description": "Complete ticket booking as anonymous user",
+      "config": {
+        "baseURL": "https://event-studio-rho.vercel.app",
+        "browser": "chromium",
+        "headless": true,
+        "timeout": 60000
+      },
+      "steps": [
+        {
+          "action": "navigate",
+          "params": {"url": "/events/123/book"}
+        },
+        {
+          "action": "fill_form",
+          "params": {
+            "fields": [
+              {"name": "Tickets", "ref": "input-quantity", "value": "2"},
+              {"name": "Email", "ref": "input-email", "value": "test@example.com"},
+              {"name": "Name", "ref": "input-name", "value": "Test User"}
+            ]
+          }
+        },
+        {
+          "action": "click",
+          "params": {"element": "Checkout button", "ref": "btn-checkout"}
+        },
+        {
+          "action": "wait_for",
+          "params": {"text": "Booking confirmed"}
+        },
+        {
+          "action": "network_requests",
+          "params": {},
+          "validation": "Verify no auth errors (401/403)"
+        },
+        {
+          "action": "screenshot",
+          "params": {"filename": "booking-confirmed.png"}
+        }
+      ],
+      "expected_duration_ms": 180000
+    },
+    "multi_browser_test": {
+      "description": "Test cross-browser compatibility",
+      "browsers": ["chromium", "firefox", "webkit"],
+      "config": {
+        "baseURL": "https://event-studio-rho.vercel.app",
+        "headless": true,
+        "timeout": 30000
+      },
+      "playbook": "playbooks/SMOKE.txt",
+      "expected_duration_per_browser_ms": 120000,
+      "parallel": false
+    },
+    "responsive_test": {
+      "description": "Test responsive layouts on different devices",
+      "viewports": [
+        {"name": "mobile", "width": 375, "height": 667},
+        {"name": "tablet", "width": 768, "height": 1024},
+        {"name": "desktop", "width": 1920, "height": 1080}
+      ],
+      "config": {
+        "baseURL": "https://event-studio-rho.vercel.app",
+        "browser": "chromium",
+        "headless": true,
+        "timeout": 30000
+      },
+      "steps": [
+        {
+          "action": "navigate",
+          "params": {"url": "/dashboard"}
+        },
+        {
+          "action": "resize",
+          "params": {"viewport": "mobile"}
+        },
+        {
+          "action": "screenshot",
+          "params": {"filename": "dashboard-mobile.png"}
+        },
+        {
+          "action": "resize",
+          "params": {"viewport": "tablet"}
+        },
+        {
+          "action": "screenshot",
+          "params": {"filename": "dashboard-tablet.png"}
+        },
+        {
+          "action": "resize",
+          "params": {"viewport": "desktop"}
+        },
+        {
+          "action": "screenshot",
+          "params": {"filename": "dashboard-desktop.png"}
+        }
+      ],
+      "expected_duration_ms": 90000
+    },
+    "ci_cd_test": {
+      "description": "CI/CD pipeline test configuration",
+      "config": {
+        "baseURL": "${VERCEL_URL}",
+        "browser": "chromium",
+        "headless": true,
+        "timeout": 30000
+      },
+      "playbook": "playbooks/SMOKE.txt",
+      "retry_on_failure": true,
+      "max_retries": 2,
+      "expected_duration_ms": 120000,
+      "artifacts": {
+        "screenshots": "test-results/screenshots",
+        "network_logs": "test-results/network",
+        "reports": "test-results/reports"
+      }
+    }
+  },
+  "metadata": {
+    "created": "2025-10-19",
+    "version": "1.0.0",
+    "total_examples": 10,
+    "coverage": {
+      "smoke_tests": 1,
+      "auth_tests": 2,
+      "wizard_tests": 1,
+      "feature_tests": 3,
+      "cross_browser": 1,
+      "responsive": 1,
+      "ci_cd": 1
+    }
+  }
+}

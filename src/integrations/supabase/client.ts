@@ -1,6 +1,6 @@
 // Production-ready Supabase client configuration
 import { createClient } from '@supabase/supabase-js';
-import type { Database } from './types';
+import type { Database } from '@/types/database';
 
 // Get environment variables (Vite requires VITE_ prefix)
 const supabaseUrl = import.meta.env.VITE_SUPABASE_URL;

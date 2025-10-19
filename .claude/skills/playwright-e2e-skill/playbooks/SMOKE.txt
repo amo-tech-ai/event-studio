@@ -1,0 +1,117 @@
+# EventOS Smoke Tests - Critical Path Validation
+# Purpose: Fast validation of core functionality after deployments
+# Runtime: ~2-3 minutes
+# Priority: P0 (must pass before deployment)
+
+# ==============================================================================
+# TEST 1: Dashboard Loads Without Auth
+# ==============================================================================
+# Validates: Auth bypass works, RLS policies allow anon access, stats display
+
+NAVIGATE: /dashboard
+
+SNAPSHOT: -> Page structure captured
+
+NETWORK_REQUESTS: -> Check for 401/403 errors
+
+VALIDATE: No blocked requests (status 401 or 403)
+
+WAIT_FOR: "Total Events"
+
+WAIT_FOR: "Total Bookings"
+
+WAIT_FOR: "Total Tickets"
+
+SCREENSHOT: dashboard-loaded.png -> Evidence dashboard works
+
+# Expected: Dashboard loads, stats show numbers (even if 0), no RLS errors
+
+# ==============================================================================
+# TEST 2: Navigation Works
+# ==============================================================================
+# Validates: React Router works, routes accessible, no 404s
+
+NAVIGATE: /
+
+WAIT_FOR: "EventOS"
+
+CLICK: element="Dashboard link", ref="nav-dashboard"
+
+WAIT_FOR: "Dashboard"
+
+NAVIGATE_BACK: -> Should return to home
+
+WAIT_FOR: "EventOS"
+
+SCREENSHOT: navigation-working.png
+
+# Expected: All routes load, back button works, no broken links
+
+# ==============================================================================
+# TEST 3: Event List Displays
+# ==============================================================================
+# Validates: Events table loads, Supabase query succeeds, data renders
+
+NAVIGATE: /events
+
+SNAPSHOT: -> Capture events page structure
+
+NETWORK_REQUESTS: -> Monitor Supabase queries
+
+WAIT_FOR: "Events" -> Page title
+
+# Accept either "No events found" or event cards
+# Both are valid states (new DB vs populated DB)
+
+CONSOLE_MESSAGES: onlyErrors=true -> Check for React errors
+
+SCREENSHOT: events-list.png
+
+# Expected: Page loads, either shows events or "No events" message, no errors
+
+# ==============================================================================
+# TEST 4: Forms Render
+# ==============================================================================
+# Validates: UI components load, no JS errors, inputs functional
+
+NAVIGATE: /events/new
+
+WAIT_FOR: "Create Event"
+
+SNAPSHOT: -> Verify form structure
+
+FILL: ref="input-name", value="Smoke Test Event"
+
+SCREENSHOT: form-filled.png
+
+# Don't submit - just verify form works
+# Expected: Form renders, inputs accept text, no console errors
+
+# ==============================================================================
+# SMOKE TEST SUCCESS CRITERIA
+# ==============================================================================
+# ✅ Dashboard loads with stats
+# ✅ No 401/403 RLS errors
+# ✅ Navigation works between routes
+# ✅ Event list displays (with or without data)
+# ✅ Forms render and accept input
+# ✅ No console errors
+# ✅ Screenshots captured for evidence
+
+# ==============================================================================
+# FAILURE HANDLING
+# ==============================================================================
+# If any test fails:
+# 1. Capture screenshot of failure state
+# 2. Log network requests for debugging
+# 3. Save console errors
+# 4. Stop execution (fail fast)
+# 5. Report to developer with evidence
+
+# ==============================================================================
+# METRICS
+# ==============================================================================
+# Total tests: 4
+# Expected runtime: 2-3 minutes
+# Failure tolerance: 0 (all must pass)
+# Run frequency: Every deployment

@@ -1,54 +1,39 @@
 {
+	"skills": [
+	  "db-schema-analyzer",
+	  "frontend-dashboard",
+	  "playwright-e2e-skill",
+	  "supabase-react-best-practices"
+	],
 	"mcpServers": {
-	  "task-master-ai": {
-		"type": "stdio",
-		"command": "npx",
-		"args": [
-		  "-y",
-		  "task-master-ai"
-		],
-		"env": {
-		  "ANTHROPIC_API_KEY": "${ANTHROPIC_API_KEY}",
-		  "PERPLEXITY_API_KEY": "${PERPLEXITY_API_KEY}",
-		  "OPENAI_API_KEY": "${OPENAI_API_KEY}",
-		  "GOOGLE_API_KEY": "${GOOGLE_API_KEY}",
-		  "XAI_API_KEY": "",
-		  "OPENROUTER_API_KEY": "",
-		  "MISTRAL_API_KEY": "",
-		  "AZURE_OPENAI_API_KEY": "",
-		  "OLLAMA_API_KEY": "${OLLAMA_API_KEY}"
-		}
-	  },
 	  "desktop-commander": {
 		"type": "stdio",
 		"command": "npx",
-		"args": [
-		  "-y",
-		  "@wonderwhy-er/desktop-commander@latest"
-		]
+		"args": ["-y", "@wonderwhy-er/desktop-commander@latest"]
 	  },
 	  "chrome-devtools": {
 		"type": "stdio",
 		"command": "npx",
-		"args": [
-		  "-y",
-		  "chrome-devtools-mcp@latest"
-		]
+		"args": ["-y", "chrome-devtools-mcp@latest"]
 	  },
 	  "supabase": {
 		"type": "http",
-		"url": "https://mcp.supabase.com/mcp?project_ref=asrzdtpyrdgyggqdfwwl&features=docs%2Caccount%2Cdatabase%2Cdebugging%2Cdevelopment%2Cfunctions%2Cbranching%2Cstorage",
+		"url": "https://mcp.supabase.com/mcp?project_ref=asrzdtpyrdgyggqdfwwl",
 		"headers": {
-		  "Authorization": "Bearer ${SUPABASE_PERSONAL_ACCESS_TOKEN}"
+		  "Authorization": "Bearer ${SUPABASE_ACCESS_TOKEN}"
 		}
 	  },
 	  "playwright": {
 		"type": "stdio",
 		"command": "npx",
-		"args": [
-		  "-y",
-		  "@playwright/mcp@latest"
-		]
+		"args": ["-y", "@playwright/mcp@latest"]
+	  },
+	  "vercel-event-studio": {
+		"type": "http",
+		"url": "https://mcp.vercel.com/team_TeHIwY6B3VCdOC8Q5Z5x4ddU/prj_eZNKbF0PgqrfxIselumGOM2PCt8M",
+		"headers": {
+		  "Authorization": "Bearer ${VERCEL_TOKEN}"
+		}
 	  }
 	}
   }

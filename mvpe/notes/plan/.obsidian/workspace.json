@@ -1,0 +1,203 @@
+{
+  "main": {
+    "id": "db7d2681acc7960a",
+    "type": "split",
+    "children": [
+      {
+        "id": "8dc4a376b9286c19",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "5c28d692b239e203",
+            "type": "leaf",
+            "state": {
+              "type": "empty",
+              "state": {},
+              "icon": "lucide-file",
+              "title": "New tab"
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "vertical"
+  },
+  "left": {
+    "id": "5592c2ba411aff74",
+    "type": "split",
+    "children": [
+      {
+        "id": "0e691d6e1639f912",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "7970fbef4b010ee5",
+            "type": "leaf",
+            "state": {
+              "type": "file-explorer",
+              "state": {
+                "sortOrder": "alphabetical",
+                "autoReveal": false
+              },
+              "icon": "lucide-folder-closed",
+              "title": "Files"
+            }
+          },
+          {
+            "id": "96c3cbb1352aee79",
+            "type": "leaf",
+            "state": {
+              "type": "search",
+              "state": {
+                "query": "",
+                "matchingCase": false,
+                "explainSearch": false,
+                "collapseAll": false,
+                "extraContext": false,
+                "sortOrder": "alphabetical"
+              },
+              "icon": "lucide-search",
+              "title": "Search"
+            }
+          },
+          {
+            "id": "123a932fab265ad3",
+            "type": "leaf",
+            "state": {
+              "type": "bookmarks",
+              "state": {},
+              "icon": "lucide-bookmark",
+              "title": "Bookmarks"
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "horizontal",
+    "width": 438.5
+  },
+  "right": {
+    "id": "25c836327156a487",
+    "type": "split",
+    "children": [
+      {
+        "id": "7984dcf0b7516bfe",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "53258cd37c117754",
+            "type": "leaf",
+            "state": {
+              "type": "backlink",
+              "state": {
+                "collapseAll": false,
+                "extraContext": false,
+                "sortOrder": "alphabetical",
+                "showSearch": false,
+                "searchQuery": "",
+                "backlinkCollapsed": false,
+                "unlinkedCollapsed": true
+              },
+              "icon": "links-coming-in",
+              "title": "Backlinks"
+            }
+          },
+          {
+            "id": "fe4ba9ae4bac4582",
+            "type": "leaf",
+            "state": {
+              "type": "outgoing-link",
+              "state": {
+                "linksCollapsed": false,
+                "unlinkedCollapsed": true
+              },
+              "icon": "links-going-out",
+              "title": "Outgoing links"
+            }
+          },
+          {
+            "id": "c50233a37352e5c3",
+            "type": "leaf",
+            "state": {
+              "type": "tag",
+              "state": {
+                "sortOrder": "frequency",
+                "useHierarchy": true,
+                "showSearch": false,
+                "searchQuery": ""
+              },
+              "icon": "lucide-tags",
+              "title": "Tags"
+            }
+          },
+          {
+            "id": "e609e45b85d3af81",
+            "type": "leaf",
+            "state": {
+              "type": "outline",
+              "state": {
+                "followCursor": false,
+                "showSearch": false,
+                "searchQuery": ""
+              },
+              "icon": "lucide-list",
+              "title": "Outline"
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "horizontal",
+    "width": 300,
+    "collapsed": true
+  },
+  "left-ribbon": {
+    "hiddenItems": {
+      "switcher:Open quick switcher": false,
+      "graph:Open graph view": false,
+      "canvas:Create new canvas": false,
+      "daily-notes:Open today's daily note": false,
+      "templates:Insert template": false,
+      "command-palette:Open command palette": false,
+      "bases:Create new base": false
+    }
+  },
+  "active": "5c28d692b239e203",
+  "lastOpenFiles": [
+    "06-sponsor-management/04-ADVANCED_SPONSOR_FEATURES.md",
+    "02-pages/02-home.md",
+    "reference/prompts/taskmaster/006-implementation-phases.md",
+    "reference/prompts/taskmaster/homepage-copywriting-suggestions.md",
+    "reference/prompts/taskmaster/007-production-ready-checklist.md",
+    "reference/prompts/taskmaster/005-advanced-workflows.md",
+    "reference/prompts/taskmaster/004-team-workflow.md",
+    "reference/prompts/taskmaster/002-advanced.md",
+    "reference/prompts/taskmaster/001-taskmaster.md",
+    "reference/prompts/taskmaster",
+    "reference/prompts",
+    "reference/01-breef-design-analysis.md",
+    "reference/MVP-PRD.md",
+    "reference/05-IMPLEMENTATION-ROADMAP.md",
+    "reference/04-UI-COMPONENTS-PATTERNS.md",
+    "reference/04-TECH-STACK.md",
+    "reference/02-SPONSOR_MANAGEMENT_GUIDE.md",
+    "reference/02-MASTER-AI-FEATURES.md",
+    "reference/02-features.md",
+    "reference/02-Event-Scoring-System-Guide.md",
+    "reference/002-architecture.md",
+    "reference/01-PRD-EVENTOS-V3.md",
+    "reference/01-FRONTEND-MASTER-PLAN.md",
+    "reference/01-EventOS-Complete-Feature-Roadmap.md",
+    "reference/01-CopilotKit-Tavily-Event-Management-Analysis.md",
+    "reference/01-AI-FEATURES-MASTER-PLAN.md",
+    "reference/01-ai-events.md",
+    "reference/00-MASTER-PLAN.md",
+    "reference",
+    "plan-features",
+    "features/mermaid",
+    "features/openai-agentsdk/COMPARISON.csv",
+    "features/openai-agentsdk",
+    "features",
+    "05-features"
+  ]
+}

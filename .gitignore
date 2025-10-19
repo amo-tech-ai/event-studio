@@ -28,6 +28,8 @@ dev-debug.log
 node_modules/
 # Environment variables
 .env
+.env.*
+!.env.example
 .vscode
 # OS specific
 
@@ -36,4 +38,6 @@ node_modules/
 # tasks/
 open-lovable/
 hi.events/
+.playwright-mcp/
 .env
+.vercel
