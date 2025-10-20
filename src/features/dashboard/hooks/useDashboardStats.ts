@@ -10,12 +10,6 @@ export interface DashboardStats {
   refetch: () => void;
 }
 
-interface DashboardStatsResponse {
-  total_events: number;
-  total_orders: number;
-  total_tickets: number;
-}
-
 /**
  * Hook to fetch dashboard statistics using secure SECURITY DEFINER function.
  *
@@ -29,12 +23,12 @@ export const useDashboardStats = (): DashboardStats => {
     queryKey: ["dashboard", "stats"],
     queryFn: async () => {
       // Call the secure SECURITY DEFINER function
-      const { data, error } = await supabase.rpc<DashboardStatsResponse>(
-        "get_dashboard_stats"
+      const { data, error } = await supabase.rpc(
+        "get_dashboard_stats" as any
       );
 
       if (error) throw error;
-      return data;
+      return data as any;
     },
     // Cache for 30 seconds to reduce database load
     staleTime: 30000,
@@ -43,9 +37,9 @@ export const useDashboardStats = (): DashboardStats => {
   });
 
   return {
-    totalEvents: data?.total_events || 0,
-    totalBookings: data?.total_orders || 0,
-    totalTickets: data?.total_tickets || 0,
+    totalEvents: (data as any)?.total_events || 0,
+    totalBookings: (data as any)?.total_orders || 0,
+    totalTickets: (data as any)?.total_tickets || 0,
     isLoading,
     error: error as Error | null,
     refetch: () => { refetch(); },

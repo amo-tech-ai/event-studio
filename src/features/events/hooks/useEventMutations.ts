@@ -40,8 +40,8 @@ export function useCreateEvent() {
         .from('events')
         .insert({
           ...eventData,
-          status: 'draft',
-        })
+          status: 'draft' as any,
+        } as any)
         .select()
         .single();
 
