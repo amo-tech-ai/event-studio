@@ -5,6 +5,14 @@ import { componentTagger } from "lovable-tagger";
 
 // https://vitejs.dev/config/
 export default defineConfig(({ mode }) => ({
+  // Define environment variables inline for Lovable deployment
+  // These are PUBLIC values, safe to hardcode (protected by RLS)
+  define: {
+    'import.meta.env.VITE_SUPABASE_URL': JSON.stringify('https://asrzdtpyrdgyggqdfwwl.supabase.co'),
+    'import.meta.env.VITE_SUPABASE_ANON_KEY': JSON.stringify('eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImFzcnpkdHB5cmRneWdncWRmd3dsIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjAxNjY4NDMsImV4cCI6MjA3NTc0Mjg0M30.dz9YKRsUNv4G7K9u-6ZyEVuRImInbt-pfaggB7SXGmM'),
+    'import.meta.env.VITE_SUPABASE_PROJECT_ID': JSON.stringify('asrzdtpyrdgyggqdfwwl'),
+    'import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY': JSON.stringify('sb_publishable_TxiT_vg3a3sCportkSNh3g_dVVq1LSZ'),
+  },
   server: {
     host: "::",
     port: 8080,
