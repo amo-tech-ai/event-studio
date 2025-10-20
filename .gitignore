@@ -33,8 +33,10 @@ dev-debug.log
 node_modules/
 
 # Environment variables
-.env
-.env.*
+# Allow .env with public Supabase keys (anon key is safe for client-side)
+.env.local
+.env.*.local
+!.env
 !.env.example
 
 # Project-specific directories
