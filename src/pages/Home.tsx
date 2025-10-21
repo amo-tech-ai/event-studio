@@ -185,42 +185,60 @@ const Home = () => {
             <h2 className="text-4xl md:text-5xl lg:text-6xl font-semibold mb-6 tracking-tight">
               The 3-Minute Event Wizard
             </h2>
-            <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
+            <p className="text-lg text-muted-foreground max-w-2xl mx-auto leading-relaxed">
               From concept to published event in seven intelligent steps.
             </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-7 gap-4 max-w-6xl mx-auto">
+          {/* Sophisticated Grid Layout */}
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-5xl mx-auto mb-16">
             {[
-              { step: "1", title: "Basic Info", icon: FileText },
-              { step: "2", title: "AI Description", icon: Sparkles },
-              { step: "3", title: "Venue Matching", icon: MapPin },
-              { step: "4", title: "Ticket Tiers", icon: DollarSign },
-              { step: "5", title: "Designer Invites", icon: Users },
-              { step: "6", title: "Marketing Plan", icon: MessageSquare },
-              { step: "7", title: "Publish & Track", icon: BarChart3 }
+              { step: "1", title: "Basic Info", desc: "Event name, type, date, and core details", icon: FileText },
+              { step: "2", title: "AI Description", desc: "Generate compelling copy instantly", icon: Sparkles },
+              { step: "3", title: "Venue Matching", desc: "Smart location and capacity planning", icon: MapPin },
+              { step: "4", title: "Ticket Tiers", desc: "Flexible pricing and access levels", icon: DollarSign },
+              { step: "5", title: "Designer Invites", desc: "Curate talent and manage RSVPs", icon: Users },
+              { step: "6", title: "Marketing Plan", desc: "Multi-channel campaign automation", icon: MessageSquare },
+              { step: "7", title: "Publish & Track", desc: "Go live and monitor performance", icon: BarChart3 }
             ].map((item, i) => (
-              <div key={i} className="relative">
-                <div className="card-soft text-center p-6">
-                  <div className="w-10 h-10 rounded-full bg-primary text-primary-foreground flex items-center justify-center mx-auto mb-3 text-sm font-semibold">
-                    {item.step}
-                  </div>
-                  <item.icon className="w-6 h-6 text-primary mx-auto mb-2" />
-                  <p className="text-sm font-medium">{item.title}</p>
+              <div 
+                key={i} 
+                className="group relative bg-card rounded-2xl p-8 border border-border/50 shadow-sm hover:shadow-md transition-all duration-300 hover:-translate-y-1"
+              >
+                {/* Step Number Badge */}
+                <div className="absolute -top-3 -left-3 w-8 h-8 rounded-full bg-primary/10 border-2 border-background flex items-center justify-center">
+                  <span className="text-xs font-semibold text-primary">{item.step}</span>
                 </div>
-                {i < 6 && (
-                  <ArrowRight className="hidden md:block absolute top-1/2 -right-2 transform -translate-y-1/2 text-muted-foreground w-4 h-4" />
-                )}
+
+                {/* Icon */}
+                <div className="w-14 h-14 rounded-xl bg-primary/5 flex items-center justify-center mb-5 group-hover:bg-primary/10 transition-colors duration-300">
+                  <item.icon className="w-7 h-7 text-primary" />
+                </div>
+
+                {/* Content */}
+                <h3 className="text-lg font-semibold mb-2 text-foreground">
+                  {item.title}
+                </h3>
+                <p className="text-sm text-muted-foreground leading-relaxed">
+                  {item.desc}
+                </p>
+
+                {/* Subtle Gradient Overlay on Hover */}
+                <div className="absolute inset-0 rounded-2xl bg-gradient-to-br from-primary/0 to-primary/0 group-hover:from-primary/[0.02] group-hover:to-transparent transition-all duration-300 pointer-events-none" />
               </div>
             ))}
           </div>
 
-          <div className="text-center mt-12">
+          {/* CTA */}
+          <div className="text-center">
             <Link to="/event-wizard">
-              <Button className="btn-hero px-8 py-4">
+              <Button className="btn-hero px-10 py-4 shadow-sm hover:shadow-md transition-shadow duration-300">
                 Try the Event Wizard Now
               </Button>
             </Link>
+            <p className="text-sm text-muted-foreground mt-4">
+              No credit card required • 14-day free trial
+            </p>
           </div>
         </div>
       </section>
