@@ -190,43 +190,51 @@ const Home = () => {
             </p>
           </div>
 
-          {/* Sophisticated Grid Layout */}
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-5xl mx-auto mb-16">
-            {[
-              { step: "1", title: "Basic Info", desc: "Event name, type, date, and core details", icon: FileText },
-              { step: "2", title: "AI Description", desc: "Generate compelling copy instantly", icon: Sparkles },
-              { step: "3", title: "Venue Matching", desc: "Smart location and capacity planning", icon: MapPin },
-              { step: "4", title: "Ticket Tiers", desc: "Flexible pricing and access levels", icon: DollarSign },
-              { step: "5", title: "Designer Invites", desc: "Curate talent and manage RSVPs", icon: Users },
-              { step: "6", title: "Marketing Plan", desc: "Multi-channel campaign automation", icon: MessageSquare },
-              { step: "7", title: "Publish & Track", desc: "Go live and monitor performance", icon: BarChart3 }
-            ].map((item, i) => (
-              <div 
-                key={i} 
-                className="group relative bg-card rounded-2xl p-8 border border-border/50 shadow-sm hover:shadow-md transition-all duration-300 hover:-translate-y-1"
-              >
-                {/* Step Number Badge */}
-                <div className="absolute -top-3 -left-3 w-8 h-8 rounded-full bg-primary/10 border-2 border-background flex items-center justify-center">
-                  <span className="text-xs font-semibold text-primary">{item.step}</span>
+          {/* Vertical Timeline Layout */}
+          <div className="max-w-4xl mx-auto mb-16 relative">
+            {/* Timeline Line */}
+            <div className="hidden md:block absolute left-[42px] top-8 bottom-8 w-0.5 bg-border/50" />
+            
+            <div className="space-y-6">
+              {[
+                { step: "1", title: "Basic Info", desc: "Event name, type, date, and core details", icon: FileText },
+                { step: "2", title: "AI Description", desc: "Generate compelling copy instantly", icon: Sparkles },
+                { step: "3", title: "Venue Matching", desc: "Smart location and capacity planning", icon: MapPin },
+                { step: "4", title: "Ticket Tiers", desc: "Flexible pricing and access levels", icon: DollarSign },
+                { step: "5", title: "Designer Invites", desc: "Curate talent and manage RSVPs", icon: Users },
+                { step: "6", title: "Marketing Plan", desc: "Multi-channel campaign automation", icon: MessageSquare },
+                { step: "7", title: "Publish & Track", desc: "Go live and monitor performance", icon: BarChart3 }
+              ].map((item, i) => (
+                <div key={i} className="relative flex gap-6 items-start group">
+                  {/* Step Number Circle */}
+                  <div className="flex-shrink-0 w-[84px] flex justify-center relative z-10">
+                    <div className="w-14 h-14 rounded-full bg-primary/10 border-2 border-background flex items-center justify-center shadow-sm group-hover:bg-primary/15 transition-colors duration-300">
+                      <span className="text-lg font-semibold text-primary">{item.step}</span>
+                    </div>
+                  </div>
+                  
+                  {/* Card Content */}
+                  <div className="flex-1 bg-card rounded-2xl p-6 md:p-8 border border-border/50 shadow-sm hover:shadow-md transition-all duration-300 group-hover:-translate-y-0.5">
+                    <div className="flex items-start gap-5">
+                      {/* Icon */}
+                      <div className="flex-shrink-0 w-14 h-14 md:w-16 md:h-16 rounded-xl bg-primary/5 flex items-center justify-center group-hover:bg-primary/10 transition-colors duration-300">
+                        <item.icon className="w-6 h-6 md:w-7 md:h-7 text-primary" />
+                      </div>
+                      
+                      {/* Text Content */}
+                      <div className="flex-1 min-w-0">
+                        <h3 className="text-lg md:text-xl font-semibold mb-2 text-foreground">
+                          {item.title}
+                        </h3>
+                        <p className="text-sm md:text-base text-muted-foreground leading-relaxed">
+                          {item.desc}
+                        </p>
+                      </div>
+                    </div>
+                  </div>
                 </div>
-
-                {/* Icon */}
-                <div className="w-14 h-14 rounded-xl bg-primary/5 flex items-center justify-center mb-5 group-hover:bg-primary/10 transition-colors duration-300">
-                  <item.icon className="w-7 h-7 text-primary" />
-                </div>
-
-                {/* Content */}
-                <h3 className="text-lg font-semibold mb-2 text-foreground">
-                  {item.title}
-                </h3>
-                <p className="text-sm text-muted-foreground leading-relaxed">
-                  {item.desc}
-                </p>
-
-                {/* Subtle Gradient Overlay on Hover */}
-                <div className="absolute inset-0 rounded-2xl bg-gradient-to-br from-primary/0 to-primary/0 group-hover:from-primary/[0.02] group-hover:to-transparent transition-all duration-300 pointer-events-none" />
-              </div>
-            ))}
+              ))}
+            </div>
           </div>
 
           {/* CTA */}
