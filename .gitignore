@@ -33,10 +33,10 @@ dev-debug.log
 node_modules/
 
 # Environment variables
-# Allow .env with public Supabase keys (anon key is safe for client-side)
+# SECURITY: Block all .env files except .env.example
+.env
 .env.local
 .env.*.local
-!.env
 !.env.example
 
 # Project-specific directories

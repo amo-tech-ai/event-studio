@@ -1,40 +1,60 @@
 {
-	"skills": [
-	  "db-schema-analyzer",
-	  "frontend-dashboard",
-	  "playwright-e2e-skill",
-	  "supabase-react-best-practices"
-	],
-	"mcpServers": {
-	  "desktop-commander": {
-		"type": "stdio",
-		"command": "npx",
-		"args": ["-y", "@wonderwhy-er/desktop-commander@latest"]
-	  },
-	  "chrome-devtools": {
-		"type": "stdio",
-		"command": "npx",
-		"args": ["-y", "chrome-devtools-mcp@latest"]
-	  },
-	  "supabase": {
-		"type": "http",
-		"url": "https://mcp.supabase.com/mcp?project_ref=asrzdtpyrdgyggqdfwwl",
-		"headers": {
-		  "Authorization": "Bearer ${SUPABASE_ACCESS_TOKEN}"
-		}
-	  },
-	  "playwright": {
-		"type": "stdio",
-		"command": "npx",
-		"args": ["-y", "@playwright/mcp@latest"]
-	  },
-	  "vercel-event-studio": {
-		"type": "http",
-		"url": "https://mcp.vercel.com/team_TeHIwY6B3VCdOC8Q5Z5x4ddU/prj_eZNKbF0PgqrfxIselumGOM2PCt8M",
-		"headers": {
-		  "Authorization": "Bearer ${VERCEL_TOKEN}"
-		}
-	  }
-	}
+  "mcpServers": {
+    "desktop-commander": {
+      "type": "stdio",
+      "command": "npx",
+      "args": [
+        "-y",
+        "@wonderwhy-er/desktop-commander@latest"
+      ]
+    },
+    "chrome-devtools": {
+      "type": "stdio",
+      "command": "npx",
+      "args": [
+        "-y",
+        "chrome-devtools-mcp@latest"
+      ]
+    },
+    "playwright": {
+      "type": "stdio",
+      "command": "npx",
+      "args": [
+        "-y",
+        "@playwright/mcp@latest"
+      ]
+    },
+    "supabase": {
+      "type": "http",
+      "url": "https://mcp.supabase.com/mcp?project_ref=asrzdtpyrdgyggqdfwwl&features=docs%2Caccount%2Cdatabase%2Cdebugging%2Cdevelopment%2Cfunctions%2Cbranching%2Cstorage",
+      "headers": {
+        "Authorization": "Bearer ${SUPABASE_ACCESS_TOKEN}"
+      }
+    },
+    "vercel-event-studio": {
+      "type": "http",
+      "url": "https://mcp.vercel.com/team_TeHIwY6B3VCdOC8Q5Z5x4ddU/prj_eZNKbF0PgqrfxIselumGOM2PCt8M",
+      "headers": {
+        "Authorization": "Bearer Ne1GmmUHhbVW3OCSFzTUIXkm"
+      }
+    },
+    "context7": {
+      "type": "http",
+      "url": "https://mcp.context7.com/mcp",
+      "headers": {
+        "Authorization": "Bearer ${CONTEXT7_API_KEY}"
+      }
+    },
+    "firecrawl": {
+      "type": "stdio",
+      "command": "npx",
+      "args": [
+        "-y",
+        "firecrawl-mcp"
+      ],
+      "env": {
+        "FIRECRAWL_API_KEY": "fc-7a3a4e6680df42d0bbe2ea2aadcf498e"
+      }
+    }
   }
-  
+}
