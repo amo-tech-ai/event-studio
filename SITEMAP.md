@@ -1,7 +1,8 @@
 # EventOS Complete Sitemap & Architecture Analysis
 **Generated:** 2025-01-18  
 **Project:** EventOS - AI-Powered Event Management Platform  
-**Overall Completion:** 68%  
+**Overall Completion:** 62%  
+**Updated:** Added Phase 3 Advanced Features (4 new pages)
 
 **Legend:** 🟢 Complete | 🟡 In Progress | 🔴 Not Started | 🚩 Critical Issue  
 **Detailed Progress:** See [docs/events/progress-tracker.md](docs/events/progress-tracker.md)
@@ -34,6 +35,14 @@
 | `/orders/:orderId` | `OrderTracking.tsx` | Order status and tracking | 🟢 Complete |
 | `/m/event/:slug/register` | `MobileRegistration.tsx` | Mobile-optimized registration | 🟢 Complete |
 | `/error/registration` | `RegistrationError.tsx` | Error handling and recovery | 🟢 Complete |
+
+### Advanced Features Routes - 🔴 0% Complete (Phase 3)
+| Route | Component | Purpose | Status |
+|-------|-----------|---------|--------|
+| `/admin/events/:slug/analytics` | Not Created | Registration analytics dashboard | 🔴 Not Started |
+| `/admin/email-templates` | Not Created | Email template management | 🔴 Not Started |
+| `/account/registrations` | Not Created | User registration history | 🔴 Not Started |
+| `/register/:eventSlug` | Not Created | High-converting landing page | 🔴 Not Started |
 
 ### Protected Routes (Authentication Required) - 🟡 60% Complete
 **Note:** Auth disabled during development via `VITE_DISABLE_AUTH=true`
@@ -101,7 +110,13 @@
 - AI Event Wizard (UI complete, needs backend)
 - Index.tsx (needs proper content)
 
-### Not Started: 9 🔴
+### Not Started: 13 🔴
+**Advanced Features Pages (4):**
+- Registration Analytics page
+- Email Templates page
+- My Registrations page
+- Registration Landing page
+
 **AI Wizard Pages (4):**
 - Venue Selection page
 - Ticketing Setup page
@@ -115,11 +130,11 @@
 - Venues Management
 - Settings Page
 
-### Total Routes: 35
-- **Public:** 13 routes (37%)
-- **Protected:** 22 routes (63%)
-- **Implementation:** 24/35 complete (68%)
-- **Critical Issues:** 🚩 9 pages not started, 🚩 Backend 0% complete
+### Total Routes: 39
+- **Public:** 13 routes (33%)
+- **Protected:** 26 routes (67%)
+- **Implementation:** 24/39 complete (62%)
+- **Critical Issues:** 🚩 13 pages not started, 🚩 Backend 0% complete
 
 ---
 
@@ -188,20 +203,27 @@ Based on the dashboard structure, these should exist:
    - No real authentication logic
    - **Priority:** CRITICAL - Core functionality blocker
 
-3. **🔴 AI Wizard Missing 4 Pages (40% of feature)**
+3. **🔴 Advanced Features Missing 4 Pages (100% of phase)**
+   - RegistrationAnalytics page not created
+   - EmailTemplates page not created
+   - MyRegistrations page not created
+   - RegistrationLanding page not created
+   - **Priority:** HIGH - New phase incomplete
+
+4. **🔴 AI Wizard Missing 4 Pages (40% of feature)**
    - VenueSelection page not created
    - TicketingSetup page not created
    - AgendaBuilder page not created
    - MarketingDashboard page not created
    - **Priority:** HIGH - Feature incomplete
 
-4. **🔴 CopilotKit Integration: 0%**
+5. **🔴 CopilotKit Integration: 0%**
    - No AI backend connection
    - No LangGraph agents
    - Mock conversations only
    - **Priority:** CRITICAL - AI features non-functional
 
-5. **🔴 Missing Dashboard Pages: 5**
+6. **🔴 Missing Dashboard Pages: 5**
    - Analytics, Calendar, Organizers, Venues, Settings
    - All redirect to main dashboard
    - **Priority:** MEDIUM - User experience gap
@@ -288,7 +310,14 @@ Missing pages (5):
 10. 🔴 DashboardVenues.tsx - **Need to create**
 11. 🔴 DashboardSettings.tsx - **Need to create**
 
-### Phase 3: AI Event Wizard 🟡 20% COMPLETE
+### Phase 3: Advanced Features 🔴 0% COMPLETE
+Missing (4):
+1. 🔴 RegistrationAnalytics.tsx - **Need to create**
+2. 🔴 EmailTemplates.tsx - **Need to create**
+3. 🔴 MyRegistrations.tsx - **Need to create**
+4. 🔴 RegistrationLanding.tsx - **Need to create**
+
+### Phase 4: AI Event Wizard 🟡 20% COMPLETE
 Working (2):
 1. ✅ EventWizard.tsx (traditional wizard)
 2. ✅ AIEventWizard.tsx (UI only)
@@ -299,7 +328,7 @@ Missing (4):
 5. 🔴 AgendaBuilder.tsx - **Need to create**
 6. 🔴 MarketingDashboard.tsx - **Need to create**
 
-### Phase 4: Backend Integration 🔴 0% COMPLETE - **Claude's Task**
+### Phase 5: Backend Integration 🔴 0% COMPLETE - **Claude's Task**
 All tasks require Claude:
 1. 🔴 Supabase schema setup
 2. 🔴 React Query hooks
@@ -309,7 +338,7 @@ All tasks require Claude:
 6. 🔴 Real-time updates
 7. 🔴 Data persistence
 
-### Phase 5: Testing & Polish 🔴 0% COMPLETE
+### Phase 6: Testing & Polish 🔴 0% COMPLETE
 Future tasks:
 1. 🔴 Unit tests
 2. 🔴 E2E tests
@@ -317,7 +346,7 @@ Future tasks:
 4. 🔴 Accessibility audit
 5. 🔴 Production deployment
 
-**Current Focus:** Complete Phase 2 & 3 UI pages (9 pages remaining)
+**Current Focus:** Complete Phase 3 & 4 UI pages (13 pages remaining)
 
 ---
 
@@ -432,6 +461,7 @@ xl: 1280px  // Large desktop
 
 ### Critical Gaps ❌
 - **🚩 Backend: 0%** - No database connectivity (CRITICAL)
+- **🚩 Advanced Features: 0%** - Phase 3 not started (4 pages)
 - **🚩 AI Features: 20%** - Missing 4 essential pages
 - **🚩 Dashboard: 55%** - 5 pages still placeholders
 - **🚩 Index.tsx:** Needs immediate fix
@@ -441,20 +471,21 @@ xl: 1280px  // Large desktop
 
 ### Completion Metrics
 ```
-Overall Project:     ████████████████░░░░ 68%
-UI/UX Design:        ████████████████████ 88% 🟢
+Overall Project:     ████████████░░░░░░░░ 62%
+UI/UX Design:        ████████████████░░░░ 82% 🟢
 Frontend Logic:      ██████████░░░░░░░░░░ 52% 🟡
 Backend Integration: ░░░░░░░░░░░░░░░░░░░░ 0% 🔴
 AI Features:         ████░░░░░░░░░░░░░░░░ 20% 🔴
-Production Ready:    █████████░░░░░░░░░░░ 45% 🟡
+Production Ready:    ████████░░░░░░░░░░░░ 42% 🟡
 ```
 
 ### Success Path Forward
 **Immediate Actions (Week 1):**
 1. 🔴 Fix Index.tsx page
-2. 🔴 Create 4 AI wizard pages
-3. 🔴 Create 5 dashboard pages
-4. 📊 Achieve 90% UI completion
+2. 🔴 Create 4 Phase 3 Advanced Features pages
+3. 🔴 Create 4 AI wizard pages
+4. 🔴 Create 5 dashboard pages
+5. 📊 Achieve 90% UI completion
 
 **Backend Integration (Week 2-3 - Claude's Task):**
 1. 🔴 Supabase database setup
@@ -473,7 +504,7 @@ Production Ready:    █████████░░░░░░░░░░�
 
 **Ready for Development:** ✅ Foundation solid, clear path forward  
 **Estimated Timeline:** 4 weeks to production-ready MVP  
-**Current Focus:** Complete remaining 9 UI pages (1 week)  
+**Current Focus:** Complete remaining 13 UI pages (1-2 weeks)  
 **Critical Blocker:** Backend integration (2-3 weeks, Claude's task)
 
 ---
