@@ -7,7 +7,7 @@
 
 import { useState } from "react";
 import { Link } from "react-router-dom";
-import { Search, MapPin, Calendar, Tag, ChevronRight } from "lucide-react";
+import { Search, MapPin, Calendar, Tag, ChevronRight, Filter } from "lucide-react";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import { Button } from "@/components/ui/button";
@@ -18,12 +18,19 @@ import { format } from "date-fns";
 const Events = () => {
   const { data: events, isLoading } = useEvents();
   const [searchQuery, setSearchQuery] = useState("");
+  const [selectedType, setSelectedType] = useState<string>("all");
+  const [selectedFormat, setSelectedFormat] = useState<string>("all");
 
-  // Filter events based on search
-  const filteredEvents = events?.filter(event => 
-    event.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-    event.description?.toLowerCase().includes(searchQuery.toLowerCase())
-  );
+  // Get unique event types
+  const eventTypes = ["all", ...Array.from(new Set(events?.map(e => e.type) || []))];
+
+  // Filter events based on search and filters
+  const filteredEvents = events?.filter(event => {
+    const matchesSearch = event.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      event.description?.toLowerCase().includes(searchQuery.toLowerCase());
+    const matchesType = selectedType === "all" || event.type === selectedType;
+    return matchesSearch && matchesType;
+  });
 
   // Featured events (first 3)
   const featuredEvents = filteredEvents?.slice(0, 3);
@@ -53,30 +60,67 @@ const Events = () => {
 
           {/* Search + Filter Bar */}
           <div className="bg-card rounded-2xl shadow-sm border border-border p-6">
-            <div className="flex flex-col md:flex-row gap-4">
-              <div className="flex-1 relative">
+            <div className="flex flex-col gap-4">
+              {/* Search */}
+              <div className="relative">
                 <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-muted-foreground" />
                 <Input
                   type="text"
-                  placeholder="Search events..."
+                  placeholder="Search events by name or description..."
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
                   className="pl-12 h-12 text-base"
                 />
               </div>
-              <div className="flex gap-3">
-                <Button variant="outline" className="flex-1 md:flex-none h-12 px-6">
-                  <Tag className="w-4 h-4 mr-2" />
-                  Category
-                </Button>
-                <Button variant="outline" className="flex-1 md:flex-none h-12 px-6">
-                  <MapPin className="w-4 h-4 mr-2" />
-                  Location
-                </Button>
-                <Button variant="outline" className="hidden md:flex h-12 px-6">
-                  <Calendar className="w-4 h-4 mr-2" />
-                  Date
-                </Button>
+
+              {/* Filters */}
+              <div className="flex flex-wrap gap-3">
+                <div className="flex items-center gap-2">
+                  <Filter className="w-4 h-4 text-muted-foreground" />
+                  <span className="text-sm font-medium text-muted-foreground">Filters:</span>
+                </div>
+                
+                {/* Category Filter */}
+                <div className="flex gap-2 flex-wrap">
+                  {eventTypes.map((type) => (
+                    <Button
+                      key={type}
+                      variant={selectedType === type ? "default" : "outline"}
+                      size="sm"
+                      onClick={() => setSelectedType(type)}
+                      className="capitalize"
+                    >
+                      {type}
+                    </Button>
+                  ))}
+                </div>
+
+                {/* Format Filter - Simple toggle */}
+                <div className="flex gap-2 ml-auto">
+                  <Button
+                    variant={selectedFormat === "all" ? "default" : "outline"}
+                    size="sm"
+                    onClick={() => setSelectedFormat("all")}
+                  >
+                    All Events
+                  </Button>
+                  <Button
+                    variant={selectedFormat === "online" ? "default" : "outline"}
+                    size="sm"
+                    onClick={() => setSelectedFormat("online")}
+                  >
+                    <Calendar className="w-3 h-3 mr-1" />
+                    Virtual
+                  </Button>
+                  <Button
+                    variant={selectedFormat === "inperson" ? "default" : "outline"}
+                    size="sm"
+                    onClick={() => setSelectedFormat("inperson")}
+                  >
+                    <MapPin className="w-3 h-3 mr-1" />
+                    In-Person
+                  </Button>
+                </div>
               </div>
             </div>
           </div>

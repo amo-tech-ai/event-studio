@@ -8,7 +8,7 @@
 import { useParams, Link } from "react-router-dom";
 import { 
   Calendar, MapPin, Clock, Users, Share2, Heart, 
-  ChevronRight, Download, ExternalLink 
+  ChevronRight, Download, ExternalLink
 } from "lucide-react";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
@@ -101,9 +101,32 @@ const EventDetails = () => {
           <div className="grid lg:grid-cols-3 gap-12">
             {/* Left Column: Event Details */}
             <div className="lg:col-span-2 space-y-10">
+              {/* 3-Step Registration Flow */}
+              <div className="bg-gradient-to-br from-primary/5 via-accent/5 to-background rounded-2xl p-8 border border-primary/20 mb-10">
+                <h2 className="text-2xl font-semibold mb-8 text-center">How to Register</h2>
+                <div className="grid md:grid-cols-3 gap-6">
+                  {[
+                    { step: "1", title: "Register", desc: "Enter your name and email", icon: Users },
+                    { step: "2", title: "Confirm", desc: "Get instant confirmation + calendar invite", icon: Calendar },
+                    { step: "3", title: "Join", desc: "Attend live or in-person", icon: MapPin }
+                  ].map((item, i) => (
+                    <div key={i} className="text-center">
+                      <div className="w-16 h-16 rounded-full bg-primary text-primary-foreground flex items-center justify-center text-2xl font-bold mx-auto mb-4">
+                        {item.step}
+                      </div>
+                      <h3 className="font-semibold text-lg mb-2">{item.title}</h3>
+                      <p className="text-sm text-muted-foreground">{item.desc}</p>
+                      {i < 2 && (
+                        <ChevronRight className="w-5 h-5 text-muted-foreground mx-auto mt-4 hidden md:block" />
+                      )}
+                    </div>
+                  ))}
+                </div>
+              </div>
+
               {/* Event Overview */}
               <div className="bg-card rounded-2xl p-8 border border-border">
-                <h2 className="text-2xl font-semibold mb-6">Event Overview</h2>
+                <h2 className="text-2xl font-semibold mb-6">About This Event</h2>
                 <p className="text-muted-foreground leading-relaxed text-lg mb-6">
                   {event.description || "Join us for an amazing event experience. This event brings together industry professionals and enthusiasts for networking, learning, and collaboration."}
                 </p>
@@ -197,6 +220,30 @@ const EventDetails = () => {
                 </div>
               </div>
 
+              {/* Speakers Section */}
+              <div className="bg-card rounded-2xl p-8 border border-border">
+                <h2 className="text-2xl font-semibold mb-6">Featured Speakers</h2>
+                <div className="grid md:grid-cols-2 gap-6">
+                  {[
+                    { name: "Sarah Johnson", role: "AI Research Lead", company: "TechCorp", bio: "Leading expert in machine learning with 15+ years experience" },
+                    { name: "Michael Chen", role: "Product Director", company: "InnovateLabs", bio: "Pioneer in AI-driven product development and strategy" },
+                    { name: "Dr. Emily Rodriguez", role: "Data Scientist", company: "DataWise", bio: "PhD in Computer Science, specializing in neural networks" },
+                    { name: "James Anderson", role: "CTO", company: "FutureAI", bio: "Building scalable AI solutions for enterprise" }
+                  ].map((speaker, i) => (
+                    <div key={i} className="flex gap-4 p-4 rounded-lg bg-muted/30 hover:bg-muted/50 transition-colors">
+                      <div className="w-16 h-16 rounded-full bg-gradient-to-br from-primary to-accent flex-shrink-0 flex items-center justify-center text-primary-foreground font-bold text-xl">
+                        {speaker.name.split(' ').map(n => n[0]).join('')}
+                      </div>
+                      <div>
+                        <h3 className="font-semibold text-lg">{speaker.name}</h3>
+                        <p className="text-sm text-primary mb-1">{speaker.role} at {speaker.company}</p>
+                        <p className="text-sm text-muted-foreground">{speaker.bio}</p>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+
               {/* Photo Gallery */}
               <div className="bg-card rounded-2xl p-8 border border-border">
                 <h2 className="text-2xl font-semibold mb-6">Event Gallery</h2>
@@ -206,6 +253,85 @@ const EventDetails = () => {
                       key={i} 
                       className="aspect-video rounded-lg bg-gradient-to-br from-primary/20 to-accent/20 hover:scale-105 transition-transform cursor-pointer"
                     />
+                  ))}
+                </div>
+              </div>
+
+              {/* Venue/Location Section */}
+              <div className="bg-card rounded-2xl p-8 border border-border">
+                <h2 className="text-2xl font-semibold mb-6">Venue & Location</h2>
+                <div className="space-y-6">
+                  <div className="aspect-video rounded-lg bg-muted overflow-hidden">
+                    <div className="w-full h-full flex items-center justify-center text-muted-foreground">
+                      <div className="text-center">
+                        <MapPin className="w-12 h-12 mx-auto mb-2 text-primary" />
+                        <p className="font-medium">Map would appear here</p>
+                        <p className="text-sm">Integration with Google Maps</p>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="grid md:grid-cols-2 gap-6">
+                    <div>
+                      <h3 className="font-semibold mb-2">Getting There</h3>
+                      <p className="text-sm text-muted-foreground mb-4">
+                        This is an online event. Join link will be sent via email 24 hours before the event starts.
+                      </p>
+                      <Button variant="outline" size="sm" className="gap-2">
+                        <ExternalLink className="w-4 h-4" />
+                        View Directions
+                      </Button>
+                    </div>
+                    <div>
+                      <h3 className="font-semibold mb-2">Parking & Access</h3>
+                      <p className="text-sm text-muted-foreground">
+                        Free parking available. Venue is wheelchair accessible with elevators and ramps.
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              {/* Testimonials */}
+              <div className="bg-card rounded-2xl p-8 border border-border">
+                <h2 className="text-2xl font-semibold mb-6">What Attendees Say</h2>
+                <div className="grid md:grid-cols-2 gap-6">
+                  {[
+                    { name: "Alex Turner", role: "Software Engineer", text: "Amazing event! The networking opportunities were incredible and I learned so much from the speakers." },
+                    { name: "Jessica Lee", role: "Product Manager", text: "Well organized, great content, and fantastic community. Can't wait for the next one!" },
+                    { name: "David Kim", role: "Startup Founder", text: "This event helped me connect with investors and partners. Highly recommend to anyone in the industry." },
+                    { name: "Rachel Adams", role: "Data Analyst", text: "The workshops were practical and immediately applicable. Worth every minute!" }
+                  ].map((testimonial, i) => (
+                    <div key={i} className="p-6 rounded-lg bg-muted/30 border border-border/50">
+                      <p className="text-muted-foreground italic mb-4">"{testimonial.text}"</p>
+                      <div className="flex items-center gap-3">
+                        <div className="w-10 h-10 rounded-full bg-gradient-to-br from-primary to-accent flex items-center justify-center text-primary-foreground font-semibold text-sm">
+                          {testimonial.name.split(' ').map(n => n[0]).join('')}
+                        </div>
+                        <div>
+                          <p className="font-medium text-sm">{testimonial.name}</p>
+                          <p className="text-xs text-muted-foreground">{testimonial.role}</p>
+                        </div>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+              {/* FAQ Section */}
+              <div className="bg-card rounded-2xl p-8 border border-border">
+                <h2 className="text-2xl font-semibold mb-6">Frequently Asked Questions</h2>
+                <div className="space-y-6">
+                  {[
+                    { q: "What's included in my ticket?", a: "Your ticket includes access to all sessions, workshops, networking events, and refreshments. You'll also receive presentation materials and recordings." },
+                    { q: "Can I get a refund?", a: "Full refunds are available up to 7 days before the event. After that, tickets can be transferred to another person." },
+                    { q: "Will sessions be recorded?", a: "Yes! All attendees will receive access to session recordings within 48 hours of the event." },
+                    { q: "Is the venue accessible?", a: "Absolutely. The venue is fully wheelchair accessible with ramps, elevators, and accessible restrooms." },
+                    { q: "What should I bring?", a: "Just bring yourself and business cards! We'll provide notebooks, pens, and all materials." }
+                  ].map((faq, i) => (
+                    <div key={i} className="pb-6 border-b border-border last:border-0 last:pb-0">
+                      <h3 className="font-semibold text-lg mb-2">{faq.q}</h3>
+                      <p className="text-muted-foreground">{faq.a}</p>
+                    </div>
                   ))}
                 </div>
               </div>
