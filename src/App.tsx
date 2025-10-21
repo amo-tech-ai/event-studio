@@ -18,6 +18,10 @@ import { queryClient } from "@/lib/queryClient";
 import Home from "./pages/Home";
 import Events from "./pages/Events";
 import EventDetails from "./pages/EventDetails";
+import EventRegistration from "./pages/EventRegistration";
+import TicketSelection from "./pages/TicketSelection";
+import PaymentPage from "./pages/PaymentPage";
+import OrderConfirmation from "./pages/OrderConfirmation";
 import Dashboard from "./pages/Dashboard";
 import DashboardEvents from "./pages/DashboardEvents";
 import DashboardBookings from "./pages/DashboardBookings";
@@ -38,8 +42,12 @@ const App = () => (
           <Routes>
             {/* Public Routes */}
             <Route path="/" element={<Home />} />
-            <Route path="/events" element={<Events />} />
-            <Route path="/event/:slug" element={<EventDetails />} />
+      <Route path="/events" element={<Events />} />
+      <Route path="/event/:slug" element={<EventDetails />} />
+      <Route path="/event/:slug/register" element={<EventRegistration />} />
+      <Route path="/event/:slug/tickets" element={<TicketSelection />} />
+      <Route path="/event/:slug/payment" element={<PaymentPage />} />
+      <Route path="/event/:slug/confirmation" element={<OrderConfirmation />} />
             <Route path="/auth" element={<Auth />} />
 
             {/* Protected Routes - Require Authentication */}
