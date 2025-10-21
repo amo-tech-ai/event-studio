@@ -15,27 +15,47 @@ const Home = () => {
       <Navbar />
 
       {/* Hero Section */}
-      <section className="section-hero">
-        <div className="container-custom text-center">
+      <section className="relative section-hero overflow-hidden">
+        {/* Wave Background Layers */}
+        <div className="absolute inset-0 pointer-events-none">
+          <svg className="absolute bottom-0 w-full h-[120%]" viewBox="0 0 1440 800" preserveAspectRatio="none">
+            <path d="M0,400 C360,320 720,480 1440,400 L1440,800 L0,800 Z" fill="hsl(var(--accent)/0.15)" />
+            <path d="M0,480 C360,400 720,560 1440,480 L1440,800 L0,800 Z" fill="hsl(var(--accent)/0.1)" />
+            <path d="M0,560 C360,480 720,640 1440,560 L1440,800 L0,800 Z" fill="hsl(var(--muted)/0.2)" />
+          </svg>
+        </div>
+
+        {/* Floating Geometric Shapes */}
+        <div className="absolute inset-0 pointer-events-none overflow-hidden">
+          <div className="absolute top-20 left-[10%] w-24 h-24 rounded-3xl bg-primary/10 blur-sm animate-float" style={{ animationDelay: '0s', animationDuration: '8s' }} />
+          <div className="absolute top-40 right-[15%] w-16 h-16 rounded-full bg-accent/15 blur-sm animate-float" style={{ animationDelay: '2s', animationDuration: '10s' }} />
+          <div className="absolute bottom-32 left-[20%] w-20 h-20 rounded-2xl bg-primary/12 blur-sm animate-float" style={{ animationDelay: '4s', animationDuration: '12s' }} />
+          <div className="absolute top-[30%] right-[8%] w-28 h-28 rounded-3xl bg-accent/10 blur-sm animate-float" style={{ animationDelay: '1s', animationDuration: '9s' }} />
+          <div className="absolute bottom-48 right-[25%] w-14 h-14 rounded-full bg-primary/15 blur-sm animate-float" style={{ animationDelay: '3s', animationDuration: '11s' }} />
+        </div>
+
+        <div className="container-custom text-center relative z-10">
           <div className="max-w-5xl mx-auto animate-fade-in-up">
-            <h1 className="text-5xl md:text-7xl lg:text-8xl font-semibold mb-8 leading-tight tracking-tight">
-              Create, Manage, and Grow<br />
-              Events in Minutes —<br />
-              <span className="text-primary">Powered by AI</span>
-            </h1>
-            <p className="text-lg md:text-xl text-muted-foreground mb-10 max-w-2xl mx-auto" style={{ lineHeight: '1.6' }}>
-              EventOS automates event planning, marketing, and analytics through multi-agent AI orchestration.
-            </p>
-            <div className="flex flex-col sm:flex-row gap-4 justify-center mb-12">
-              <Link to="/event-wizard">
-                <Button className="btn-hero px-8 py-4">
-                  Start Your Free Trial
+            {/* White Content Box */}
+            <div className="bg-card/95 backdrop-blur-sm rounded-3xl shadow-lg p-12 md:p-16 border border-border/50">
+              <h1 className="text-5xl md:text-7xl lg:text-8xl font-semibold mb-8 leading-tight tracking-tight">
+                Create, Manage & Grow<br />
+                Events in Minutes
+              </h1>
+              <p className="text-lg md:text-xl text-muted-foreground mb-10 max-w-2xl mx-auto" style={{ lineHeight: '1.6' }}>
+                EventOS automates event planning, marketing, and analytics through multi-agent AI orchestration.
+              </p>
+              <div className="flex flex-col sm:flex-row gap-4 justify-center">
+                <Link to="/event-wizard">
+                  <Button className="btn-hero px-8 py-4">
+                    Start Your Free Trial
+                  </Button>
+                </Link>
+                <Button className="btn-outline-hero px-8 py-4">
+                  <Play className="w-4 h-4 mr-2" />
+                  Watch the 3-Minute AI Demo
                 </Button>
-              </Link>
-              <Button className="btn-outline-hero px-8 py-4">
-                <Play className="w-4 h-4 mr-2" />
-                Watch the 3-Minute AI Demo
-              </Button>
+              </div>
             </div>
           </div>
         </div>
