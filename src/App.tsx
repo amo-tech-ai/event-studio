@@ -16,6 +16,8 @@ import { queryClient } from "@/lib/queryClient";
 
 // Page imports
 import Home from "./pages/Home";
+import Events from "./pages/Events";
+import EventDetails from "./pages/EventDetails";
 import Dashboard from "./pages/Dashboard";
 import DashboardEvents from "./pages/DashboardEvents";
 import DashboardBookings from "./pages/DashboardBookings";
@@ -36,6 +38,8 @@ const App = () => (
           <Routes>
             {/* Public Routes */}
             <Route path="/" element={<Home />} />
+            <Route path="/events" element={<Events />} />
+            <Route path="/event/:slug" element={<EventDetails />} />
             <Route path="/auth" element={<Auth />} />
 
             {/* Protected Routes - Require Authentication */}
