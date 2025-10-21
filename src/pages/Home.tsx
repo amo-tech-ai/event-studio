@@ -190,11 +190,8 @@ const Home = () => {
             </p>
           </div>
 
-          {/* Vertical Timeline Layout */}
-          <div className="max-w-4xl mx-auto mb-16 relative">
-            {/* Timeline Line */}
-            <div className="hidden md:block absolute left-[42px] top-8 bottom-8 w-0.5 bg-border/50" />
-            
+          {/* Single Column Layout */}
+          <div className="max-w-2xl mx-auto mb-16">
             <div className="space-y-6">
               {[
                 { step: "1", title: "Basic Info", desc: "Event name, type, date, and core details", icon: FileText },
@@ -205,32 +202,32 @@ const Home = () => {
                 { step: "6", title: "Marketing Plan", desc: "Multi-channel campaign automation", icon: MessageSquare },
                 { step: "7", title: "Publish & Track", desc: "Go live and monitor performance", icon: BarChart3 }
               ].map((item, i) => (
-                <div key={i} className="relative flex gap-6 items-start group">
-                  {/* Step Number Circle */}
-                  <div className="flex-shrink-0 w-[84px] flex justify-center relative z-10">
-                    <div className="w-14 h-14 rounded-full bg-primary/10 border-2 border-background flex items-center justify-center shadow-sm group-hover:bg-primary/15 transition-colors duration-300">
+                <div 
+                  key={i} 
+                  className="bg-card rounded-2xl p-8 border border-border/50 shadow-sm hover:shadow-md transition-all duration-300 hover:-translate-y-1"
+                >
+                  {/* Step Number - Centered at Top */}
+                  <div className="flex justify-center mb-4">
+                    <div className="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center">
                       <span className="text-lg font-semibold text-primary">{item.step}</span>
                     </div>
                   </div>
                   
-                  {/* Card Content */}
-                  <div className="flex-1 bg-card rounded-2xl p-6 md:p-8 border border-border/50 shadow-sm hover:shadow-md transition-all duration-300 group-hover:-translate-y-0.5">
-                    <div className="flex items-start gap-5">
-                      {/* Icon */}
-                      <div className="flex-shrink-0 w-14 h-14 md:w-16 md:h-16 rounded-xl bg-primary/5 flex items-center justify-center group-hover:bg-primary/10 transition-colors duration-300">
-                        <item.icon className="w-6 h-6 md:w-7 md:h-7 text-primary" />
-                      </div>
-                      
-                      {/* Text Content */}
-                      <div className="flex-1 min-w-0">
-                        <h3 className="text-lg md:text-xl font-semibold mb-2 text-foreground">
-                          {item.title}
-                        </h3>
-                        <p className="text-sm md:text-base text-muted-foreground leading-relaxed">
-                          {item.desc}
-                        </p>
-                      </div>
+                  {/* Icon - Centered */}
+                  <div className="flex justify-center mb-4">
+                    <div className="w-16 h-16 rounded-xl bg-primary/5 flex items-center justify-center">
+                      <item.icon className="w-7 h-7 text-primary" />
                     </div>
+                  </div>
+                  
+                  {/* Text Content - Centered */}
+                  <div className="text-center">
+                    <h3 className="text-xl font-semibold mb-3 text-foreground">
+                      {item.title}
+                    </h3>
+                    <p className="text-base text-muted-foreground leading-relaxed">
+                      {item.desc}
+                    </p>
                   </div>
                 </div>
               ))}
@@ -240,8 +237,8 @@ const Home = () => {
           {/* CTA */}
           <div className="text-center">
             <Link to="/event-wizard">
-              <Button className="btn-hero px-10 py-4 shadow-sm hover:shadow-md transition-shadow duration-300">
-                Try the Event Wizard Now
+              <Button className="btn-hero px-10 py-6 text-lg shadow-sm hover:shadow-md transition-shadow duration-300">
+                Launch Event Wizard
               </Button>
             </Link>
             <p className="text-sm text-muted-foreground mt-4">
