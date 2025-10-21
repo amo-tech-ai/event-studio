@@ -22,6 +22,10 @@ import EventRegistration from "./pages/EventRegistration";
 import TicketSelection from "./pages/TicketSelection";
 import PaymentPage from "./pages/PaymentPage";
 import OrderConfirmation from "./pages/OrderConfirmation";
+import RegistrationCheckout from "./pages/RegistrationCheckout";
+import OrderTracking from "./pages/OrderTracking";
+import MobileRegistration from "./pages/MobileRegistration";
+import RegistrationError from "./pages/RegistrationError";
 import Dashboard from "./pages/Dashboard";
 import DashboardEvents from "./pages/DashboardEvents";
 import DashboardBookings from "./pages/DashboardBookings";
@@ -48,6 +52,10 @@ const App = () => (
       <Route path="/event/:slug/tickets" element={<TicketSelection />} />
       <Route path="/event/:slug/payment" element={<PaymentPage />} />
       <Route path="/event/:slug/confirmation" element={<OrderConfirmation />} />
+      <Route path="/checkout/:orderId" element={<RegistrationCheckout />} />
+      <Route path="/orders/:orderId" element={<OrderTracking />} />
+      <Route path="/m/event/:slug/register" element={<MobileRegistration />} />
+      <Route path="/error/registration" element={<RegistrationError />} />
             <Route path="/auth" element={<Auth />} />
 
             {/* Protected Routes - Require Authentication */}
