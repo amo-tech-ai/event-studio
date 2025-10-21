@@ -35,6 +35,7 @@ import DashboardEventDetails from "./pages/DashboardEventDetails";
 import Auth from "./pages/Auth";
 import NotFound from "./pages/NotFound";
 import EventWizard from "./pages/EventWizard";
+import AIEventWizard from "./pages/AIEventWizard";
 
 const App = () => (
   <QueryClientProvider client={queryClient}>
@@ -61,6 +62,7 @@ const App = () => (
             {/* Protected Routes - Require Authentication */}
             <Route element={<ProtectedRoute />}>
               <Route path="/event-wizard" element={<EventWizard />} />
+              <Route path="/ai-wizard" element={<AIEventWizard />} />
               <Route path="/dashboard" element={<Dashboard />} />
               <Route path="/dashboard/events" element={<DashboardEvents />} />
               <Route path="/dashboard/events/:id" element={<DashboardEventDetails />} />
