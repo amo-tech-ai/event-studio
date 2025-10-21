@@ -206,13 +206,6 @@ const Home = () => {
                   key={i} 
                   className="bg-card rounded-2xl p-8 border border-border/50 shadow-sm hover:shadow-md transition-all duration-300 hover:-translate-y-1"
                 >
-                  {/* Step Number - Centered at Top */}
-                  <div className="flex justify-center mb-4">
-                    <div className="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center">
-                      <span className="text-lg font-semibold text-primary">{item.step}</span>
-                    </div>
-                  </div>
-                  
                   {/* Icon - Centered */}
                   <div className="flex justify-center mb-4">
                     <div className="w-16 h-16 rounded-xl bg-primary/5 flex items-center justify-center">
