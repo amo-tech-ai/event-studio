@@ -8,8 +8,8 @@
 
 @layer base {
   :root {
-    /* Pastel Blue Design System - Notion × Linear × Framer inspired */
-    --background: 180 33% 93%; /* #E5F4F4 - Soft pastel blue */
+    /* Coral & Cream Design System - Original EventOS Palette */
+    --background: 30 25% 95%; /* #F5F1ED - Warm cream background */
     --foreground: 0 0% 10%; /* #1A1A1A - Dark gray text */
 
     --card: 0 0% 100%; /* #FFFFFF - White cards */
@@ -18,25 +18,25 @@
     --popover: 0 0% 100%;
     --popover-foreground: 0 0% 10%;
 
-    --primary: 200 15% 59%; /* #879BA6 - Muted blue-gray buttons */
+    --primary: 14 70% 50%; /* #C45836 - Coral/terracotta orange */
     --primary-foreground: 0 0% 100%;
-    --primary-dark: 200 20% 45%; /* Darker variant for hover */
+    --primary-dark: 14 75% 42%; /* Darker coral for hover */
 
-    --secondary: 206 28% 71%; /* #A3BCCB - Medium blue accents */
+    --secondary: 24 50% 65%; /* #D89A7A - Lighter coral accent */
     --secondary-foreground: 0 0% 10%;
 
-    --muted: 180 25% 95%; /* Very light blue */
-    --muted-foreground: 200 10% 45%; /* Muted blue-gray text */
+    --muted: 30 20% 92%; /* Very light cream */
+    --muted-foreground: 25 15% 45%; /* Muted warm gray text */
 
-    --accent: 206 28% 71%; /* #A3BCCB - Accent color */
-    --accent-foreground: 0 0% 10%;
+    --accent: 14 70% 50%; /* Coral accent color */
+    --accent-foreground: 0 0% 100%;
 
     --destructive: 0 84% 60%;
     --destructive-foreground: 0 0% 100%;
 
-    --border: 200 20% 88%; /* Light blue-gray border */
-    --input: 200 20% 88%;
-    --ring: 200 15% 59%;
+    --border: 30 15% 88%; /* Light warm gray border */
+    --input: 30 15% 88%;
+    --ring: 14 70% 50%;
 
     --radius: 0.75rem; /* More rounded for modern feel */
     
@@ -46,37 +46,37 @@
     /* Sidebar */
     --sidebar-background: 0 0% 100%;
     --sidebar-foreground: 0 0% 10%;
-    --sidebar-primary: 200 15% 59%;
+    --sidebar-primary: 14 70% 50%;
     --sidebar-primary-foreground: 0 0% 100%;
-    --sidebar-accent: 180 33% 95%;
+    --sidebar-accent: 30 25% 95%;
     --sidebar-accent-foreground: 0 0% 10%;
-    --sidebar-border: 200 20% 88%;
-    --sidebar-ring: 200 15% 59%;
+    --sidebar-border: 30 15% 88%;
+    --sidebar-ring: 14 70% 50%;
   }
 
   .dark {
-    --background: 200 30% 8%;
-    --foreground: 180 20% 95%;
+    --background: 20 15% 10%;
+    --foreground: 30 20% 95%;
 
-    --card: 200 25% 10%;
-    --card-foreground: 180 20% 95%;
+    --card: 20 15% 12%;
+    --card-foreground: 30 20% 95%;
 
-    --primary: 200 15% 59%;
+    --primary: 14 70% 50%;
     --primary-foreground: 0 0% 100%;
-    --primary-dark: 200 20% 45%;
+    --primary-dark: 14 75% 42%;
 
-    --secondary: 206 28% 71%;
+    --secondary: 24 50% 65%;
     --secondary-foreground: 0 0% 10%;
 
-    --muted: 200 20% 15%;
-    --muted-foreground: 200 10% 60%;
+    --muted: 20 15% 18%;
+    --muted-foreground: 30 10% 60%;
 
-    --accent: 206 28% 71%;
-    --accent-foreground: 0 0% 10%;
+    --accent: 14 70% 50%;
+    --accent-foreground: 0 0% 100%;
 
-    --border: 200 20% 15%;
-    --input: 200 20% 15%;
-    --ring: 200 15% 59%;
+    --border: 20 15% 20%;
+    --input: 20 15% 20%;
+    --ring: 14 70% 50%;
   }
 }
 
@@ -122,10 +122,10 @@
   
   .section-hero::before {
     content: '';
-    @apply absolute top-0 left-0 w-full h-full opacity-30 pointer-events-none;
+    @apply absolute top-0 left-0 w-full h-full opacity-20 pointer-events-none;
     background: 
-      radial-gradient(circle at 20% 30%, hsl(var(--secondary) / 0.3) 0%, transparent 50%),
-      radial-gradient(circle at 80% 70%, hsl(var(--accent) / 0.2) 0%, transparent 50%);
+      radial-gradient(circle at 20% 30%, hsl(var(--primary) / 0.15) 0%, transparent 50%),
+      radial-gradient(circle at 80% 70%, hsl(var(--secondary) / 0.1) 0%, transparent 50%);
   }
 
   /* Card Variants - Soft Pastel Style with Shadows */
