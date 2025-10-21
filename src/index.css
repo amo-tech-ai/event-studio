@@ -8,75 +8,75 @@
 
 @layer base {
   :root {
-    /* Breef-inspired Design System */
-    --background: 40 23% 96%; /* #F9F7F3 */
-    --foreground: 27 91% 5%; /* #120902 */
+    /* Pastel Blue Design System - Notion × Linear × Framer inspired */
+    --background: 180 33% 93%; /* #E5F4F4 - Soft pastel blue */
+    --foreground: 0 0% 10%; /* #1A1A1A - Dark gray text */
 
-    --card: 0 0% 100%; /* White */
-    --card-foreground: 27 91% 5%;
+    --card: 0 0% 100%; /* #FFFFFF - White cards */
+    --card-foreground: 0 0% 10%;
 
     --popover: 0 0% 100%;
-    --popover-foreground: 27 91% 5%;
+    --popover-foreground: 0 0% 10%;
 
-    --primary: 20 67% 52%; /* #D96E34 */
+    --primary: 200 15% 59%; /* #879BA6 - Muted blue-gray buttons */
     --primary-foreground: 0 0% 100%;
-    --primary-dark: 20 62% 26%; /* #6D371A */
+    --primary-dark: 200 20% 45%; /* Darker variant for hover */
 
-    --secondary: 50 8% 31%; /* #56544B */
-    --secondary-foreground: 0 0% 100%;
+    --secondary: 206 28% 71%; /* #A3BCCB - Medium blue accents */
+    --secondary-foreground: 0 0% 10%;
 
-    --muted: 45 14% 90%; /* #E9E8E1 */
-    --muted-foreground: 40 2% 49%; /* #7D7C7A */
+    --muted: 180 25% 95%; /* Very light blue */
+    --muted-foreground: 200 10% 45%; /* Muted blue-gray text */
 
-    --accent: 20 67% 52%;
-    --accent-foreground: 0 0% 100%;
+    --accent: 206 28% 71%; /* #A3BCCB - Accent color */
+    --accent-foreground: 0 0% 10%;
 
     --destructive: 0 84% 60%;
     --destructive-foreground: 0 0% 100%;
 
-    --border: 45 14% 90%;
-    --input: 45 14% 90%;
-    --ring: 20 67% 52%;
+    --border: 200 20% 88%; /* Light blue-gray border */
+    --input: 200 20% 88%;
+    --ring: 200 15% 59%;
 
-    --radius: 0.25rem;
+    --radius: 0.75rem; /* More rounded for modern feel */
     
     /* Footer */
-    --footer-bg: 27 91% 5%;
+    --footer-bg: 0 0% 10%;
     
     /* Sidebar */
-    --sidebar-background: 0 0% 98%;
-    --sidebar-foreground: 240 5.3% 26.1%;
-    --sidebar-primary: 240 5.9% 10%;
-    --sidebar-primary-foreground: 0 0% 98%;
-    --sidebar-accent: 240 4.8% 95.9%;
-    --sidebar-accent-foreground: 240 5.9% 10%;
-    --sidebar-border: 220 13% 91%;
-    --sidebar-ring: 217.2 91.2% 59.8%;
+    --sidebar-background: 0 0% 100%;
+    --sidebar-foreground: 0 0% 10%;
+    --sidebar-primary: 200 15% 59%;
+    --sidebar-primary-foreground: 0 0% 100%;
+    --sidebar-accent: 180 33% 95%;
+    --sidebar-accent-foreground: 0 0% 10%;
+    --sidebar-border: 200 20% 88%;
+    --sidebar-ring: 200 15% 59%;
   }
 
   .dark {
-    --background: 27 91% 5%;
-    --foreground: 40 23% 96%;
+    --background: 200 30% 8%;
+    --foreground: 180 20% 95%;
 
-    --card: 27 50% 8%;
-    --card-foreground: 40 23% 96%;
+    --card: 200 25% 10%;
+    --card-foreground: 180 20% 95%;
 
-    --primary: 20 67% 52%;
+    --primary: 200 15% 59%;
     --primary-foreground: 0 0% 100%;
-    --primary-dark: 20 62% 26%;
+    --primary-dark: 200 20% 45%;
 
-    --secondary: 50 8% 31%;
-    --secondary-foreground: 40 23% 96%;
+    --secondary: 206 28% 71%;
+    --secondary-foreground: 0 0% 10%;
 
-    --muted: 50 8% 15%;
-    --muted-foreground: 40 2% 60%;
+    --muted: 200 20% 15%;
+    --muted-foreground: 200 10% 60%;
 
-    --accent: 20 67% 52%;
-    --accent-foreground: 0 0% 100%;
+    --accent: 206 28% 71%;
+    --accent-foreground: 0 0% 10%;
 
-    --border: 50 8% 15%;
-    --input: 50 8% 15%;
-    --ring: 20 67% 52%;
+    --border: 200 20% 15%;
+    --input: 200 20% 15%;
+    --ring: 200 15% 59%;
   }
 }
 
@@ -117,41 +117,50 @@
   }
 
   .section-hero {
-    @apply pt-32 pb-20 md:pt-40 md:pb-32 bg-background;
+    @apply pt-32 pb-20 md:pt-40 md:pb-32 bg-background relative overflow-hidden;
+  }
+  
+  .section-hero::before {
+    content: '';
+    @apply absolute top-0 left-0 w-full h-full opacity-30 pointer-events-none;
+    background: 
+      radial-gradient(circle at 20% 30%, hsl(var(--secondary) / 0.3) 0%, transparent 50%),
+      radial-gradient(circle at 80% 70%, hsl(var(--accent) / 0.2) 0%, transparent 50%);
   }
 
-  /* Card Variants - Minimal Breef Style */
+  /* Card Variants - Soft Pastel Style with Shadows */
   .card-feature {
-    @apply bg-card rounded p-12 text-center border border-border transition-all duration-300;
+    @apply bg-card rounded-xl p-12 text-center border border-border/50 shadow-lg transition-all duration-300;
   }
 
   .card-soft {
-    @apply bg-card rounded p-8 border border-border transition-all duration-300;
+    @apply bg-card rounded-xl p-8 border border-border/50 shadow-md transition-all duration-300;
   }
 
-  /* Buttons - Breef Style */
+  /* Buttons - Soft Pastel Style */
   .btn-hero {
     @apply inline-flex items-center justify-center px-8 py-4 text-base font-medium;
-    @apply bg-primary text-primary-foreground rounded transition-all duration-300;
+    @apply bg-primary text-primary-foreground rounded-lg shadow-md transition-all duration-300;
   }
 
   .btn-hero:hover {
     background: hsl(var(--primary-dark));
+    @apply shadow-lg transform -translate-y-0.5;
   }
 
   .btn-outline-hero {
     @apply inline-flex items-center justify-center px-8 py-4 text-base font-medium;
-    @apply border border-foreground text-foreground rounded bg-transparent;
-    @apply transition-all duration-300;
+    @apply border-2 border-primary text-primary rounded-lg bg-card/50;
+    @apply transition-all duration-300 shadow-sm;
   }
 
   .btn-outline-hero:hover {
-    @apply bg-foreground text-background;
+    @apply bg-primary text-primary-foreground shadow-md transform -translate-y-0.5;
   }
 
-  /* Icon Containers */
+  /* Icon Containers - Soft with subtle shadows */
   .icon-box {
-    @apply w-12 h-12 rounded bg-muted flex items-center justify-center mb-6;
+    @apply w-12 h-12 rounded-xl bg-secondary/20 flex items-center justify-center mb-6 shadow-sm;
   }
 
   /* Footer */
@@ -160,13 +169,13 @@
     background: hsl(var(--footer-bg));
   }
 
-  /* Minimal Hover Effects */
+  /* Gentle Hover Effects with Lift */
   .hover-lift {
     @apply transition-all duration-300;
   }
 
   .hover-lift:hover {
-    @apply border-foreground/20;
+    @apply shadow-xl transform -translate-y-1;
   }
 
   /* Animations */
