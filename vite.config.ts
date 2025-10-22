@@ -30,8 +30,8 @@ export default defineConfig(({ mode }) => ({
       output: {
         // Manual chunk splitting for better code organization
         manualChunks: {
-          // Vendor chunks
-          'react-vendor': ['react', 'react-dom', 'react-router-dom'],
+          // Vendor chunks - React Query bundled with React to avoid instance issues
+          'react-vendor': ['react', 'react-dom', 'react-router-dom', '@tanstack/react-query'],
           'ui-vendor': [
             '@radix-ui/react-dialog',
             '@radix-ui/react-dropdown-menu',
@@ -41,7 +41,6 @@ export default defineConfig(({ mode }) => ({
           ],
           'chart-vendor': ['recharts'],
           'supabase-vendor': ['@supabase/supabase-js'],
-          'query-vendor': ['@tanstack/react-query'],
         },
       },
     },
