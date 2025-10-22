@@ -40,6 +40,15 @@ import RegistrationAnalytics from "./pages/RegistrationAnalytics";
 import EmailTemplates from "./pages/EmailTemplates";
 import MyRegistrations from "./pages/MyRegistrations";
 import RegistrationLanding from "./pages/RegistrationLanding";
+import DashboardAnalytics from "./pages/DashboardAnalytics";
+import DashboardCalendar from "./pages/DashboardCalendar";
+import DashboardOrganizers from "./pages/DashboardOrganizers";
+import DashboardVenues from "./pages/DashboardVenues";
+import DashboardSettings from "./pages/DashboardSettings";
+import AIVenueSelection from "./pages/AIVenueSelection";
+import AITicketingSetup from "./pages/AITicketingSetup";
+import AIAgendaBuilder from "./pages/AIAgendaBuilder";
+import AIMarketingDashboard from "./pages/AIMarketingDashboard";
 
 const App = () => (
   <QueryClientProvider client={queryClient}>
@@ -76,11 +85,17 @@ const App = () => (
               <Route path="/dashboard/bookings" element={<DashboardBookings />} />
               <Route path="/dashboard/financials" element={<DashboardFinancials />} />
               <Route path="/dashboard/gallery" element={<DashboardGallery />} />
-              <Route path="/dashboard/analytics" element={<Dashboard />} />
-              <Route path="/dashboard/calendar" element={<Dashboard />} />
-              <Route path="/dashboard/organizers" element={<Dashboard />} />
-              <Route path="/dashboard/venues" element={<Dashboard />} />
-              <Route path="/dashboard/settings" element={<Dashboard />} />
+              <Route path="/dashboard/analytics" element={<DashboardAnalytics />} />
+              <Route path="/dashboard/calendar" element={<DashboardCalendar />} />
+              <Route path="/dashboard/organizers" element={<DashboardOrganizers />} />
+              <Route path="/dashboard/venues" element={<DashboardVenues />} />
+              <Route path="/dashboard/settings" element={<DashboardSettings />} />
+              
+              {/* AI Wizard Routes */}
+              <Route path="/ai-wizard/venues" element={<AIVenueSelection />} />
+              <Route path="/ai-wizard/tickets" element={<AITicketingSetup />} />
+              <Route path="/ai-wizard/agenda" element={<AIAgendaBuilder />} />
+              <Route path="/ai-wizard/marketing" element={<AIMarketingDashboard />} />
             </Route>
 
             {/* Public Registration Landing */}
