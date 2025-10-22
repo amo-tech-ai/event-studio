@@ -1,3 +1,4 @@
+import DashboardLayout from "@/components/DashboardLayout";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -5,6 +6,14 @@ import { Badge } from "@/components/ui/badge";
 import { Search, MapPin, Users, DollarSign, Wifi, Utensils, Car, Monitor, Plus, Map } from "lucide-react";
 
 export default function DashboardVenues() {
+  return (
+    <DashboardLayout>
+      <VenuesContent />
+    </DashboardLayout>
+  );
+}
+
+function VenuesContent() {
   const venues = [
     {
       id: 1,

@@ -1,10 +1,19 @@
 import { useState } from "react";
+import DashboardLayout from "@/components/DashboardLayout";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { ChevronLeft, ChevronRight, Calendar as CalendarIcon, MapPin, Clock, Edit, Eye, Copy } from "lucide-react";
 
 export default function DashboardCalendar() {
+  return (
+    <DashboardLayout>
+      <CalendarContent />
+    </DashboardLayout>
+  );
+}
+
+function CalendarContent() {
   const [selectedEvent, setSelectedEvent] = useState<any>(null);
 
   const events = [

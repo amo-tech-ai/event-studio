@@ -1,9 +1,22 @@
+import DashboardLayout from "@/components/DashboardLayout";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { TrendingUp, Users, Target, Award, Download, FileText } from "lucide-react";
 
 export default function DashboardAnalytics() {
+  return (
+    <DashboardLayout>
+      <div className="max-w-7xl mx-auto">
+        <h1 className="text-3xl font-bold mb-2">Analytics Dashboard</h1>
+        <p className="text-muted-foreground mb-8">Track your event performance</p>
+        <AnalyticsContent />
+      </div>
+    </DashboardLayout>
+  );
+}
+
+function AnalyticsContent() {
   const metrics = [
     { label: "Revenue", value: "$45,000", change: "+12%", icon: TrendingUp, trend: "up" },
     { label: "Attendees", value: "1,250", change: "+8%", icon: Users, trend: "up" },
