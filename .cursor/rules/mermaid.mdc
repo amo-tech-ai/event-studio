@@ -1,0 +1,609 @@
+---
+description: Advanced Mermaid diagram generation with comprehensive syntax support and AI-optimized prompting
+globs: "**/*.md, **/*.mdc, **/*.mdx, **/*.mermaid"
+alwaysApply: true
+---
+
+# Advanced Mermaid Diagram Generator for Claude
+
+## 🎯 **Core Purpose**
+Transform ANY textual diagram idea, natural language description, malformed/incomplete Mermaid code, or embedded Mermaid blocks into **production-ready, syntactically pristine, visually compelling, and interactive Mermaid diagrams** with comprehensive syntax support and AI-optimized prompting.
+
+## 🚀 **Operational Phases (Refinement Lifecycle)**
+
+### **Phase 1: Input Ingestion & Contextual Analysis**
+1. **Isolate Mermaid Content:** Extract content from `` `mermaid ...` `` blocks in Markdown
+2. **Pre-sanitize:** Normalize whitespace; identify explicit user flags (`theme:`, `type:`, `layout:`)
+3. **Diagram Type & Layout Inference:** Determine appropriate Mermaid diagram type and layout direction
+4. **Default Strategy:** If ambiguous, default to `flowchart TD` and note assumption
+
+### **Phase 2: Syntactic & Structural Perfection**
+1. **Strict Syntax Enforcement:** Apply specific syntax rules for inferred diagram type
+2. **Code Formatting:** Apply consistent indentation and spacing for readability
+3. **Validation:** Ensure all syntax is correct and executable
+
+### **Phase 3: Visual Styling & Clarity Enhancement**
+1. **Theme & Color Application:** Apply WCAG-compliant, professional base theme
+2. **User Theme Honor:** Respect `theme: dark | corporate | {JSON_object_for_themeVariables}`
+3. **Layout Optimization:** Refine layout for balance and legibility
+
+### **Phase 4: Interactivity & Documentation Augmentation**
+1. **Click Actions & Links:** Implement `click`, `link`, `links` directives
+2. **Tooltips:** Generate tooltips from `%% comments %%` or complex elements
+3. **Changelog:** Prepare concise list of key refinements
+
+### **Phase 5: Output Assembly**
+1. **Final Code Block:** Compile validated Mermaid code
+2. **Changelog Delivery:** Provide concise refinement summary
+
+## 🎨 **Comprehensive Diagram Type Support**
+
+### **Core Diagram Types**
+
+#### 1. **Flowchart** (`flowchart` or `graph`)
+- **Use for:** Logical processes, decisions, workflows, system flows
+- **Direction:** `TD` (top-down), `LR` (left-right), `RL` (right-left), `BT` (bottom-top)
+- **Syntax:** `flowchart TD` or `graph TD`
+- **Best for:** Event wizard stages, user journeys, business processes
+
+#### 2. **Sequence Diagram** (`sequenceDiagram`)
+- **Use for:** User/system interactions over time, API calls, message passing
+- **Syntax:** `sequenceDiagram` with `participant`, `->>`, `-->>`, `activate`, `deactivate`
+- **Best for:** AI agent interactions, real-time communications, multi-step processes
+
+#### 3. **Class Diagram** (`classDiagram`)
+- **Use for:** Software architecture, object relationships, database schemas
+- **Syntax:** `classDiagram` with `class`, `interface`, `enum`, relationships
+- **Best for:** Database ERDs, system architecture, component relationships
+
+#### 4. **State Diagram** (`stateDiagram`)
+- **Use for:** Finite state machines, wizard states, process states
+- **Syntax:** `stateDiagram-v2` with states, transitions, notes
+- **Best for:** Event lifecycle, user authentication flows, order statuses
+
+#### 5. **Entity Relationship Diagram (ERD)** (`erDiagram`)
+- **Use for:** Database relationships, data models, table connections
+- **Syntax:** `erDiagram` with entities, attributes, relationships
+- **Best for:** Database schema visualization, data flow analysis
+
+#### 6. **Gantt Chart** (`gantt`)
+- **Use for:** Project timelines, implementation phases, milestone tracking
+- **Syntax:** `gantt` with `title`, `dateFormat`, `section`, tasks
+- **Best for:** Development roadmaps, feature rollouts, sprint planning
+
+### **Advanced Diagram Types**
+
+#### 7. **Git Graph** (`gitGraph`)
+- **Use for:** Git workflow visualization, branch management
+- **Syntax:** `gitGraph` with `commit`, `branch`, `merge`, `checkout`
+- **Best for:** Version control workflows, release management
+
+#### 8. **Pie Chart** (`pie`)
+- **Use for:** Data distribution, percentage breakdowns
+- **Syntax:** `pie` with `title` and data points
+- **Best for:** Analytics dashboards, survey results
+
+#### 9. **Journey Diagram** (`journey`)
+- **Use for:** User experience mapping, customer journeys
+- **Syntax:** `journey` with `title`, `section`, steps
+- **Best for:** UX research, customer experience mapping
+
+#### 10. **Timeline** (`timeline`)
+- **Use for:** Historical events, project milestones, chronological data
+- **Syntax:** `timeline` with `title`, `section`, events
+- **Best for:** Project history, feature releases, company milestones
+
+#### 11. **Mindmap** (`mindmap`)
+- **Use for:** Brainstorming, concept mapping, knowledge organization
+- **Syntax:** `mindmap` with hierarchical structure
+- **Best for:** Planning sessions, knowledge management
+
+#### 12. **Block Diagram** (`block-beta`)
+- **Use for:** System architecture, component relationships
+- **Syntax:** `block-beta` with `columns`, `blocks`, `spaces`
+- **Best for:** Infrastructure diagrams, system architecture
+
+#### 13. **Sankey Diagram** (`sankey-beta`)
+- **Use for:** Flow visualization, resource allocation
+- **Syntax:** `sankey-beta` with `flows`, `nodes`
+- **Best for:** Data flow analysis, resource tracking
+
+#### 14. **Timeline** (`timeline`)
+- **Use for:** Historical events, project milestones
+- **Syntax:** `timeline` with `title`, `section`, events
+- **Best for:** Project history, feature releases
+
+#### 15. **Architecture Diagram** (`architecture-beta`)
+- **Use for:** System architecture, infrastructure visualization
+- **Syntax:** `architecture-beta` with `service`, `group`, `junction`
+- **Best for:** Cloud architecture, microservices, system design
+
+#### 16. **Radar Chart** (`radar-beta`)
+- **Use for:** Multi-dimensional data comparison
+- **Syntax:** `radar-beta` with `axis`, `curve`, configuration
+- **Best for:** Skill assessments, performance comparisons
+
+#### 17. **Kanban Board** (`kanban`)
+- **Use for:** Project management, task tracking
+- **Syntax:** `kanban` with columns and tasks
+- **Best for:** Agile workflows, task management
+
+#### 18. **Packet Diagram** (`packet-beta`)
+- **Use for:** Network protocols, data structures
+- **Syntax:** `packet-beta` with bit field definitions
+- **Best for:** Network engineering, protocol documentation
+
+## 🧩 **Advanced Input Processing & Inference Matrix**
+
+### **Diagram Type Inference Matrix**
+| Primary Keywords / Structure Cues | Inferred Diagram Type | Secondary Cues / Common Elements |
+|-----------------------------------|----------------------|----------------------------------|
+| `-->`, `---`, node shapes `[]` `()` `(())` `{}` `{{}}` `>]` `[/]` `[\\]`, subgraph | flowchart | direction TD/LR/etc., style, classDef, click |
+| participant, actor, `->>`, `-->>`, activate/deactivate, loop, alt, opt, par, note left of | sequenceDiagram | autonumber, link, rect, critical |
+| class, interface, enum, `+`, `-`, `#`, `~`, `*`, `$`, `%` | classDiagram | direction LR/TB, namespace, annotation |
+| state, `[*]`, `-->`, `--`, `:`, `[`, `]` | stateDiagram | direction LR/TB, note, fork, join |
+| entity, attribute, relationship, `||--o{`, `||--||`, `}o--||` | erDiagram | direction LR/TB, attribute, relationship |
+| title, dateFormat, section, `:done`, `:active`, `:crit` | gantt | dateFormat, section, task |
+| commit, branch, merge, checkout, reset | gitGraph | direction TB/LR, commit, branch |
+| title, `"Label" : value` | pie | title, data points |
+| title, section, step | journey | title, section, step |
+| title, section, event | timeline | title, section, event |
+| root, `(Node)`, `[Node]` | mindmap | root, children |
+| columns, blocks, spaces | block-beta | columns, blocks, spaces |
+| flows, nodes | sankey-beta | flows, nodes |
+| service, group, junction | architecture-beta | service, group, junction |
+| axis, curve, configuration | radar-beta | axis, curve, configuration |
+| columns, tasks | kanban | columns, tasks |
+| bit fields, packet header | packet-beta | bit fields, packet header |
+
+### **Input Processing Rules**
+1. **Analyze the flow** - Is it linear, branching, or cyclical?
+2. **Identify participants** - Users, systems, databases, AI agents
+3. **Choose diagram type** - Match complexity to appropriate diagram
+4. **Extract relationships** - What connects the components?
+5. **Apply syntax rules** - Use correct syntax for chosen diagram type
+6. **Validate structure** - Ensure all elements are properly formatted
+
+### **Example Input Analysis:**
+```
+Input: "User creates event → AI generates content → Saves to Supabase → Sends WhatsApp"
+Analysis: Linear flow with 4 steps, multiple participants (User, AI, DB, Messaging)
+Diagram Type: Sequence Diagram (shows interaction over time)
+Syntax: sequenceDiagram with participant, ->>, activate, deactivate
+```
+
+## 📊 **Advanced Output Format & Syntax Specifications**
+
+### **For Every Diagram Request, Provide:**
+
+1. **🏷️ Diagram Type** - Clear identification of chosen diagram type
+2. **📊 Mermaid Code Block** - Complete, executable Mermaid code with proper syntax
+3. **💬 Explanation** - 1-sentence description of what it shows and why it matters
+4. **🔧 Changelog** - Key refinements made (max 5 bullet points)
+
+### **Comprehensive Syntax Specifications**
+
+#### **Flowchart Syntax (`flowchart` or `graph`)**
+```mermaid
+flowchart TD
+    A[Start] --> B[Process]
+    B --> C{Decision?}
+    C -->|Yes| D[Action A]
+    C -->|No| E[Action B]
+    D --> F[End]
+    E --> F
+    
+    %% Styling
+    classDef success fill:#90EE90
+    classDef error fill:#FFB6C1
+    class A,F success
+    class C error
+```
+
+#### **Sequence Diagram Syntax (`sequenceDiagram`)**
+```mermaid
+sequenceDiagram
+    participant U as User
+    participant W as Wizard
+    participant AI as AI Agent
+    participant DB as Database
+    
+    U->>W: Enter Event Details
+    activate W
+    W->>AI: Generate Content
+    activate AI
+    AI->>DB: Save Generated Content
+    activate DB
+    DB-->>AI: Confirm Save
+    deactivate DB
+    AI-->>W: Content Ready
+    deactivate AI
+    W-->>U: Show Preview
+    deactivate W
+```
+
+#### **Class Diagram Syntax (`classDiagram`)**
+```mermaid
+classDiagram
+    class Event {
+        +String title
+        +Date startDate
+        +String status
+        +createEvent()
+        +updateEvent()
+        +deleteEvent()
+    }
+    
+    class Ticket {
+        +String tier
+        +Decimal price
+        +Integer quantity
+        +validateTicket()
+    }
+    
+    Event ||--o{ Ticket : "has"
+    Event ||--o{ Order : "receives"
+```
+
+#### **State Diagram Syntax (`stateDiagram-v2`)**
+```mermaid
+stateDiagram-v2
+    [*] --> Draft
+    Draft --> Published : Publish
+    Published --> Live : Start Event
+    Live --> Completed : End Event
+    Completed --> [*]
+    
+    Draft --> Draft : Edit
+    Published --> Draft : Unpublish
+```
+
+#### **ERD Syntax (`erDiagram`)**
+```mermaid
+erDiagram
+    EVENTS ||--o{ TICKETS : "has"
+    EVENTS ||--o{ ORDERS : "receives"
+    ORDERS ||--o{ ATTENDEES : "contains"
+    USERS ||--o{ EVENTS : "creates"
+    
+    EVENTS {
+        uuid id PK
+        string title
+        timestamp start_date
+        string status
+        decimal price
+    }
+    
+    TICKETS {
+        uuid id PK
+        uuid event_id FK
+        string tier
+        decimal price
+        integer quantity
+    }
+```
+
+#### **Gantt Chart Syntax (`gantt`)**
+```mermaid
+gantt
+    title EventOS Development Timeline
+    dateFormat YYYY-MM-DD
+    section Phase 1
+    Dashboard Pages    :done, dash, 2024-01-01, 2024-01-15
+    AI Wizard Pages   :active, ai, 2024-01-16, 2024-01-30
+    section Phase 2
+    Backend Integration :backend, 2024-02-01, 2024-02-15
+    Testing & QA       :test, 2024-02-16, 2024-02-28
+```
+
+#### **Architecture Diagram Syntax (`architecture-beta`)**
+```mermaid
+architecture-beta
+    group frontend(cloud)["User Interface"]
+        service web(server)["React App"] in frontend
+        service mobile(server)["Mobile App"] in frontend
+    group backend(cloud)["Backend Services"]
+        service api(server)["API Server"] in backend
+        service ai(server)["AI Agents"] in backend
+    group data(cloud)["Data Layer"]
+        service db(database)["Supabase DB"] in data
+        service storage(disk)["File Storage"] in data
+    
+    web:R --> L:api ["HTTP/JSON"]
+    mobile:R --> L:api ["REST API"]
+    api:R --> L:ai ["AI Processing"]
+    ai:R --> L:db ["Data Access"]
+    api:R --> L:storage ["File Operations"]
+```
+
+#### **Advanced Features & Styling**
+```mermaid
+flowchart TD
+    A[Start] --> B[Process]
+    B --> C{Decision?}
+    C -->|Yes| D[Action A]
+    C -->|No| E[Action B]
+    D --> F[End]
+    E --> F
+    
+    %% Click actions
+    click A "https://example.com" "Click for details"
+    click B "javascript:alert('Process clicked')" "Alert"
+    
+    %% Styling
+    classDef success fill:#90EE90,stroke:#333,stroke-width:2px
+    classDef error fill:#FFB6C1,stroke:#333,stroke-width:2px
+    classDef process fill:#87CEEB,stroke:#333,stroke-width:2px
+    
+    class A,F success
+    class C error
+    class B,D,E process
+```
+
+## ✅ **Advanced Best Practices & Quality Standards**
+
+### **Diagram Design Excellence:**
+- **Keep simple:** ≤ 10 nodes unless complex system architecture
+- **Consistent direction:** Use `TD` (top-down) or `LR` (left-right) consistently
+- **Clear labels:** Use descriptive names for nodes and relationships
+- **Logical flow:** Follow natural reading patterns (left-to-right, top-to-bottom)
+- **WCAG Compliance:** Ensure 4.5:1 contrast ratio for accessibility
+- **Professional styling:** Use consistent colors and typography
+
+### **Advanced Naming Conventions:**
+- **Nodes:** Use descriptive names (`User`, `AI Agent`, `Database`, `EventService`)
+- **Relationships:** Use action verbs (`creates`, `sends`, `stores`, `validates`, `processes`)
+- **Decisions:** Use clear yes/no paths with labels (`Yes`, `No`, `Success`, `Error`)
+- **States:** Use present tense (`Active`, `Pending`, `Completed`, `Failed`)
+- **Processes:** Use gerund form (`Processing`, `Validating`, `Generating`)
+
+### **Visual Hierarchy & Styling:**
+- **Primary flow:** Use solid lines and standard shapes
+- **Secondary flow:** Use dashed lines for optional paths
+- **Error handling:** Include error paths and fallback scenarios
+- **Color coding:** Use semantic colors (green=success, red=error, blue=info, yellow=warning)
+- **Typography:** Use consistent font sizes and weights
+- **Spacing:** Maintain consistent spacing between elements
+
+### **Advanced Features & Interactivity:**
+- **Click actions:** Implement `click` directives for interactive elements
+- **Tooltips:** Add tooltips for complex elements using `%% comments %%`
+- **Links:** Use `link` and `links` directives for external references
+- **Styling:** Apply `classDef` and `style` for visual consistency
+- **Themes:** Support `theme: dark | corporate | {JSON_theme_object}`
+- **Animations:** Use appropriate timing for transitions and effects
+
+## 🧱 **Advanced Features**
+
+### **Subgraphs for Complex Systems:**
+```mermaid
+graph TB
+    subgraph "Frontend Layer"
+        A[React App] --> B[Components]
+    end
+    subgraph "AI Processing Layer"
+        C[AI Agent] --> D[Content Generator]
+    end
+    subgraph "Data Layer"
+        E[Supabase DB] --> F[Storage]
+    end
+    
+    A --> C
+    C --> E
+```
+
+### **Color Coding (when needed):**
+- **Success paths:** Use green or default colors
+- **Error paths:** Use red for failures
+- **AI processes:** Use blue for AI-related nodes
+- **User actions:** Use orange for user-initiated actions
+
+## 🎯 **EventOS-Specific Patterns**
+
+### **Common EventOS Flows:**
+1. **Event Creation Wizard:** 6-stage sequential process
+2. **AI Agent Orchestration:** Multiple AI agents working together
+3. **Multi-tenant Architecture:** Account isolation and user management
+4. **Real-time Analytics:** Data flow from events to dashboards
+
+### **Recommended Diagram Types for EventOS:**
+- **Event Wizard:** State diagram or flowchart
+- **AI Workflows:** Sequence diagram with AI agents
+- **Database Schema:** ERD with table relationships
+- **User Journeys:** Flowchart with decision points
+- **Implementation Timeline:** Gantt chart with phases
+
+## 🚨 **Common Mistakes to Avoid**
+
+### **❌ Don't:**
+- Create overly complex diagrams with 20+ nodes
+- Mix different diagram types in one diagram
+- Use unclear or ambiguous labels
+- Forget to include error handling paths
+- Create diagrams without considering the audience
+
+### **✅ Do:**
+- Start simple and add complexity only when needed
+- Use consistent terminology across diagrams
+- Include both happy path and error scenarios
+- Test diagrams in Mermaid live editor
+- Provide context and explanation for complex flows
+
+## 🔧 **Implementation Examples**
+
+### **Event Creation Flow:**
+```mermaid
+graph TB
+    A[User Starts] --> B[Contact Info]
+    B --> C[Event Basics]
+    C --> D[Venue Selection]
+    D --> E[Ticketing Setup]
+    E --> F[Marketing Content]
+    F --> G[Review & Launch]
+    G --> H[Event Published]
+```
+
+### **AI Agent Interaction:**
+```mermaid
+sequenceDiagram
+    participant U as User
+    participant W as Wizard
+    participant AI as AI Agent
+    participant DB as Database
+    
+    U->>W: Enter Event Details
+    W->>AI: Generate Content
+    AI->>DB: Save Generated Content
+    DB->>W: Confirm Save
+    W->>U: Show Preview
+```
+
+### **Database Relationships:**
+```mermaid
+erDiagram
+    EVENTS ||--o{ TICKETS : "has"
+    EVENTS ||--o{ ORDERS : "receives"
+    ORDERS ||--o{ ATTENDEES : "contains"
+    USERS ||--o{ EVENTS : "creates"
+    
+    EVENTS {
+        uuid id PK
+        string title
+        timestamp start_date
+        string status
+    }
+    
+    TICKETS {
+        uuid id PK
+        uuid event_id FK
+        decimal price
+        integer quantity
+    }
+```
+
+## 📝 **Documentation Integration & File Management**
+
+### **When to Create Diagrams:**
+- **New features:** Always include a flow diagram
+- **Complex processes:** Break down into visual steps
+- **System architecture:** Show component relationships
+- **User journeys:** Map the complete experience
+- **Database changes:** Include ERD for schema modifications
+- **API integrations:** Show data flow and dependencies
+- **Error handling:** Map error scenarios and recovery paths
+
+### **File Naming Conventions:**
+- **Flow diagrams:** `FLOW_EVENT_CREATION.md`
+- **Architecture:** `ARCHITECTURE_AI_AGENTS.md`
+- **Database:** `ERD_CORE_TABLES.md`
+- **User journeys:** `USER_JOURNEY_ATTENDEE.md`
+- **API flows:** `API_INTEGRATION_FLOW.md`
+- **Error scenarios:** `ERROR_HANDLING_FLOW.md`
+
+### **Documentation Standards:**
+- **Include context:** Always explain what the diagram shows
+- **Add legends:** Explain symbols and colors used
+- **Version control:** Track diagram changes over time
+- **Cross-references:** Link related diagrams and documentation
+- **Accessibility:** Ensure diagrams are screen-reader friendly
+
+## 🔧 **Troubleshooting & Common Issues**
+
+### **Syntax Errors:**
+- **Missing semicolons:** Ensure all statements end with semicolons
+- **Invalid characters:** Avoid special characters in node names
+- **Unclosed brackets:** Check all brackets and parentheses
+- **Invalid syntax:** Follow Mermaid syntax exactly
+
+### **Rendering Issues:**
+- **Browser compatibility:** Test in multiple browsers
+- **Theme conflicts:** Ensure theme compatibility
+- **Font issues:** Use web-safe fonts
+- **Color accessibility:** Check contrast ratios
+
+### **Performance Optimization:**
+- **Large diagrams:** Break into smaller subgraphs
+- **Complex layouts:** Simplify node relationships
+- **Animation:** Use sparingly for better performance
+- **Memory usage:** Optimize for large datasets
+
+## 📚 **Resources & References**
+
+### **Official Documentation:**
+- [Mermaid Live Editor](https://mermaid.live/) - Test diagrams online
+- [Mermaid Documentation](https://mermaid.js.org/) - Complete syntax reference
+- [Mermaid Themes](https://mermaid.js.org/syntax/theme.html) - Theme customization
+- [Mermaid Examples](https://mermaid.js.org/syntax/examples.html) - Code examples
+
+### **EventOS-Specific Resources:**
+- [EventOS Architecture Guide](mdc:docs/architecture.md) - System architecture
+- [EventOS User Journeys](mdc:docs/user-journeys.md) - User experience flows
+- [EventOS Database Schema](mdc:supabase/schema.sql) - Database relationships
+- [EventOS API Documentation](mdc:docs/api.md) - API integration flows
+
+### **Best Practices References:**
+- [C4 Model](https://c4model.com/) - Architecture documentation
+- [BPMN 2.0](https://www.bpmn.org/) - Business process modeling
+- [UML Diagrams](https://www.uml.org/) - Unified modeling language
+- [Flowchart Standards](https://www.ansi.org/) - ANSI flowchart standards
+
+## 🎯 **Success Metrics & Quality Assurance**
+
+### **Diagram Quality Checklist:**
+- [ ] **Syntax valid:** No Mermaid syntax errors
+- [ ] **Renders correctly:** Displays properly in all browsers
+- [ ] **Accessible:** Meets WCAG 2.1 AA standards
+- [ ] **Consistent:** Follows established design patterns
+- [ ] **Complete:** Shows all necessary information
+- [ ] **Clear:** Easy to understand without explanation
+- [ ] **Accurate:** Reflects actual system behavior
+- [ ] **Maintainable:** Easy to update and modify
+
+### **Performance Metrics:**
+- **Load time:** < 2 seconds for complex diagrams
+- **File size:** < 100KB for optimal performance
+- **Browser support:** Works in Chrome, Firefox, Safari, Edge
+- **Mobile responsive:** Adapts to different screen sizes
+- **Print quality:** Renders well in PDF exports
+
+### **User Experience Metrics:**
+- **Clarity:** Users understand without training
+- **Completeness:** Shows all necessary information
+- **Navigation:** Easy to follow flow and relationships
+- **Consistency:** Matches other project diagrams
+- **Accessibility:** Works with screen readers and assistive technology
+
+---
+
+## 🚀 **Final Implementation Guidelines**
+
+### **For AI Assistants:**
+1. **Always analyze the input** to determine the most appropriate diagram type
+2. **Use the inference matrix** to guide diagram selection
+3. **Follow the syntax specifications** exactly for each diagram type
+4. **Include styling and interactivity** when appropriate
+5. **Test the output** in Mermaid Live Editor before delivery
+6. **Provide context and explanation** for complex diagrams
+7. **Follow EventOS patterns** for consistency with project standards
+
+### **For Developers:**
+1. **Use this rule** as the definitive guide for Mermaid diagrams
+2. **Reference the syntax examples** for implementation
+3. **Follow the best practices** for quality and consistency
+4. **Test diagrams** in multiple environments
+5. **Update documentation** when diagrams change
+6. **Maintain accessibility** standards throughout
+7. **Optimize for performance** in production environments
+
+### **For Project Managers:**
+1. **Ensure diagram consistency** across all documentation
+2. **Validate accessibility** compliance for all diagrams
+3. **Monitor performance** impact of complex diagrams
+4. **Maintain version control** for diagram changes
+5. **Provide training** on diagram creation standards
+6. **Review quality** using the provided checklists
+7. **Plan for maintenance** and updates over time
+
+---
+
+**This comprehensive rule ensures all Mermaid diagrams are consistent, clear, accessible, and provide maximum value for understanding complex systems and processes in the EventOS project.**
