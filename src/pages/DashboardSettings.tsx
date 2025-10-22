@@ -1,3 +1,4 @@
+import DashboardLayout from "@/components/DashboardLayout";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -10,7 +11,8 @@ import { User, Bell, Lock, CreditCard, Globe, Moon, Sun } from "lucide-react";
 
 export default function DashboardSettings() {
   return (
-    <div className="min-h-screen bg-background p-4 md:p-6 lg:p-8">
+    <DashboardLayout>
+      <div className="max-w-4xl mx-auto">
       <div className="mb-6">
         <h1 className="text-3xl font-bold mb-2">Settings</h1>
         <p className="text-muted-foreground">Manage your account and preferences</p>
