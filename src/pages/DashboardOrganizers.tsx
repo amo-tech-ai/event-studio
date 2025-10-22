@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Badge } from "@/components/ui/badge";
 import { Search, Mail, Phone, Calendar, Star, Plus } from "lucide-react";
+import { Link } from "react-router-dom";
 
 export default function DashboardOrganizers() {
   return (
@@ -133,9 +134,11 @@ function OrganizersContent() {
                 <Mail className="h-3 w-3" />
                 Contact
               </Button>
-              <Button variant="outline" size="sm" className="flex-1">
-                View Profile
-              </Button>
+              <Link to={`/dashboard/organizers/${organizer.id}`} className="flex-1">
+                <Button variant="outline" size="sm" className="w-full">
+                  View Profile
+                </Button>
+              </Link>
             </div>
           </Card>
         ))}
