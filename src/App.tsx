@@ -45,6 +45,7 @@ import DashboardCalendar from "./pages/DashboardCalendar";
 import DashboardOrganizers from "./pages/DashboardOrganizers";
 import OrganizerDetail from "./pages/OrganizerDetail";
 import DashboardVenues from "./pages/DashboardVenues";
+import VenueDetail from "./pages/VenueDetail";
 import DashboardSettings from "./pages/DashboardSettings";
 import AIVenueSelection from "./pages/AIVenueSelection";
 import AITicketingSetup from "./pages/AITicketingSetup";
@@ -91,6 +92,7 @@ const App = () => (
               <Route path="/dashboard/organizers" element={<DashboardOrganizers />} />
               <Route path="/dashboard/organizers/:id" element={<OrganizerDetail />} />
               <Route path="/dashboard/venues" element={<DashboardVenues />} />
+              <Route path="/dashboard/venues/:id" element={<VenueDetail />} />
               <Route path="/dashboard/settings" element={<DashboardSettings />} />
               
               {/* AI Wizard Routes */}
