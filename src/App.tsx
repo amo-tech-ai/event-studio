@@ -43,6 +43,7 @@ import RegistrationLanding from "./pages/RegistrationLanding";
 import DashboardAnalytics from "./pages/DashboardAnalytics";
 import DashboardCalendar from "./pages/DashboardCalendar";
 import DashboardOrganizers from "./pages/DashboardOrganizers";
+import OrganizerDetail from "./pages/OrganizerDetail";
 import DashboardVenues from "./pages/DashboardVenues";
 import DashboardSettings from "./pages/DashboardSettings";
 import AIVenueSelection from "./pages/AIVenueSelection";
@@ -88,6 +89,7 @@ const App = () => (
               <Route path="/dashboard/analytics" element={<DashboardAnalytics />} />
               <Route path="/dashboard/calendar" element={<DashboardCalendar />} />
               <Route path="/dashboard/organizers" element={<DashboardOrganizers />} />
+              <Route path="/dashboard/organizers/:id" element={<OrganizerDetail />} />
               <Route path="/dashboard/venues" element={<DashboardVenues />} />
               <Route path="/dashboard/settings" element={<DashboardSettings />} />
               
