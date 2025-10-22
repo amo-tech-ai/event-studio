@@ -80,10 +80,14 @@ You are tasked with creating **9 missing pages** for EventOS that will complete 
 - Top event: "Tech Conference 2024" with 89% satisfaction
 
 **Mobile Considerations:**
-- Stack metric cards vertically
-- Make charts touch-friendly
-- Swipe navigation for chart sections
-- Large touch targets for export buttons
+- Stack metric cards vertically in single column
+- Make charts touch-friendly with 44px+ touch targets
+- Swipe navigation for chart sections (left/right swipe)
+- Large touch targets for export buttons (48px minimum)
+- Thumb-friendly navigation (bottom 2/3 of screen)
+- Collapsible sections for detailed metrics
+- Bottom sheet for chart interactions
+- Pull-to-refresh for data updates
 
 ---
 
@@ -112,10 +116,14 @@ You are tasked with creating **9 missing pages** for EventOS that will complete 
 - Time slots: 9 AM - 6 PM typical business hours
 
 **Mobile Considerations:**
-- Swipe navigation between months
-- Tap to select dates
-- Swipe up for event details
-- Large touch targets for navigation
+- Swipe navigation between months (left/right swipe)
+- Tap to select dates with 44px+ touch targets
+- Swipe up for event details (bottom sheet)
+- Large touch targets for navigation (48px minimum)
+- Thumb-friendly month navigation
+- Collapsible event details
+- Gesture-based month switching
+- Safe area respect for iPhone notch
 
 ---
 
@@ -146,9 +154,13 @@ You are tasked with creating **9 missing pages** for EventOS that will complete 
 
 **Mobile Considerations:**
 - Single column layout for organizer cards
-- Swipe actions for quick contact
-- Collapsible performance sections
-- Easy-to-tap action buttons
+- Swipe actions for quick contact (left swipe = call, right swipe = email)
+- Collapsible performance sections (accordion style)
+- Easy-to-tap action buttons (48px minimum)
+- Thumb-friendly card interactions
+- Bottom sheet for detailed organizer info
+- Pull-to-refresh for organizer list
+- Gesture-based quick actions
 
 ---
 
@@ -179,9 +191,14 @@ You are tasked with creating **9 missing pages** for EventOS that will complete 
 
 **Mobile Considerations:**
 - Image-heavy cards with clear information
-- Swipe between list and map views
-- Touch-friendly filter controls
-- Quick contact actions
+- Swipe between list and map views (horizontal swipe)
+- Touch-friendly filter controls (44px+ touch targets)
+- Quick contact actions (swipe gestures)
+- Thumb-friendly venue browsing
+- Bottom sheet for venue details
+- Gesture-based map interactions
+- Pull-to-refresh for venue list
+- Safe area respect for full-screen map
 
 ---
 
@@ -213,9 +230,13 @@ You are tasked with creating **9 missing pages** for EventOS that will complete 
 
 **Mobile Considerations:**
 - Single column form layout
-- Large touch targets for toggles
-- Easy-to-use dropdown menus
-- Clear save/cancel actions
+- Large touch targets for toggles (48px minimum)
+- Easy-to-use dropdown menus (44px+ touch targets)
+- Clear save/cancel actions (thumb-friendly placement)
+- Collapsible settings sections
+- Bottom sheet for complex settings
+- Gesture-based form navigation
+- Safe area respect for form inputs
 
 ---
 
@@ -245,10 +266,13 @@ You are tasked with creating **9 missing pages** for EventOS that will complete 
 - Alternative suggestions and backup options
 
 **Mobile Considerations:**
-- Chat interface optimized for mobile
-- Swipeable venue cards
-- Easy comparison on small screens
-- Clear selection confirmation
+- Chat interface optimized for mobile (44px+ touch targets)
+- Swipeable venue cards (horizontal swipe)
+- Easy comparison on small screens (bottom sheet)
+- Clear selection confirmation (thumb-friendly buttons)
+- Gesture-based venue browsing
+- Pull-to-refresh for new recommendations
+- Safe area respect for chat interface
 
 ---
 
@@ -279,10 +303,13 @@ You are tasked with creating **9 missing pages** for EventOS that will complete 
 - Market comparison data and competitor analysis
 
 **Mobile Considerations:**
-- Touch-friendly sliders and controls
-- Swipeable ticket tier cards
-- Easy price adjustment on mobile
-- Clear revenue projections
+- Touch-friendly sliders and controls (44px+ touch targets)
+- Swipeable ticket tier cards (horizontal swipe)
+- Easy price adjustment on mobile (thumb-friendly sliders)
+- Clear revenue projections (large, readable text)
+- Bottom sheet for detailed pricing analysis
+- Gesture-based tier selection
+- Pull-to-refresh for pricing updates
 
 ---
 
@@ -313,10 +340,14 @@ You are tasked with creating **9 missing pages** for EventOS that will complete 
 - Session topics and learning objectives
 
 **Mobile Considerations:**
-- Vertical timeline for mobile viewing
-- Touch-friendly drag and drop
-- Swipeable session cards
-- Easy speaker selection
+- Vertical timeline for mobile viewing (single column)
+- Touch-friendly drag and drop (44px+ touch targets)
+- Swipeable session cards (horizontal swipe)
+- Easy speaker selection (thumb-friendly buttons)
+- Bottom sheet for session details
+- Gesture-based timeline navigation
+- Pull-to-refresh for agenda updates
+- Safe area respect for timeline
 
 ---
 
@@ -347,10 +378,14 @@ You are tasked with creating **9 missing pages** for EventOS that will complete 
 - Performance metrics and ROI projections
 
 **Mobile Considerations:**
-- Swipeable strategy cards
-- Touch-friendly campaign builder
-- Easy content generation on mobile
-- Clear performance metrics
+- Swipeable strategy cards (horizontal swipe)
+- Touch-friendly campaign builder (44px+ touch targets)
+- Easy content generation on mobile (thumb-friendly interface)
+- Clear performance metrics (large, readable text)
+- Bottom sheet for detailed campaign analysis
+- Gesture-based strategy selection
+- Pull-to-refresh for campaign updates
+- Safe area respect for content generation
 
 ---
 
@@ -392,24 +427,43 @@ You are tasked with creating **9 missing pages** for EventOS that will complete 
 
 ## 📱 **MOBILE-FIRST RESPONSIVE DESIGN**
 
-### **Mobile Layout (< 640px)**
-- **Single Column:** All content in single column
-- **Touch Targets:** Minimum 44px for all interactive elements
-- **Swipe Navigation:** Swipe between sections where appropriate
-- **Collapsible Sections:** Accordion-style content organization
-- **Floating Actions:** FAB for primary actions
+### **Mobile Layout (< 640px) - PRIMARY FOCUS (65% of users)**
+- **Single Column:** All content in single column with proper spacing
+- **Touch Targets:** Minimum 44px for all interactive elements (buttons, links, form controls)
+- **Swipe Navigation:** Swipe between sections where appropriate (calendar months, venue cards)
+- **Collapsible Sections:** Accordion-style content organization for complex data
+- **Floating Actions:** FAB for primary actions (add event, contact organizer)
+- **Thumb-Friendly:** All controls within thumb reach (bottom 2/3 of screen)
+- **Large Text:** Minimum 16px font size for readability
+- **Gesture Support:** Pull-to-refresh, swipe-to-dismiss, pinch-to-zoom where appropriate
+- **Bottom Navigation:** Primary navigation at bottom for easy thumb access
+- **Safe Areas:** Respect iPhone notch and Android navigation bars
 
-### **Tablet Layout (640px - 1024px)**
-- **Two Column:** Sidebar navigation with main content
+### **Tablet Layout (640px - 1024px) - OPTIMIZED FOR TOUCH**
+- **Two Column:** Sidebar navigation with main content area
 - **Grid Layout:** 2-column grid for cards and components
-- **Touch Optimization:** Larger touch targets than desktop
+- **Touch Optimization:** Larger touch targets than desktop (48px minimum)
 - **Navigation:** Tab-based navigation for easy access
+- **Split View:** Master-detail pattern for complex data
+- **Landscape Priority:** Optimized for landscape orientation
+- **Touch Gestures:** Swipe, pinch, and tap gestures for navigation
 
-### **Desktop Layout (> 1024px)**
+### **Desktop Layout (> 1024px) - POWER USER FEATURES**
 - **Multi-Column:** 3-4 column layouts for complex dashboards
 - **Hover States:** Rich hover interactions and tooltips
-- **Keyboard Navigation:** Full keyboard accessibility
-- **Advanced Interactions:** Drag and drop, multi-select
+- **Keyboard Navigation:** Full keyboard accessibility (Tab, Enter, Arrow keys)
+- **Advanced Interactions:** Drag and drop, multi-select, keyboard shortcuts
+- **Mouse Precision:** Smaller touch targets (32px) for precise mouse control
+- **Screen Real Estate:** Utilize full width for data-dense interfaces
+- **Right-Click Menus:** Context menus for advanced actions
+- **Keyboard Shortcuts:** Power user keyboard shortcuts (Ctrl+S, Ctrl+N, etc.)
+
+### **Large Desktop Layout (> 1280px) - ENTERPRISE FEATURES**
+- **Ultra-Wide Layouts:** 5-6 column grids for maximum data density
+- **Side Panels:** Multiple side panels for complex workflows
+- **Advanced Toolbars:** Rich toolbars with many options
+- **Multi-Monitor Support:** Optimized for multiple monitor setups
+- **Enterprise Navigation:** Complex navigation trees and breadcrumbs
 
 ---
 
@@ -423,11 +477,17 @@ You are tasked with creating **9 missing pages** for EventOS that will complete 
 - [ ] Spacing follows 8px grid system
 
 ### **Responsive Design Testing**
-- [ ] Mobile layout works perfectly (< 640px)
-- [ ] Tablet layout is optimized (640-1024px)
-- [ ] Desktop layout is fully functional (> 1024px)
+- [ ] Mobile layout works perfectly (< 640px) - PRIMARY FOCUS
+- [ ] Tablet layout is optimized (640-1024px) - TOUCH OPTIMIZED
+- [ ] Desktop layout is fully functional (> 1024px) - POWER USER FEATURES
+- [ ] Large desktop layout works (> 1280px) - ENTERPRISE FEATURES
 - [ ] No horizontal scroll at any breakpoint
-- [ ] Touch targets are appropriate for mobile
+- [ ] Touch targets are appropriate for each device type
+- [ ] Mobile: 44px+ touch targets, thumb-friendly navigation
+- [ ] Tablet: 48px+ touch targets, landscape optimization
+- [ ] Desktop: 32px+ targets, keyboard navigation
+- [ ] Gesture support works on touch devices
+- [ ] Safe areas respected on mobile devices
 
 ### **Component Quality**
 - [ ] All shadcn/ui components render correctly
@@ -506,33 +566,106 @@ You are tasked with creating **9 missing pages** for EventOS that will complete 
 
 ---
 
-## 📋 **IMPLEMENTATION TIMELINE**
+## 📋 **IMPLEMENTATION TIMELINE & ORDER**
 
-### **Day 1: Core Dashboard Pages**
-- Dashboard Analytics
-- Dashboard Calendar
-- Dashboard Organizers
+### **Phase 1: Core Dashboard Pages (Day 1) - HIGHEST PRIORITY**
+**Order of Implementation:**
+1. **Dashboard Analytics** - Most business-critical page
+2. **Dashboard Calendar** - Essential for event scheduling
+3. **Dashboard Organizers** - User management foundation
 
-### **Day 2: Remaining Dashboard Pages**
-- Dashboard Venues
-- Dashboard Settings
-- Cross-page consistency review
+**Success Criteria:**
+- All 3 pages render without errors
+- Mobile-first responsive design
+- Consistent with existing EventOS design
+- Mock data displays correctly
 
-### **Day 3: AI Wizard Pages**
-- AI Venue Selection
-- AI Ticketing Setup
-- AI Agenda Builder
-- AI Marketing Dashboard
+### **Phase 2: Remaining Dashboard Pages (Day 2) - HIGH PRIORITY**
+**Order of Implementation:**
+4. **Dashboard Venues** - Core venue management
+5. **Dashboard Settings** - User configuration
+6. **Cross-page consistency review** - Ensure design harmony
 
-### **Final Review**
-- Complete testing checklist
-- Cross-device validation
+**Success Criteria:**
+- All 5 dashboard pages complete
+- Consistent navigation and design
+- Mobile optimization verified
+- Cross-page functionality tested
+
+### **Phase 3: AI Wizard Pages (Day 3) - MEDIUM PRIORITY**
+**Order of Implementation:**
+7. **AI Venue Selection** - Most used AI feature
+8. **AI Ticketing Setup** - Revenue optimization
+9. **AI Agenda Builder** - Event planning
+10. **AI Marketing Dashboard** - Marketing automation
+
+**Success Criteria:**
+- All 4 AI pages complete
+- AI chat interfaces functional
+- Mobile gesture support working
+- Mock AI responses display correctly
+
+### **Phase 4: Final Review & Polish (Day 4) - CRITICAL**
+**Final Steps:**
+- Complete testing checklist (all 9 pages)
+- Cross-device validation (mobile, tablet, desktop)
 - User experience review
+- Performance optimization
+- Accessibility compliance
 - Final polish and optimization
+
+### **Implementation Priority Matrix**
+| Priority | Page | Business Value | Technical Complexity | Mobile Impact |
+|----------|------|----------------|---------------------|---------------|
+| **1** | Dashboard Analytics | HIGH | MEDIUM | HIGH |
+| **2** | Dashboard Calendar | HIGH | MEDIUM | HIGH |
+| **3** | Dashboard Organizers | HIGH | LOW | MEDIUM |
+| **4** | Dashboard Venues | HIGH | MEDIUM | HIGH |
+| **5** | Dashboard Settings | MEDIUM | LOW | MEDIUM |
+| **6** | AI Venue Selection | HIGH | HIGH | HIGH |
+| **7** | AI Ticketing Setup | HIGH | HIGH | MEDIUM |
+| **8** | AI Agenda Builder | MEDIUM | HIGH | MEDIUM |
+| **9** | AI Marketing Dashboard | MEDIUM | HIGH | LOW |
 
 ---
 
-**Document Status:** ✅ Complete Lovable Design Prompt  
+---
+
+## ✅ **PROMPT COMPLETENESS CHECKLIST**
+
+### **Design Specifications**
+- [x] All 9 pages detailed with purpose, layout, components
+- [x] Mobile-first responsive design requirements (65% mobile users)
+- [x] Touch targets specified (44px+ mobile, 48px+ tablet, 32px+ desktop)
+- [x] Gesture support defined (swipe, pull-to-refresh, bottom sheets)
+- [x] Safe area considerations for mobile devices
+- [x] Mock data specifications for each page
+
+### **Implementation Order**
+- [x] Priority matrix with business value and technical complexity
+- [x] 4-phase implementation timeline (4 days total)
+- [x] Success criteria for each phase
+- [x] Cross-page consistency requirements
+- [x] Final review and polish checklist
+
+### **Technical Requirements**
+- [x] EventOS design system compliance
+- [x] shadcn/ui component library usage
+- [x] Responsive breakpoints defined
+- [x] Accessibility requirements
+- [x] Performance optimization guidelines
+
+### **Quality Assurance**
+- [x] Comprehensive testing checklist
+- [x] Cross-device validation requirements
+- [x] User experience validation criteria
+- [x] Business value metrics
+- [x] Success criteria and deliverables
+
+---
+
+**Document Status:** ✅ **COMPLETE & OPTIMIZED**  
 **Priority:** CRITICAL (UI/UX Design)  
-**Next Action:** Begin with Dashboard Analytics page  
-**Success Metric:** 9 pages complete with mobile-first responsive design
+**Next Action:** Begin with Dashboard Analytics page (Phase 1, Day 1)  
+**Success Metric:** 9 pages complete with mobile-first responsive design  
+**Implementation Order:** ✅ **OPTIMIZED FOR SUCCESS**
