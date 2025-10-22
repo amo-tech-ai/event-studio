@@ -44,3 +44,6 @@ open-lovable/
 hi.events/
 .playwright-mcp/
 .vercel/
+# Environment Variables (DO NOT COMMIT)
+lovable-env-vars.txt
+LOVABLE-ENV-SETUP.md
