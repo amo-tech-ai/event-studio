@@ -294,5 +294,6 @@ export default function DashboardSettings() {
         </TabsContent>
       </Tabs>
     </div>
+    </DashboardLayout>
   );
 }
