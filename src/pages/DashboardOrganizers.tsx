@@ -1,3 +1,4 @@
+import DashboardLayout from "@/components/DashboardLayout";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -5,6 +6,14 @@ import { Badge } from "@/components/ui/badge";
 import { Search, Mail, Phone, Calendar, Star, Plus } from "lucide-react";
 
 export default function DashboardOrganizers() {
+  return (
+    <DashboardLayout>
+      <OrganizersContent />
+    </DashboardLayout>
+  );
+}
+
+function OrganizersContent() {
   const organizers = [
     {
       id: 1,
