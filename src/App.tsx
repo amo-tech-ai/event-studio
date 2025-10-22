@@ -51,6 +51,12 @@ import AIVenueSelection from "./pages/AIVenueSelection";
 import AITicketingSetup from "./pages/AITicketingSetup";
 import AIAgendaBuilder from "./pages/AIAgendaBuilder";
 import AIMarketingDashboard from "./pages/AIMarketingDashboard";
+import SponsorsOverview from "./pages/SponsorsOverview";
+import SponsorsDiscovery from "./pages/SponsorsDiscovery";
+import SponsorsProposals from "./pages/SponsorsProposals";
+import SponsorsContracts from "./pages/SponsorsContracts";
+import SponsorsAnalytics from "./pages/SponsorsAnalytics";
+import SponsorsPortal from "./pages/SponsorsPortal";
 
 const App = () => (
   <QueryClientProvider client={queryClient}>
@@ -94,6 +100,12 @@ const App = () => (
               <Route path="/dashboard/venues" element={<DashboardVenues />} />
               <Route path="/dashboard/venues/:id" element={<VenueDetail />} />
               <Route path="/dashboard/settings" element={<DashboardSettings />} />
+              <Route path="/dashboard/sponsors" element={<SponsorsOverview />} />
+              <Route path="/dashboard/sponsors/discovery" element={<SponsorsDiscovery />} />
+              <Route path="/dashboard/sponsors/proposals" element={<SponsorsProposals />} />
+              <Route path="/dashboard/sponsors/contracts" element={<SponsorsContracts />} />
+              <Route path="/dashboard/sponsors/analytics" element={<SponsorsAnalytics />} />
+              <Route path="/dashboard/sponsors/portal" element={<SponsorsPortal />} />
               
               {/* AI Wizard Routes */}
               <Route path="/ai-wizard/venues" element={<AIVenueSelection />} />
