@@ -36,6 +36,10 @@ import Auth from "./pages/Auth";
 import NotFound from "./pages/NotFound";
 import EventWizard from "./pages/EventWizard";
 import AIEventWizard from "./pages/AIEventWizard";
+import RegistrationAnalytics from "./pages/RegistrationAnalytics";
+import EmailTemplates from "./pages/EmailTemplates";
+import MyRegistrations from "./pages/MyRegistrations";
+import RegistrationLanding from "./pages/RegistrationLanding";
 
 const App = () => (
   <QueryClientProvider client={queryClient}>
@@ -63,6 +67,9 @@ const App = () => (
             <Route element={<ProtectedRoute />}>
               <Route path="/event-wizard" element={<EventWizard />} />
               <Route path="/ai-wizard" element={<AIEventWizard />} />
+              <Route path="/admin/events/:slug/analytics" element={<RegistrationAnalytics />} />
+              <Route path="/admin/email-templates" element={<EmailTemplates />} />
+              <Route path="/account/registrations" element={<MyRegistrations />} />
               <Route path="/dashboard" element={<Dashboard />} />
               <Route path="/dashboard/events" element={<DashboardEvents />} />
               <Route path="/dashboard/events/:id" element={<DashboardEventDetails />} />
@@ -75,6 +82,9 @@ const App = () => (
               <Route path="/dashboard/venues" element={<Dashboard />} />
               <Route path="/dashboard/settings" element={<Dashboard />} />
             </Route>
+
+            {/* Public Registration Landing */}
+            <Route path="/register/:eventSlug" element={<RegistrationLanding />} />
 
             {/* 404 - Keep this last */}
             <Route path="*" element={<NotFound />} />

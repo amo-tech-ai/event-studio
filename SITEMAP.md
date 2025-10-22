@@ -36,13 +36,13 @@
 | `/m/event/:slug/register` | `MobileRegistration.tsx` | Mobile-optimized registration | 🟢 Complete |
 | `/error/registration` | `RegistrationError.tsx` | Error handling and recovery | 🟢 Complete |
 
-### Advanced Features Routes - 🔴 0% Complete (Phase 3)
+### Advanced Features Routes - 🟢 100% Complete (Phase 3)
 | Route | Component | Purpose | Status |
 |-------|-----------|---------|--------|
-| `/admin/events/:slug/analytics` | Not Created | Registration analytics dashboard | 🔴 Not Started |
-| `/admin/email-templates` | Not Created | Email template management | 🔴 Not Started |
-| `/account/registrations` | Not Created | User registration history | 🔴 Not Started |
-| `/register/:eventSlug` | Not Created | High-converting landing page | 🔴 Not Started |
+| `/admin/events/:slug/analytics` | `RegistrationAnalytics.tsx` | Registration analytics dashboard | 🟢 Complete |
+| `/admin/email-templates` | `EmailTemplates.tsx` | Email template management | 🟢 Complete |
+| `/account/registrations` | `MyRegistrations.tsx` | User registration history | 🟢 Complete |
+| `/register/:eventSlug` | `RegistrationLanding.tsx` | High-converting landing page | 🟢 Complete |
 
 ### Protected Routes (Authentication Required) - 🟡 60% Complete
 **Note:** Auth disabled during development via `VITE_DISABLE_AUTH=true`
