@@ -1,0 +1,101 @@
+# Claude Code Conventions for EventOS
+
+## Automatic File Numbering Rules
+
+### Documentation Files
+
+When creating new markdown (.md) documentation files in feature directories:
+
+**Rule:** Always use sequential two-digit numbering
+
+**Format:** `NN-Descriptive-Title-In-Title-Case.md`
+
+**Process:**
+1. Check existing files in the target directory
+2. Find the highest number (e.g., if `04-*.md` exists, use `05`)
+3. Use next sequential number with leading zero (01-09, 10-99)
+4. Use Title-Case-With-Hyphens for the filename
+
+**Example:**
+```bash
+# If directory has:
+01-Feature-A.md
+02-Feature-B.md
+03-Feature-C.md
+
+# Create new file as:
+04-New-Feature-Documentation.md
+```
+
+### Directories Following This Convention
+
+- `/home/sk/event-studio/mvpe/features/airtable/`
+- `/home/sk/event-studio/mvpe/features/` (all subdirectories)
+- Any directory containing numbered documentation files
+
+### Files That Do NOT Get Numbered
+
+❌ **Skip numbering for:**
+- CSV, JSON, or other data files
+- Images, videos, media files
+- Configuration files (.env, .json, .yaml)
+- Temporary/draft files (prefix with `_` instead)
+- Auto-generated files
+- README.md (always unnumbered)
+
+### Quick Commands
+
+**Find next number:**
+```bash
+ls -1 *.md | grep -oE "^[0-9]{2}" | sort -n | tail -1
+# Add 1 to result
+```
+
+**List all numbered files:**
+```bash
+ls -1 [0-9][0-9]-*.md
+```
+
+### Examples
+
+✅ **Correct:**
+- Creating in `/mvpe/features/`: `05-Authentication-System-Guide.md`
+- Creating in `/mvpe/features/airtable/`: `05-Real-World-Implementation-Examples.md`
+
+❌ **Incorrect:**
+- `Authentication-Guide.md` (no number)
+- `5-Auth-Guide.md` (single digit)
+- `05_auth_guide.md` (wrong case and separators)
+
+### Updating the Sequence
+
+After creating a numbered file:
+1. Update the `00-NAMING-CONVENTIONS.md` file in that directory if it exists
+2. Add entry to the tracking table
+3. Update "Next Available Number"
+
+---
+
+## Other Claude Conventions
+
+### Git Commits
+- Use conventional commits format
+- Include 🤖 emoji and co-author attribution
+- See git commit guidelines in the Bash tool description
+
+### Code Comments
+- No emojis in code unless explicitly requested
+- Clear, concise comments
+- Focus on "why" not "what"
+
+### User Communication
+- Professional, objective tone
+- No unnecessary superlatives or praise
+- Short and concise responses
+- Use markdown formatting for CLI display
+
+---
+
+*This file contains conventions for Claude Code to follow*
+*Location: /home/sk/event-studio/.claude-conventions*
+*Last Updated: 2025-10-20*

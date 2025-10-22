@@ -1,0 +1,1634 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>International Fashion Week - EventsOS Dashboard</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@300;400;500;600;700;800&family=Inter:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            /* Fashion Week Light Palette */
+            --bg-primary: #FEFEFE;
+            --bg-secondary: #FFFFFF;
+            --bg-tertiary: #F8F9FA;
+            --bg-glass: rgba(255, 255, 255, 0.95);
+            --bg-soft: #F5F5F7;
+            
+            /* Fashion House Colors */
+            --fashion-black: #1A1A1A;
+            --fashion-charcoal: #2C2C2C;
+            --fashion-gray: #6B6B6B;
+            --fashion-silver: #C0C0C0;
+            --fashion-white: #FFFFFF;
+            --fashion-cream: #F7F3E9;
+            --fashion-beige: #F5F2ED;
+            
+            /* Accent Colors */
+            --accent-gold: #D4AF37;
+            --accent-rose: #E8B4CB;
+            --accent-lavender: #C8A2C8;
+            --accent-powder: #E6E2DD;
+            --accent-pearl: #F8F6F0;
+            --accent-champagne: #F7E7CE;
+            
+            /* Runway Colors */
+            --runway-red: #DC143C;
+            --runway-blue: #4A90E2;
+            --runway-emerald: #50C878;
+            --runway-purple: #8A2BE2;
+            --runway-amber: #FFBF00;
+            
+            /* Semantic Colors */
+            --success: #10B981;
+            --warning: #F59E0B;
+            --error: #EF4444;
+            --info: #3B82F6;
+            
+            /* Typography */
+            --text-primary: #1A1A1A;
+            --text-secondary: #6B6B6B;
+            --text-tertiary: #9B9B9B;
+            --text-accent: var(--fashion-black);
+            
+            /* Modern Shadows */
+            --shadow-xs: 0 1px 2px rgba(0, 0, 0, 0.03), 0 1px 1px rgba(0, 0, 0, 0.02);
+            --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.04), 0 1px 2px rgba(0, 0, 0, 0.02);
+            --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.06), 0 2px 4px rgba(0, 0, 0, 0.02);
+            --shadow-lg: 0 8px 24px rgba(0, 0, 0, 0.08), 0 4px 8px rgba(0, 0, 0, 0.03);
+            --shadow-xl: 0 16px 48px rgba(0, 0, 0, 0.12), 0 8px 16px rgba(0, 0, 0, 0.04);
+            
+            /* Borders */
+            --border-primary: rgba(26, 26, 26, 0.06);
+            --border-secondary: rgba(26, 26, 26, 0.04);
+            --border-accent: rgba(212, 175, 55, 0.15);
+            
+            /* Spacing System */
+            --space-xs: 4px;
+            --space-sm: 8px;
+            --space-md: 16px;
+            --space-lg: 24px;
+            --space-xl: 32px;
+            --space-2xl: 48px;
+            --space-3xl: 64px;
+            
+            /* Border Radius */
+            --radius-xs: 4px;
+            --radius-sm: 8px;
+            --radius-md: 12px;
+            --radius-lg: 16px;
+            --radius-xl: 24px;
+            --radius-2xl: 32px;
+            --radius-full: 50%;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            line-height: 1.6;
+            overflow-x: hidden;
+            font-weight: 400;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+
+        /* Fashion Week Header */
+        .fashion-header {
+            background: var(--bg-glass);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid var(--border-primary);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            padding: var(--space-lg) 0;
+        }
+
+        .header-container {
+            max-width: 1800px;
+            margin: 0 auto;
+            padding: 0 var(--space-xl);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        /* Luxury Logo */
+        .fashion-logo {
+            display: flex;
+            align-items: center;
+            gap: var(--space-lg);
+        }
+
+        .logo-mark {
+            width: 48px;
+            height: 48px;
+            background: linear-gradient(135deg, var(--fashion-black), var(--fashion-charcoal));
+            border-radius: var(--radius-sm);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .logo-mark::before {
+            content: '✨';
+            font-size: 20px;
+            color: var(--fashion-white);
+            position: relative;
+            z-index: 2;
+        }
+
+        .logo-mark::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+            animation: logoShine 3s infinite;
+        }
+
+        @keyframes logoShine {
+            0% { left: -100%; }
+            100% { left: 100%; }
+        }
+
+        .logo-text {
+            color: var(--text-primary);
+        }
+
+        .logo-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 24px;
+            font-weight: 700;
+            margin: 0;
+            letter-spacing: -0.5px;
+        }
+
+        .logo-subtitle {
+            font-size: 12px;
+            font-weight: 400;
+            color: var(--text-secondary);
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+        }
+
+        /* Fashion Navigation */
+        .fashion-nav {
+            display: flex;
+            gap: var(--space-xs);
+            background: var(--bg-tertiary);
+            padding: var(--space-xs);
+            border-radius: var(--radius-2xl);
+            border: 1px solid var(--border-primary);
+        }
+
+        .nav-item {
+            padding: var(--space-md) var(--space-lg);
+            border-radius: var(--radius-lg);
+            font-size: 14px;
+            font-weight: 500;
+            color: var(--text-secondary);
+            background: transparent;
+            border: none;
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            display: flex;
+            align-items: center;
+            gap: var(--space-sm);
+            position: relative;
+            white-space: nowrap;
+        }
+
+        .nav-item:hover {
+            color: var(--text-primary);
+            background: var(--bg-secondary);
+            transform: translateY(-1px);
+        }
+
+        .nav-item.active {
+            background: var(--fashion-black);
+            color: var(--fashion-white);
+            box-shadow: var(--shadow-sm);
+        }
+
+        .nav-item.active::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            animation: navShimmer 2s infinite;
+        }
+
+        @keyframes navShimmer {
+            0% { left: -100%; }
+            100% { left: 100%; }
+        }
+
+        /* User Profile */
+        .user-section {
+            display: flex;
+            align-items: center;
+            gap: var(--space-md);
+        }
+
+        .search-btn, .notification-btn {
+            width: 44px;
+            height: 44px;
+            border-radius: var(--radius-md);
+            background: var(--bg-secondary);
+            border: 1px solid var(--border-primary);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            position: relative;
+        }
+
+        .search-btn:hover, .notification-btn:hover {
+            background: var(--bg-tertiary);
+            transform: translateY(-1px);
+            box-shadow: var(--shadow-sm);
+        }
+
+        .notification-dot {
+            position: absolute;
+            top: 8px;
+            right: 8px;
+            width: 6px;
+            height: 6px;
+            background: var(--runway-red);
+            border-radius: var(--radius-full);
+            border: 2px solid var(--bg-secondary);
+        }
+
+        .user-avatar {
+            width: 44px;
+            height: 44px;
+            border-radius: var(--radius-md);
+            background: linear-gradient(135deg, var(--accent-gold), var(--accent-rose));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--fashion-white);
+            font-weight: 600;
+            font-size: 16px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            border: 2px solid var(--bg-secondary);
+            box-shadow: var(--shadow-xs);
+        }
+
+        .user-avatar:hover {
+            transform: scale(1.05);
+            box-shadow: var(--shadow-md);
+        }
+
+        /* Main Container */
+        .main-container {
+            max-width: 1800px;
+            margin: 0 auto;
+            padding: var(--space-3xl) var(--space-xl);
+        }
+
+        /* Fashion Week Stats */
+        .fashion-stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: var(--space-lg);
+            margin-bottom: var(--space-3xl);
+        }
+
+        .stat-card {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border-primary);
+            border-radius: var(--radius-xl);
+            padding: var(--space-xl);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-lg);
+            border-color: var(--border-accent);
+        }
+
+        .stat-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, var(--accent-gold), var(--accent-rose), var(--accent-lavender));
+        }
+
+        .stat-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: var(--space-lg);
+        }
+
+        .stat-icon {
+            width: 36px;
+            height: 36px;
+            border-radius: var(--radius-sm);
+            background: var(--bg-tertiary);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+        }
+
+        .stat-value {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 36px;
+            font-weight: 700;
+            color: var(--text-primary);
+            margin-bottom: var(--space-sm);
+            letter-spacing: -0.02em;
+        }
+
+        .stat-label {
+            font-size: 14px;
+            color: var(--text-secondary);
+            margin-bottom: var(--space-sm);
+            font-weight: 500;
+        }
+
+        .stat-change {
+            display: flex;
+            align-items: center;
+            gap: var(--space-xs);
+            font-size: 13px;
+            font-weight: 500;
+        }
+
+        .change-positive {
+            color: var(--success);
+        }
+
+        .change-negative {
+            color: var(--error);
+        }
+
+        /* Dashboard Grid */
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: repeat(12, 1fr);
+            gap: var(--space-lg);
+            margin-bottom: var(--space-3xl);
+        }
+
+        /* Fashion Card */
+        .fashion-card {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border-primary);
+            border-radius: var(--radius-xl);
+            padding: var(--space-xl);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .fashion-card:hover {
+            transform: translateY(-1px);
+            box-shadow: var(--shadow-md);
+            border-color: var(--border-accent);
+        }
+
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: var(--space-lg);
+        }
+
+        .card-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 20px;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin: 0;
+        }
+
+        .card-action {
+            padding: var(--space-sm) var(--space-md);
+            background: var(--bg-tertiary);
+            border: 1px solid var(--border-primary);
+            border-radius: var(--radius-sm);
+            font-size: 12px;
+            font-weight: 500;
+            color: var(--text-secondary);
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .card-action:hover {
+            background: var(--fashion-black);
+            color: var(--fashion-white);
+        }
+
+        /* Runway Schedule */
+        .runway-card {
+            grid-column: span 8;
+        }
+
+        .runway-timeline {
+            position: relative;
+            padding: var(--space-lg) 0;
+        }
+
+        .timeline-line {
+            position: absolute;
+            left: 24px;
+            top: 0;
+            bottom: 0;
+            width: 2px;
+            background: linear-gradient(180deg, var(--accent-gold), var(--accent-rose));
+        }
+
+        .show-item {
+            position: relative;
+            padding: var(--space-lg);
+            margin-bottom: var(--space-lg);
+            background: var(--bg-tertiary);
+            border-radius: var(--radius-lg);
+            border: 1px solid var(--border-primary);
+            margin-left: 56px;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .show-item:hover {
+            background: var(--bg-secondary);
+            transform: translateX(4px);
+            box-shadow: var(--shadow-md);
+        }
+
+        .show-item.featured {
+            background: linear-gradient(135deg, var(--accent-champagne), var(--accent-pearl));
+            border-color: var(--accent-gold);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .show-item::before {
+            content: '';
+            position: absolute;
+            left: -68px;
+            top: 28px;
+            width: 16px;
+            height: 16px;
+            background: var(--bg-secondary);
+            border: 3px solid var(--accent-gold);
+            border-radius: var(--radius-full);
+        }
+
+        .show-item.featured::before {
+            background: var(--accent-gold);
+            box-shadow: 0 0 0 4px rgba(212, 175, 55, 0.2);
+            animation: featuredPulse 2s infinite;
+        }
+
+        @keyframes featuredPulse {
+            0%, 100% { box-shadow: 0 0 0 4px rgba(212, 175, 55, 0.2); }
+            50% { box-shadow: 0 0 0 8px rgba(212, 175, 55, 0.1); }
+        }
+
+        .show-time {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--accent-gold);
+            margin-bottom: var(--space-xs);
+        }
+
+        .show-designer {
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: var(--space-xs);
+            color: var(--text-primary);
+        }
+
+        .show-collection {
+            font-size: 14px;
+            color: var(--text-secondary);
+            margin-bottom: var(--space-sm);
+        }
+
+        .show-venue {
+            font-size: 12px;
+            color: var(--text-tertiary);
+            font-style: italic;
+        }
+
+        /* Fashion Week Cities */
+        .cities-card {
+            grid-column: span 4;
+        }
+
+        .cities-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: var(--space-md);
+        }
+
+        .city-item {
+            padding: var(--space-lg);
+            background: var(--bg-tertiary);
+            border-radius: var(--radius-md);
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: 1px solid var(--border-primary);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .city-item:hover {
+            background: var(--bg-secondary);
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-md);
+        }
+
+        .city-item.active {
+            background: var(--fashion-black);
+            color: var(--fashion-white);
+        }
+
+        .city-flag {
+            font-size: 24px;
+            margin-bottom: var(--space-sm);
+            display: block;
+        }
+
+        .city-name {
+            font-weight: 600;
+            margin-bottom: var(--space-xs);
+            font-size: 14px;
+        }
+
+        .city-dates {
+            font-size: 11px;
+            opacity: 0.7;
+        }
+
+        /* Designer Spotlight */
+        .designer-card {
+            grid-column: span 6;
+        }
+
+        .designer-showcase {
+            display: flex;
+            gap: var(--space-lg);
+            align-items: center;
+        }
+
+        .designer-avatar {
+            width: 80px;
+            height: 80px;
+            border-radius: var(--radius-full);
+            background: linear-gradient(135deg, var(--accent-gold), var(--accent-rose));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 32px;
+            color: var(--fashion-white);
+            flex-shrink: 0;
+            box-shadow: var(--shadow-md);
+        }
+
+        .designer-info {
+            flex: 1;
+        }
+
+        .designer-name {
+            font-family: 'Playfair Display', serif;
+            font-size: 24px;
+            font-weight: 700;
+            margin-bottom: var(--space-xs);
+        }
+
+        .designer-brand {
+            font-size: 14px;
+            color: var(--text-secondary);
+            margin-bottom: var(--space-sm);
+        }
+
+        .designer-stats {
+            display: flex;
+            gap: var(--space-lg);
+        }
+
+        .designer-stat {
+            text-align: center;
+        }
+
+        .stat-number {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 20px;
+            font-weight: 700;
+            color: var(--text-primary);
+        }
+
+        .stat-text {
+            font-size: 11px;
+            color: var(--text-tertiary);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        /* Media Coverage */
+        .media-card {
+            grid-column: span 6;
+        }
+
+        .media-feed {
+            max-height: 320px;
+            overflow-y: auto;
+            margin: calc(-1 * var(--space-sm));
+            padding: var(--space-sm);
+        }
+
+        .media-feed::-webkit-scrollbar {
+            width: 4px;
+        }
+
+        .media-feed::-webkit-scrollbar-track {
+            background: var(--bg-tertiary);
+            border-radius: 2px;
+        }
+
+        .media-feed::-webkit-scrollbar-thumb {
+            background: var(--accent-gold);
+            border-radius: 2px;
+        }
+
+        .media-item {
+            display: flex;
+            align-items: center;
+            gap: var(--space-md);
+            padding: var(--space-md) 0;
+            border-bottom: 1px solid var(--border-primary);
+            transition: all 0.2s ease;
+        }
+
+        .media-item:last-child {
+            border-bottom: none;
+        }
+
+        .media-item:hover {
+            background: var(--bg-tertiary);
+            border-radius: var(--radius-md);
+            padding: var(--space-md);
+            margin: 0 calc(-1 * var(--space-md));
+        }
+
+        .media-icon {
+            width: 36px;
+            height: 36px;
+            border-radius: var(--radius-sm);
+            background: var(--fashion-black);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--fashion-white);
+            font-weight: 600;
+            font-size: 12px;
+            flex-shrink: 0;
+        }
+
+        .media-content {
+            flex: 1;
+        }
+
+        .media-headline {
+            font-size: 14px;
+            font-weight: 500;
+            margin-bottom: 2px;
+            color: var(--text-primary);
+        }
+
+        .media-source {
+            font-size: 12px;
+            color: var(--text-secondary);
+        }
+
+        .media-badge {
+            padding: 4px var(--space-sm);
+            border-radius: var(--radius-sm);
+            font-size: 10px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .badge-viral {
+            background: rgba(16, 185, 129, 0.1);
+            color: var(--success);
+        }
+
+        .badge-trending {
+            background: rgba(245, 158, 11, 0.1);
+            color: var(--warning);
+        }
+
+        .badge-featured {
+            background: rgba(59, 130, 246, 0.1);
+            color: var(--info);
+        }
+
+        /* Trends Analytics */
+        .trends-card {
+            grid-column: span 4;
+        }
+
+        .trend-item {
+            display: flex;
+            align-items: center;
+            gap: var(--space-md);
+            padding: var(--space-md);
+            margin-bottom: var(--space-sm);
+            background: var(--bg-tertiary);
+            border-radius: var(--radius-md);
+            border: 1px solid var(--border-primary);
+            transition: all 0.2s ease;
+            cursor: pointer;
+        }
+
+        .trend-item:hover {
+            background: var(--bg-secondary);
+            transform: scale(1.02);
+            box-shadow: var(--shadow-sm);
+        }
+
+        .trend-color {
+            width: 32px;
+            height: 32px;
+            border-radius: var(--radius-sm);
+            flex-shrink: 0;
+            border: 2px solid var(--bg-secondary);
+            box-shadow: var(--shadow-xs);
+        }
+
+        .trend-color.emerald {
+            background: var(--runway-emerald);
+        }
+
+        .trend-color.rose {
+            background: var(--accent-rose);
+        }
+
+        .trend-color.lavender {
+            background: var(--accent-lavender);
+        }
+
+        .trend-color.amber {
+            background: var(--runway-amber);
+        }
+
+        .trend-info {
+            flex: 1;
+        }
+
+        .trend-name {
+            font-size: 14px;
+            font-weight: 600;
+            margin-bottom: 2px;
+        }
+
+        .trend-growth {
+            font-size: 12px;
+            color: var(--success);
+            font-weight: 500;
+        }
+
+        /* VIP Guest List */
+        .vip-card {
+            grid-column: span 4;
+        }
+
+        .vip-list {
+            max-height: 320px;
+            overflow-y: auto;
+            margin: calc(-1 * var(--space-sm));
+            padding: var(--space-sm);
+        }
+
+        .vip-item {
+            display: flex;
+            align-items: center;
+            gap: var(--space-md);
+            padding: var(--space-md);
+            margin-bottom: var(--space-sm);
+            background: var(--bg-tertiary);
+            border-radius: var(--radius-md);
+            border: 1px solid var(--border-primary);
+            transition: all 0.2s ease;
+            cursor: pointer;
+        }
+
+        .vip-item:hover {
+            background: var(--bg-secondary);
+            transform: translateX(2px);
+        }
+
+        .vip-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: var(--radius-md);
+            background: linear-gradient(135deg, var(--fashion-black), var(--fashion-charcoal));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--fashion-white);
+            font-weight: 600;
+            font-size: 14px;
+            flex-shrink: 0;
+        }
+
+        .vip-info {
+            flex: 1;
+        }
+
+        .vip-name {
+            font-size: 14px;
+            font-weight: 600;
+            margin-bottom: 2px;
+        }
+
+        .vip-role {
+            font-size: 12px;
+            color: var(--text-secondary);
+        }
+
+        .vip-status {
+            width: 8px;
+            height: 8px;
+            border-radius: var(--radius-full);
+            background: var(--success);
+        }
+
+        .vip-status.pending {
+            background: var(--warning);
+        }
+
+        /* Quick Actions */
+        .actions-card {
+            grid-column: span 4;
+        }
+
+        .action-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: var(--space-md);
+        }
+
+        .action-item {
+            padding: var(--space-lg);
+            background: var(--bg-tertiary);
+            border: 1px solid var(--border-primary);
+            border-radius: var(--radius-lg);
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: var(--space-sm);
+        }
+
+        .action-item:hover {
+            background: var(--fashion-black);
+            color: var(--fashion-white);
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-md);
+        }
+
+        .action-icon {
+            font-size: 24px;
+            margin-bottom: var(--space-xs);
+        }
+
+        .action-label {
+            font-size: 12px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        /* Fashion Calendar */
+        .calendar-card {
+            grid-column: span 8;
+        }
+
+        .calendar-header {
+            display: flex;
+            justify-content: between;
+            align-items: center;
+            margin-bottom: var(--space-lg);
+        }
+
+        .calendar-nav {
+            display: flex;
+            gap: var(--space-sm);
+        }
+
+        .calendar-btn {
+            padding: var(--space-sm) var(--space-md);
+            background: var(--bg-tertiary);
+            border: 1px solid var(--border-primary);
+            border-radius: var(--radius-sm);
+            font-size: 12px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .calendar-btn:hover,
+        .calendar-btn.active {
+            background: var(--fashion-black);
+            color: var(--fashion-white);
+        }
+
+        .calendar-grid {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            gap: var(--space-sm);
+        }
+
+        .calendar-day {
+            aspect-ratio: 1;
+            border-radius: var(--radius-sm);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            background: var(--bg-tertiary);
+            border: 1px solid var(--border-primary);
+            position: relative;
+        }
+
+        .calendar-day:hover {
+            background: var(--bg-secondary);
+            transform: scale(1.05);
+        }
+
+        .calendar-day.has-event {
+            background: var(--accent-champagne);
+            border-color: var(--accent-gold);
+        }
+
+        .calendar-day.has-event::after {
+            content: '';
+            position: absolute;
+            bottom: 4px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 4px;
+            height: 4px;
+            background: var(--accent-gold);
+            border-radius: var(--radius-full);
+        }
+
+        /* Floating Action Button */
+        .fashion-fab {
+            position: fixed;
+            bottom: var(--space-xl);
+            right: var(--space-xl);
+            width: 64px;
+            height: 64px;
+            border-radius: var(--radius-full);
+            background: var(--fashion-black);
+            color: var(--fashion-white);
+            border: none;
+            cursor: pointer;
+            box-shadow: var(--shadow-xl);
+            font-size: 24px;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .fashion-fab:hover {
+            transform: scale(1.1) rotate(90deg);
+            box-shadow: 0 20px 60px rgba(26, 26, 26, 0.3);
+        }
+
+        /* Responsive Design */
+        @media (max-width: 1400px) {
+            .runway-card { grid-column: span 12; }
+            .cities-card { grid-column: span 6; }
+            .designer-card { grid-column: span 6; }
+            .media-card { grid-column: span 6; }
+            .trends-card { grid-column: span 4; }
+            .vip-card { grid-column: span 4; }
+            .actions-card { grid-column: span 4; }
+            .calendar-card { grid-column: span 12; }
+        }
+
+        @media (max-width: 768px) {
+            .fashion-nav { display: none; }
+            .fashion-stats { grid-template-columns: repeat(2, 1fr); }
+            .dashboard-grid { grid-template-columns: 1fr; gap: var(--space-md); }
+            .fashion-card { grid-column: span 1 !important; padding: var(--space-lg); }
+            .main-container { padding: var(--space-lg) var(--space-md); }
+            .header-container { padding: 0 var(--space-md); }
+            .show-item { margin-left: var(--space-lg); }
+            .timeline-line { left: 12px; }
+            .show-item::before { left: -24px; }
+            .cities-grid { grid-template-columns: 1fr; }
+            .designer-showcase { flex-direction: column; text-align: center; }
+        }
+
+        /* Loading Animation */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .animate-in {
+            animation: fadeInUp 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .animate-delayed {
+            animation: fadeInUp 0.6s cubic-bezier(0.4, 0, 0.2, 1) 0.2s both;
+        }
+    </style>
+</head>
+<body>
+    <!-- Fashion Week Header -->
+    <header class="fashion-header">
+        <div class="header-container">
+            <!-- Fashion Logo -->
+            <div class="fashion-logo">
+                <div class="logo-mark"></div>
+                <div class="logo-text">
+                    <h1 class="logo-title">Fashion Week International</h1>
+                    <p class="logo-subtitle">EventsOS Platform</p>
+                </div>
+            </div>
+
+            <!-- Fashion Navigation -->
+            <nav class="fashion-nav">
+                <button class="nav-item active">
+                    <span>📊</span> Dashboard
+                </button>
+                <button class="nav-item">
+                    <span>👗</span> Shows
+                </button>
+                <button class="nav-item">
+                    <span>🌍</span> Cities
+                </button>
+                <button class="nav-item">
+                    <span>👑</span> Designers
+                </button>
+                <button class="nav-item">
+                    <span>📱</span> Media
+                </button>
+                <button class="nav-item">
+                    <span>⚙️</span> Settings
+                </button>
+            </nav>
+
+            <!-- User Section -->
+            <div class="user-section">
+                <div class="search-btn">🔍</div>
+                <div class="notification-btn">
+                    🔔
+                    <div class="notification-dot"></div>
+                </div>
+                <div class="user-avatar">AD</div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Container -->
+    <main class="main-container">
+        <!-- Fashion Week Stats -->
+        <section class="fashion-stats animate-in">
+            <div class="stat-card">
+                <div class="stat-header">
+                    <div class="stat-icon">👗</div>
+                </div>
+                <div class="stat-value">247</div>
+                <div class="stat-label">Fashion Shows</div>
+                <div class="stat-change change-positive">
+                    <span>↗</span> +18 this season
+                </div>
+            </div>
+
+            <div class="stat-card">
+                <div class="stat-header">
+                    <div class="stat-icon">💰</div>
+                </div>
+                <div class="stat-value">€8.2M</div>
+                <div class="stat-label">Event Revenue</div>
+                <div class="stat-change change-positive">
+                    <span>↗</span> +22.4% vs last year
+                </div>
+            </div>
+
+            <div class="stat-card">
+                <div class="stat-header">
+                    <div class="stat-icon">👥</div>
+                </div>
+                <div class="stat-value">2,847</div>
+                <div class="stat-label">VIP Attendees</div>
+                <div class="stat-change change-positive">
+                    <span>↗</span> +12.7% capacity
+                </div>
+            </div>
+
+            <div class="stat-card">
+                <div class="stat-header">
+                    <div class="stat-icon">📱</div>
+                </div>
+                <div class="stat-value">1.2M</div>
+                <div class="stat-label">Social Reach</div>
+                <div class="stat-change change-positive">
+                    <span>↗</span> Viral trending
+                </div>
+            </div>
+        </section>
+
+        <!-- Dashboard Grid -->
+        <section class="dashboard-grid">
+            <!-- Runway Schedule -->
+            <div class="fashion-card runway-card animate-in">
+                <div class="card-header">
+                    <h2 class="card-title">Today's Runway Schedule</h2>
+                    <button class="card-action">View All</button>
+                </div>
+                
+                <div class="runway-timeline">
+                    <div class="timeline-line"></div>
+                    
+                    <div class="show-item">
+                        <div class="show-time">10:00</div>
+                        <div class="show-designer">Versace</div>
+                        <div class="show-collection">Spring/Summer 2025 Collection</div>
+                        <div class="show-venue">Palazzo San Martino, Milan</div>
+                    </div>
+                    
+                    <div class="show-item">
+                        <div class="show-time">11:30</div>
+                        <div class="show-designer">Prada</div>
+                        <div class="show-collection">Ready-to-Wear Presentation</div>
+                        <div class="show-venue">Fondazione Prada, Milan</div>
+                    </div>
+                    
+                    <div class="show-item featured">
+                        <div class="show-time">13:00</div>
+                        <div class="show-designer">Giorgio Armani</div>
+                        <div class="show-collection">Haute Couture Finale</div>
+                        <div class="show-venue">Armani Teatro, Milan</div>
+                    </div>
+                    
+                    <div class="show-item">
+                        <div class="show-time">14:30</div>
+                        <div class="show-designer">Dolce & Gabbana</div>
+                        <div class="show-collection">Alta Moda Collection</div>
+                        <div class="show-venue">Villa San Sebastiano, Milan</div>
+                    </div>
+                    
+                    <div class="show-item">
+                        <div class="show-time">16:00</div>
+                        <div class="show-designer">Bottega Veneta</div>
+                        <div class="show-collection">Luxury Leather Showcase</div>
+                        <div class="show-venue">Palazzo delle Stelline, Milan</div>
+                    </div>
+                    
+                    <div class="show-item">
+                        <div class="show-time">17:30</div>
+                        <div class="show-designer">Gucci</div>
+                        <div class="show-collection">Avant-Garde Presentation</div>
+                        <div class="show-venue">Gucci Hub, Milan</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Fashion Week Cities -->
+            <div class="fashion-card cities-card animate-delayed">
+                <div class="card-header">
+                    <h2 class="card-title">Fashion Capitals</h2>
+                    <button class="card-action">Schedule</button>
+                </div>
+                
+                <div class="cities-grid">
+                    <div class="city-item active">
+                        <span class="city-flag">🇮🇹</span>
+                        <div class="city-name">Milan</div>
+                        <div class="city-dates">Feb 25 - Mar 3</div>
+                    </div>
+                    
+                    <div class="city-item">
+                        <span class="city-flag">🇫🇷</span>
+                        <div class="city-name">Paris</div>
+                        <div class="city-dates">Mar 3 - Mar 11</div>
+                    </div>
+                    
+                    <div class="city-item">
+                        <span class="city-flag">🇬🇧</span>
+                        <div class="city-name">London</div>
+                        <div class="city-dates">Feb 20 - Feb 24</div>
+                    </div>
+                    
+                    <div class="city-item">
+                        <span class="city-flag">🇺🇸</span>
+                        <div class="city-name">New York</div>
+                        <div class="city-dates">Feb 6 - Feb 11</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Designer Spotlight -->
+            <div class="fashion-card designer-card animate-delayed">
+                <div class="card-header">
+                    <h2 class="card-title">Designer Spotlight</h2>
+                    <button class="card-action">Profile</button>
+                </div>
+                
+                <div class="designer-showcase">
+                    <div class="designer-avatar">👨‍🎨</div>
+                    <div class="designer-info">
+                        <div class="designer-name">Giorgio Armani</div>
+                        <div class="designer-brand">Armani Group</div>
+                        <div class="designer-stats">
+                            <div class="designer-stat">
+                                <div class="stat-number">50</div>
+                                <div class="stat-text">Years</div>
+                            </div>
+                            <div class="designer-stat">
+                                <div class="stat-number">3.2M</div>
+                                <div class="stat-text">Followers</div>
+                            </div>
+                            <div class="designer-stat">
+                                <div class="stat-number">147</div>
+                                <div class="stat-text">Awards</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Media Coverage -->
+            <div class="fashion-card media-card animate-delayed">
+                <div class="card-header">
+                    <h2 class="card-title">Media Coverage</h2>
+                    <button class="card-action">View All</button>
+                </div>
+                
+                <div class="media-feed">
+                    <div class="media-item">
+                        <div class="media-icon">V</div>
+                        <div class="media-content">
+                            <div class="media-headline">Milan Fashion Week Sets New Standards</div>
+                            <div class="media-source">Vogue Italia</div>
+                        </div>
+                        <div class="media-badge badge-viral">Viral</div>
+                    </div>
+                    
+                    <div class="media-item">
+                        <div class="media-icon">WD</div>
+                        <div class="media-content">
+                            <div class="media-headline">Armani's Timeless Elegance Returns</div>
+                            <div class="media-source">Women's Wear Daily</div>
+                        </div>
+                        <div class="media-badge badge-trending">Trending</div>
+                    </div>
+                    
+                    <div class="media-item">
+                        <div class="media-icon">H</div>
+                        <div class="media-content">
+                            <div class="media-headline">Front Row Fashion Icons</div>
+                            <div class="media-source">Harper's Bazaar</div>
+                        </div>
+                        <div class="media-badge badge-featured">Featured</div>
+                    </div>
+                    
+                    <div class="media-item">
+                        <div class="media-icon">E</div>
+                        <div class="media-content">
+                            <div class="media-headline">Sustainable Fashion Takes Center Stage</div>
+                            <div class="media-source">Elle</div>
+                        </div>
+                        <div class="media-badge badge-trending">Trending</div>
+                    </div>
+                    
+                    <div class="media-item">
+                        <div class="media-icon">M</div>
+                        <div class="media-content">
+                            <div class="media-headline">Street Style Stars Emerge</div>
+                            <div class="media-source">Marie Claire</div>
+                        </div>
+                        <div class="media-badge badge-featured">Featured</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Trending Colors -->
+            <div class="fashion-card trends-card animate-delayed">
+                <div class="card-header">
+                    <h2 class="card-title">Trending Colors</h2>
+                    <button class="card-action">Analytics</button>
+                </div>
+                
+                <div class="trend-item">
+                    <div class="trend-color emerald"></div>
+                    <div class="trend-info">
+                        <div class="trend-name">Emerald Green</div>
+                        <div class="trend-growth">+47% engagement</div>
+                    </div>
+                </div>
+                
+                <div class="trend-item">
+                    <div class="trend-color rose"></div>
+                    <div class="trend-info">
+                        <div class="trend-name">Dusty Rose</div>
+                        <div class="trend-growth">+32% interest</div>
+                    </div>
+                </div>
+                
+                <div class="trend-item">
+                    <div class="trend-color lavender"></div>
+                    <div class="trend-info">
+                        <div class="trend-name">Soft Lavender</div>
+                        <div class="trend-growth">+28% searches</div>
+                    </div>
+                </div>
+                
+                <div class="trend-item">
+                    <div class="trend-color amber"></div>
+                    <div class="trend-info">
+                        <div class="trend-name">Golden Amber</div>
+                        <div class="trend-growth">+41% mentions</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- VIP Guest List -->
+            <div class="fashion-card vip-card animate-delayed">
+                <div class="card-header">
+                    <h2 class="card-title">VIP Guests</h2>
+                    <button class="card-action">Manage</button>
+                </div>
+                
+                <div class="vip-list">
+                    <div class="vip-item">
+                        <div class="vip-avatar">AW</div>
+                        <div class="vip-info">
+                            <div class="vip-name">Anna Wintour</div>
+                            <div class="vip-role">Editor-in-Chief, Vogue</div>
+                        </div>
+                        <div class="vip-status"></div>
+                    </div>
+                    
+                    <div class="vip-item">
+                        <div class="vip-avatar">CF</div>
+                        <div class="vip-info">
+                            <div class="vip-name">Chiara Ferragni</div>
+                            <div class="vip-role">Fashion Influencer</div>
+                        </div>
+                        <div class="vip-status"></div>
+                    </div>
+                    
+                    <div class="vip-item">
+                        <div class="vip-avatar">EW</div>
+                        <div class="vip-info">
+                            <div class="vip-name">Edward Enninful</div>
+                            <div class="vip-role">Creative Director</div>
+                        </div>
+                        <div class="vip-status pending"></div>
+                    </div>
+                    
+                    <div class="vip-item">
+                        <div class="vip-avatar">SL</div>
+                        <div class="vip-info">
+                            <div class="vip-name">Susanna Lau</div>
+                            <div class="vip-role">Fashion Editor</div>
+                        </div>
+                        <div class="vip-status"></div>
+                    </div>
+                    
+                    <div class="vip-item">
+                        <div class="vip-avatar">OP</div>
+                        <div class="vip-info">
+                            <div class="vip-name">Olivia Palermo</div>
+                            <div class="vip-role">Style Icon</div>
+                        </div>
+                        <div class="vip-status"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Quick Actions -->
+            <div class="fashion-card actions-card animate-delayed">
+                <div class="card-header">
+                    <h2 class="card-title">Quick Actions</h2>
+                </div>
+                
+                <div class="action-grid">
+                    <div class="action-item">
+                        <div class="action-icon">📅</div>
+                        <div class="action-label">Schedule Show</div>
+                    </div>
+                    
+                    <div class="action-item">
+                        <div class="action-icon">👥</div>
+                        <div class="action-label">Add VIP</div>
+                    </div>
+                    
+                    <div class="action-item">
+                        <div class="action-icon">📸</div>
+                        <div class="action-label">Media Kit</div>
+                    </div>
+                    
+                    <div class="action-item">
+                        <div class="action-icon">📊</div>
+                        <div class="action-label">Analytics</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Fashion Floating Action Button -->
+    <button class="fashion-fab">+</button>
+
+    <script>
+        // Fashion week dashboard interactions
+        document.addEventListener('DOMContentLoaded', function() {
+            // Navigation interaction
+            document.querySelectorAll('.nav-item').forEach(item => {
+                item.addEventListener('click', function() {
+                    document.querySelectorAll('.nav-item').forEach(i => i.classList.remove('active'));
+                    this.classList.add('active');
+                });
+            });
+
+            // City selection
+            document.querySelectorAll('.city-item').forEach(city => {
+                city.addEventListener('click', function() {
+                    document.querySelectorAll('.city-item').forEach(c => c.classList.remove('active'));
+                    this.classList.add('active');
+                });
+            });
+
+            // Show item interaction
+            document.querySelectorAll('.show-item').forEach(item => {
+                item.addEventListener('click', function() {
+                    document.querySelectorAll('.show-item').forEach(i => i.classList.remove('featured'));
+                    this.classList.add('featured');
+                });
+            });
+
+            // Real-time updates
+            setInterval(() => {
+                const pendingStatuses = document.querySelectorAll('.vip-status.pending');
+                pendingStatuses.forEach(status => {
+                    if (Math.random() > 0.8) {
+                        status.classList.remove('pending');
+                    }
+                });
+            }, 5000);
+
+            // Fashion FAB interaction
+            document.querySelector('.fashion-fab').addEventListener('click', function() {
+                this.style.transform = 'scale(1.2) rotate(180deg)';
+                setTimeout(() => {
+                    this.style.transform = 'scale(1) rotate(90deg)';
+                }, 300);
+            });
+
+            // Enhanced card hover effects
+            document.querySelectorAll('.fashion-card').forEach(card => {
+                card.addEventListener('mouseenter', function() {
+                    this.style.transform = 'translateY(-2px) scale(1.005)';
+                });
+                
+                card.addEventListener('mouseleave', function() {
+                    this.style.transform = 'translateY(0) scale(1)';
+                });
+            });
+
+            // Trend item interactions
+            document.querySelectorAll('.trend-item').forEach(item => {
+                item.addEventListener('click', function() {
+                    const color = this.querySelector('.trend-color');
+                    color.style.transform = 'scale(1.2) rotate(360deg)';
+                    setTimeout(() => {
+                        color.style.transform = 'scale(1) rotate(0deg)';
+                    }, 300);
+                });
+            });
+
+            // VIP item interactions
+            document.querySelectorAll('.vip-item').forEach(item => {
+                item.addEventListener('click', function() {
+                    this.style.background = 'var(--bg-secondary)';
+                    this.style.transform = 'scale(1.02)';
+                    setTimeout(() => {
+                        this.style.background = 'var(--bg-tertiary)';
+                        this.style.transform = 'scale(1)';
+                    }, 300);
+                });
+            });
+
+            // Media item engagement tracking
+            document.querySelectorAll('.media-item').forEach(item => {
+                item.addEventListener('click', function() {
+                    const badge = this.querySelector('.media-badge');
+                    if (badge.classList.contains('badge-trending')) {
+                        badge.textContent = 'Viral';
+                        badge.className = 'media-badge badge-viral';
+                    }
+                });
+            });
+
+            // Modern scroll behavior
+            if (window.innerWidth <= 768) {
+                const header = document.querySelector('.fashion-header');
+                let lastScrollY = window.scrollY;
+                
+                window.addEventListener('scroll', () => {
+                    if (window.scrollY > lastScrollY && window.scrollY > 100) {
+                        header.style.transform = 'translateY(-100%)';
+                    } else {
+                        header.style.transform = 'translateY(0)';
+                    }
+                    lastScrollY = window.scrollY;
+                });
+            }
+
+            // Progressive loading animation
+            const cards = document.querySelectorAll('.fashion-card');
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach((entry, index) => {
+                    if (entry.isIntersecting) {
+                        setTimeout(() => {
+                            entry.target.style.opacity = '1';
+                            entry.target.style.transform = 'translateY(0)';
+                        }, index * 100);
+                    }
+                });
+            });
+
+            cards.forEach(card => {
+                card.style.opacity = '0';
+                card.style.transform = 'translateY(20px)';
+                card.style.transition = 'all 0.6s cubic-bezier(0.4, 0, 0.2, 1)';
+                observer.observe(card);
+            });
+
+            // Fashion week countdown timer
+            function fashionCountdown() {
+                const nextShow = new Date();
+                nextShow.setHours(13, 0, 0, 0); // Next featured show at 1 PM
+                
+                const now = new Date();
+                const diff = nextShow - now;
+                
+                if (diff > 0) {
+                    const hours = Math.floor(diff / (1000 * 60 * 60));
+                    const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+                    
+                    // Update any countdown displays
+                    const countdownElements = document.querySelectorAll('.countdown');
+                    countdownElements.forEach(el => {
+                        el.textContent = `${hours}h ${minutes}m until featured show`;
+                    });
+                }
+            }
+
+            fashionCountdown();
+            setInterval(fashionCountdown, 60000);
+        });
+    </script>
+</body>
+</html>
