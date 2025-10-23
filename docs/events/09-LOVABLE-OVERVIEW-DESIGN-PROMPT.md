@@ -31,10 +31,16 @@ All pages must use the existing EventOS design system, shadcn/ui components, and
 3. **Organizers Management** (`/dashboard/organizers`) - Organizer profiles and performance
 4. **Venues Management** (`/dashboard/venues`) - Venue listing and management
 5. **Settings Page** (`/dashboard/settings`) - Account configuration
-6. **Organizer Detail Page** (`/dashboard/organizers/:id`) - Comprehensive organizer profile
+6. **Organizer Detail Page** (`/dashboard/organizers/:id`) - Comprehensive organizer profile matching purple screenshot style (soft cards, rounded corners, clean spacing)
+
+**CRITICAL SIDEBAR REQUIREMENTS FOR ALL DASHBOARD PAGES:**
+- **Sidebar MUST be visible** on all dashboard pages (`/dashboard/analytics`, `/dashboard/calendar`, `/dashboard/organizers`, `/dashboard/venues`, `/dashboard/settings`)
+- **Active item highlighting** - Current page must be highlighted in sidebar
+- **Mobile behavior** - Sidebar collapsed by default on mobile (<640px), opens as left overlay via hamburger button
+- **Consistent navigation** - Same sidebar structure across all dashboard pages
 
 ### **Venue Management (1 Page)**
-7. **Venue Details Page** (`/dashboard/venues/:id`) - Complete venue management with tabs
+7. **Venue Details Page** (`/dashboard/venues/:id`) - Complete venue management with gallery banner, stats cards (bookings, occupancy, revenue, rating), amenities badges, availability calendar with legend, and recent bookings table
 
 ### **CRM System (5 Pages)**
 8. **CRM Dashboard** (`/crm/dashboard`) - Client metrics and pipeline overview
@@ -52,6 +58,39 @@ All pages must use the existing EventOS design system, shadcn/ui components, and
 18. **Sponsor Portal** (`/sponsors/portal`) - Self-service portal for sponsors
 
 **Total: 18 Pages** across 4 major systems
+
+---
+
+## 🏗️ **DASHBOARD PAGE TEMPLATE REQUIREMENTS**
+
+### **Reusable Dashboard Page Template**
+All dashboard pages must use a consistent template structure:
+- **Header Section** - Page title, breadcrumbs, action buttons
+- **Content Grid** - Responsive layout with proper spacing
+- **Right Gutter** - Consistent sidebar space allocation
+- **Skeleton Blocks** - Loading state placeholders
+- **Empty State Slot** - When no data is available
+- **Error State Slot** - For error handling
+- **Standard Card/Section Spacing** - 8px grid system
+
+### **Organizer Detail Page Specifications** (`/dashboard/organizers/:id`)
+**Style:** Match purple screenshot reference (soft cards, rounded corners, clean spacing)
+**Sections Required:**
+- **Profile Header** - Avatar, name, role, contact CTAs (call, email, message)
+- **KPI Cards** - Total events, revenue, attendees (3-4 metric cards)
+- **Recent Events Cards** - Event thumbnails, titles, dates, status
+- **Activity Feed Timeline** - Recent actions, bookings, updates
+- **Mini Calendar** - Upcoming events and availability
+- **Mock Data** - Use placeholder images and sample data
+
+### **Venue Detail Page Specifications** (`/dashboard/venues/:id`)
+**Sections Required:**
+- **Gallery Banner** - Image carousel with venue photos
+- **Stats Cards** - Bookings count, occupancy rate, revenue, rating
+- **Amenities Badges** - WiFi, parking, AV, catering, accessibility
+- **Availability Calendar** - Monthly view with legend (available/tentative/booked)
+- **Recent Bookings Table** - Event name, date, revenue, status
+- **Mock Data** - Use placeholder images and sample data
 
 ---
 
@@ -128,186 +167,6 @@ Use these exact component names for consistency:
 │ 🤖 AI Assistant │
 │ 👤 Profile      │
 └─────────────────┘
-```
-
----
-
-## 🎨 **SYSTEM ARCHITECTURE & USER JOURNEY FLOWS**
-
-### **Complete System Overview Diagram**
-```mermaid
-graph TB
-    subgraph "EventOS Platform Architecture"
-        A[User Login] --> B[Dashboard Hub]
-        B --> C[Analytics Dashboard]
-        B --> D[Calendar Management]
-        B --> E[Organizer Management]
-        B --> F[Venue Management]
-        B --> G[Settings]
-        
-        E --> H[Organizer Detail Page]
-        F --> I[Venue Details Page]
-        
-        J[CRM System] --> K[CRM Dashboard]
-        J --> L[Client Management]
-        J --> M[Pipeline Board]
-        J --> N[Reports & Analytics]
-        
-        O[Sponsor Management] --> P[Sponsor Dashboard]
-        O --> Q[AI Discovery]
-        O --> R[Proposal Management]
-        O --> S[Contract Management]
-        O --> T[Performance Analytics]
-        O --> U[Sponsor Portal]
-    end
-    
-    style A fill:#8B5CF6,color:#fff
-    style B fill:#1E40AF,color:#fff
-    style J fill:#059669,color:#fff
-    style O fill:#DC2626,color:#fff
-```
-
-### **User Journey Flow - Complete Event Management**
-```mermaid
-flowchart TD
-    A[User Login] --> B[Dashboard Overview]
-    B --> C{User Role?}
-    
-    C -->|Organizer| D[Analytics Dashboard]
-    C -->|Venue Manager| E[Venue Management]
-    C -->|CRM User| F[CRM Dashboard]
-    C -->|Sponsor| G[Sponsor Portal]
-    
-    D --> H[Create Event]
-    H --> I[Select Venue]
-    I --> J[Book Venue]
-    J --> K[Manage Attendees]
-    K --> L[Generate Revenue]
-    
-    E --> M[Venue Details]
-    M --> N[Manage Bookings]
-    N --> O[Update Availability]
-    O --> P[Track Performance]
-    
-    F --> Q[Client Pipeline]
-    Q --> R[Deal Management]
-    R --> S[Generate Proposals]
-    S --> T[Close Deals]
-    
-    G --> U[Browse Events]
-    U --> V[Submit Proposals]
-    V --> W[Track Performance]
-    W --> X[Access Analytics]
-    
-    style A fill:#8B5CF6,color:#fff
-    style B fill:#1E40AF,color:#fff
-    style L fill:#059669,color:#fff
-    style T fill:#DC2626,color:#fff
-```
-
-### **Mobile-First Navigation Flow**
-```mermaid
-graph LR
-    subgraph "Mobile Navigation (< 640px)"
-        A[☰ Hamburger Menu] --> B[Sidebar Overlay]
-        B --> C[Dashboard]
-        B --> D[Analytics]
-        B --> E[Calendar]
-        B --> F[Organizers]
-        B --> G[Venues]
-        B --> H[Settings]
-        B --> I[AI Assistant]
-        B --> J[Profile]
-        
-        K[Touch Gestures] --> L[Swipe Navigation]
-        L --> M[Pull to Refresh]
-        M --> N[Bottom Sheets]
-        N --> O[Context Menus]
-    end
-    
-    subgraph "Desktop Navigation (> 1024px)"
-        P[Fixed Sidebar] --> Q[Always Visible]
-        Q --> R[Quick Access]
-        R --> S[Power User Features]
-    end
-    
-    style A fill:#8B5CF6,color:#fff
-    style B fill:#1E40AF,color:#fff
-    style P fill:#059669,color:#fff
-```
-
-### **Dashboard System Integration Flow**
-```mermaid
-sequenceDiagram
-    participant U as User
-    participant D as Dashboard
-    participant A as Analytics
-    participant C as Calendar
-    participant O as Organizers
-    participant V as Venues
-    participant S as Settings
-    
-    U->>D: Login to Dashboard
-    D->>A: Load Analytics Data
-    A-->>D: Revenue Metrics
-    D->>C: Load Calendar Events
-    C-->>D: Event Schedule
-    D->>O: Load Organizer Data
-    O-->>D: Organizer Profiles
-    D->>V: Load Venue Data
-    V-->>D: Venue Information
-    D->>S: Load User Settings
-    S-->>D: Configuration Data
-    D-->>U: Complete Dashboard View
-    
-    Note over U,S: All systems integrated seamlessly
-```
-
-### **CRM System Workflow**
-```mermaid
-flowchart TD
-    A[CRM Dashboard] --> B[Client Overview]
-    B --> C[Pipeline Management]
-    C --> D[Deal Stages]
-    D --> E[Lead Generation]
-    E --> F[Proposal Creation]
-    F --> G[Contract Management]
-    G --> H[Revenue Tracking]
-    H --> I[Performance Analytics]
-    I --> J[Client Success]
-    
-    K[AI Insights] --> L[Predictive Analytics]
-    L --> M[Opportunity Scoring]
-    M --> N[Automated Follow-ups]
-    N --> O[Revenue Optimization]
-    
-    style A fill:#059669,color:#fff
-    style J fill:#8B5CF6,color:#fff
-    style K fill:#DC2626,color:#fff
-```
-
-### **Sponsor Management Flow**
-```mermaid
-graph TB
-    subgraph "AI-Powered Sponsor Management"
-        A[Sponsor Dashboard] --> B[AI Discovery Engine]
-        B --> C[Lead Scoring]
-        C --> D[Match Recommendations]
-        D --> E[Proposal Generation]
-        E --> F[Contract Automation]
-        F --> G[Performance Tracking]
-        G --> H[Revenue Optimization]
-        
-        I[AI Insights] --> J[Predictive Analytics]
-        J --> K[Market Trends]
-        K --> L[Opportunity Identification]
-        L --> M[Automated Outreach]
-        M --> N[Success Metrics]
-    end
-    
-    style A fill:#DC2626,color:#fff
-    style B fill:#8B5CF6,color:#fff
-    style I fill:#059669,color:#fff
 ```
 
 ---
@@ -453,100 +312,6 @@ SIDEBAR OVERLAY (When Open):
 - **Smooth animations:** 300ms slide transitions
 - **Backdrop blur:** Semi-transparent when open
 
-### **CRM Pipeline Board Wireframe**
-```
-┌─────────────────────────────────────────────────────────┐
-│ [Sidebar Navigation] │ CRM Pipeline Management         │
-├─────────────────────────────────────────────────────────┤
-│ 👥 Client Pipeline              [Filter] [Sort] [Export] │
-├─────────────────────────────────────────────────────────┤
-│ ┌─────────────┐ ┌─────────────┐ ┌─────────────┐ ┌─────┐ │
-│ │   Leads     │ │  Qualified  │ │  Proposal   │ │ Won │ │
-│ │ (12 deals)  │ │  (8 deals)  │ │  (5 deals)  │ │ (3) │ │
-│ │             │ │             │ │             │ │     │ │
-│ │ ┌─────────┐ │ │ ┌─────────┐ │ │ ┌─────────┐ │ │ ┌─┐ │ │
-│ │ │Company A │ │ │ │Company B│ │ │ │Company C│ │ │ │D│ │ │
-│ │ │$15,000   │ │ │ │$25,000  │ │ │ │$35,000  │ │ │ │$│ │ │
-│ │ │🟡 Hot    │ │ │ │🟢 Warm  │ │ │ │🟠 Cold   │ │ │ │5│ │ │
-│ │ └─────────┘ │ │ └─────────┘ │ │ └─────────┘ │ │ │0│ │ │
-│ │             │ │             │ │             │ │ │K│ │ │
-│ │ ┌─────────┐ │ │ ┌─────────┐ │ │ ┌─────────┐ │ │ └─┘ │ │
-│ │ │Company E │ │ │ │Company F│ │ │ │Company G│ │ │     │ │
-│ │ │$12,000   │ │ │ │$18,000  │ │ │ │$22,000  │ │ │     │ │
-│ │ │🟡 Hot    │ │ │ │🟢 Warm  │ │ │ │🟠 Cold   │ │ │     │ │
-│ │ └─────────┘ │ │ └─────────┘ │ │ └─────────┘ │ │     │ │
-│ └─────────────┘ └─────────────┘ └─────────────┘ └─────┘ │
-└─────────────────────────────────────────────────────────┘
-```
-
-### **Sponsor Discovery AI Wireframe**
-```
-┌─────────────────────────────────────────────────────────┐
-│ [Sidebar Navigation] │ AI Sponsor Discovery             │
-├─────────────────────────────────────────────────────────┤
-│ 🤖 AI Insights & Recommendations    [Refresh] [Export]  │
-├─────────────────────────────────────────────────────────┤
-│ ┌─────────────────────────────────────────────────────┐ │
-│ │ 🎯 AI Match Score: 95%                              │ │
-│ │ Perfect match for Tech Conference 2024             │ │
-│ │ [View Details] [Contact] [Save]                     │ │
-│ └─────────────────────────────────────────────────────┘ │
-├─────────────────────────────────────────────────────────┤
-│ ┌─────────────────────────────────────────────────────┐ │
-│ │ 📊 Discovery Analytics                              │ │
-│ │ • 50 AI matches found                               │ │
-│ │ • 85% accuracy rate                                 │ │
-│ │ • 12 hot leads identified                           │ │
-│ │ • $2.5M pipeline value                              │ │
-│ └─────────────────────────────────────────────────────┘ │
-├─────────────────────────────────────────────────────────┤
-│ ┌─────────────────────────────────────────────────────┐ │
-│ │ 🔍 AI-Generated Matches                             │ │
-│ │ ┌─────────┐ ┌─────────┐ ┌─────────┐ ┌─────────┐ │ │
-│ │ │Company A│ │Company B│ │Company C│ │Company D│ │ │
-│ │ │Score:95%│ │Score:87%│ │Score:82%│ │Score:78%│ │ │
-│ │ │$50K     │ │$35K     │ │$25K     │ │$20K     │ │ │
-│ │ └─────────┘ └─────────┘ └─────────┘ └─────────┘ │ │
-│ └─────────────────────────────────────────────────────┘ │
-└─────────────────────────────────────────────────────────┘
-```
-
-### **Venue Details Page Wireframe**
-```
-┌─────────────────────────────────────────────────────────┐
-│ [Sidebar Navigation] │ Convention Center Downtown       │
-├─────────────────────────────────────────────────────────┤
-│ 🏢 Venue Overview                    [Edit] [Book] [Share] │
-│ ┌─────────────────────────────────────────────────────┐ │
-│ │ [Venue Image Gallery - Swipeable]                  │ │
-│ │ 📍 123 Business Ave, Toronto, ON                  │ │
-│ │ 👥 Capacity: 500 | 💰 $2,500/day | ⭐ 4.8/5       │ │
-│ │ ✅ WiFi, Parking, AV, Catering, Accessibility     │ │
-│ └─────────────────────────────────────────────────────┘ │
-├─────────────────────────────────────────────────────────┤
-│ ┌─────────────────────────────────────────────────────┐ │
-│ │ 📊 Performance Metrics                             │ │
-│ │ ┌─────────┐ ┌─────────┐ ┌─────────┐ ┌─────────┐   │ │
-│ │ │ 12       │ │ $45,200 │ │ 78%     │ │ 4.8/5   │   │ │
-│ │ │ Bookings │ │ Revenue │ │ Occupancy│ │ Rating  │   │ │
-│ │ └─────────┘ └─────────┘ └─────────┘ └─────────┘   │ │
-│ └─────────────────────────────────────────────────────┘ │
-├─────────────────────────────────────────────────────────┤
-│ ┌─────────────────────────────────────────────────────┐ │
-│ │ 📅 Availability Calendar                            │ │
-│ │ [Calendar Grid with Available/Booked Dates]        │ │
-│ │ 🟢 Available  🟡 Tentative  🔴 Booked            │ │
-│ └─────────────────────────────────────────────────────┘ │
-├─────────────────────────────────────────────────────────┤
-│ ┌─────────────────────────────────────────────────────┐ │
-│ │ 📋 Recent Bookings                                  │ │
-│ │ • Tech Conference 2024 - Mar 15, 2024 - $2,500    │ │
-│ │ • Startup Pitch Night - Mar 22, 2024 - $2,500     │ │
-│ │ • Corporate Workshop - Mar 28, 2024 - $2,500      │ │
-│ └─────────────────────────────────────────────────────┘ │
-└─────────────────────────────────────────────────────────┘
-```
-
 ---
 
 ## 🧩 **COMPONENT REUSE STRATEGY**
@@ -565,180 +330,6 @@ SIDEBAR OVERLAY (When Open):
 - **Pipeline Board** - Kanban-style deal management
 - **AI Insights Panel** - Sponsor management AI features
 - **Touch Gestures** - Mobile-specific interactions
-
-### **Component Hierarchy**
-```
-EventOS Design System
-├── Layout Components
-│   ├── Sidebar (Navigation)
-│   ├── Header (Page titles)
-│   ├── Container (Content wrapper)
-│   └── Grid (Responsive layout)
-├── Data Display Components
-│   ├── Card (Information display)
-│   ├── Table (Data listing)
-│   ├── List (Item display)
-│   └── Badge (Status indicators)
-├── Form Components
-│   ├── Input (Text fields)
-│   ├── Select (Dropdowns)
-│   ├── Button (Actions)
-│   └── Checkbox (Selections)
-└── Feedback Components
-    ├── Alert (Notifications)
-    ├── Skeleton (Loading states)
-    └── Toast (Messages)
-```
-
----
-
-## 🔄 **DATA FLOW & INTEGRATION DIAGRAMS**
-
-### **Complete Data Flow Architecture**
-```mermaid
-graph TB
-    subgraph "Frontend Layer"
-        A[React Components] --> B[shadcn/ui Library]
-        B --> C[EventOS Design System]
-        C --> D[Mobile-First Layout]
-    end
-    
-    subgraph "State Management Layer"
-        E[Component State] --> F[Local Storage]
-        F --> G[Session Management]
-        G --> H[User Preferences]
-    end
-    
-    subgraph "Data Layer (Mock Data)"
-        I[Dashboard Metrics] --> J[Analytics Data]
-        J --> K[Event Information]
-        K --> L[User Profiles]
-        L --> M[Venue Details]
-        M --> N[CRM Pipeline]
-        N --> O[Sponsor Data]
-    end
-    
-    subgraph "Integration Points"
-        P[Supabase Connection] --> Q[Real-time Updates]
-        Q --> R[Authentication]
-        R --> S[File Storage]
-        S --> T[AI Services]
-    end
-    
-    A --> E
-    E --> I
-    I --> P
-    
-    style A fill:#8B5CF6,color:#fff
-    style I fill:#1E40AF,color:#fff
-    style P fill:#059669,color:#fff
-```
-
-### **User Authentication Flow**
-```mermaid
-sequenceDiagram
-    participant U as User
-    participant L as Login Page
-    participant A as Auth System
-    participant D as Dashboard
-    participant S as Sidebar
-    
-    U->>L: Enter credentials
-    L->>A: Validate user
-    A-->>L: Authentication success
-    L->>D: Redirect to dashboard
-    D->>S: Load sidebar navigation
-    S-->>D: Navigation ready
-    D-->>U: Complete dashboard view
-    
-    Note over U,S: Seamless authentication flow
-```
-
-### **Mobile Navigation Flow**
-```mermaid
-flowchart TD
-    A[Mobile User] --> B[Tap Hamburger Menu]
-    B --> C[Sidebar Slides In]
-    C --> D[User Selects Page]
-    D --> E[Navigate to Page]
-    E --> F[Sidebar Slides Out]
-    F --> G[Page Content Loads]
-    G --> H[Touch Gestures Available]
-    
-    I[Swipe Right] --> J[Open Sidebar]
-    J --> K[Navigation Options]
-    K --> L[Select Destination]
-    L --> M[Close Sidebar]
-    M --> N[Page Transition]
-    
-    style A fill:#8B5CF6,color:#fff
-    style C fill:#1E40AF,color:#fff
-    style G fill:#059669,color:#fff
-```
-
-### **Component Integration Flow**
-```mermaid
-graph LR
-    subgraph "Layout Components"
-        A[Sidebar] --> B[Header]
-        B --> C[Container]
-        C --> D[Grid]
-    end
-    
-    subgraph "Data Display Components"
-        E[Card] --> F[Table]
-        F --> G[List]
-        G --> H[Badge]
-    end
-    
-    subgraph "Form Components"
-        I[Input] --> J[Select]
-        J --> K[Button]
-        K --> L[Checkbox]
-    end
-    
-    subgraph "Feedback Components"
-        M[Alert] --> N[Toast]
-        N --> O[Skeleton]
-        O --> P[Spinner]
-    end
-    
-    A --> E
-    E --> I
-    I --> M
-    
-    style A fill:#8B5CF6,color:#fff
-    style E fill:#1E40AF,color:#fff
-    style I fill:#059669,color:#fff
-    style M fill:#DC2626,color:#fff
-```
-
-### **Responsive Design Flow**
-```mermaid
-flowchart TD
-    A[Device Detection] --> B{Screen Size?}
-    
-    B -->|Mobile < 640px| C[Mobile Layout]
-    C --> D[Hamburger Menu]
-    D --> E[Stacked Cards]
-    E --> F[Touch Gestures]
-    F --> G[Swipe Navigation]
-    
-    B -->|Tablet 640-1024px| H[Tablet Layout]
-    H --> I[Sidebar + Content]
-    I --> J[2-Column Grid]
-    J --> K[Touch Optimized]
-    
-    B -->|Desktop > 1024px| L[Desktop Layout]
-    L --> M[Fixed Sidebar]
-    M --> N[Multi-Column Grid]
-    N --> O[Power User Features]
-    
-    style A fill:#8B5CF6,color:#fff
-    style C fill:#1E40AF,color:#fff
-    style H fill:#059669,color:#fff
-    style L fill:#DC2626,color:#fff
-```
 
 ---
 
@@ -765,187 +356,12 @@ flowchart TD
 - **Bookings:** 12 bookings this month, 78% occupancy rate
 - **Amenities:** WiFi, Parking, AV Equipment, Catering, Accessibility
 
----
-
-## 🎯 **COMPREHENSIVE USER JOURNEY FLOWS**
-
-### **Complete User Journey - Event Organizer**
-```mermaid
-journey
-    title Event Organizer Complete Journey
-    section Login & Setup
-      User logs in: 5: User
-      Dashboard loads: 5: User
-      View analytics: 4: User
-    section Event Creation
-      Create new event: 5: User
-      Select venue: 4: User
-      Set pricing: 3: User
-      Publish event: 5: User
-    section Management
-      Track bookings: 5: User
-      Manage attendees: 4: User
-      Generate reports: 3: User
-    section Success
-      Event success: 5: User
-      Revenue generated: 5: User
-```
-
-### **Complete User Journey - Venue Manager**
-```mermaid
-journey
-    title Venue Manager Complete Journey
-    section Venue Setup
-      Login to system: 5: Venue Manager
-      View venue dashboard: 5: Venue Manager
-      Update availability: 4: Venue Manager
-    section Booking Management
-      Receive booking requests: 4: Venue Manager
-      Review event details: 3: Venue Manager
-      Approve bookings: 5: Venue Manager
-    section Performance
-      Track venue performance: 5: Venue Manager
-      Manage amenities: 4: Venue Manager
-      Generate revenue: 5: Venue Manager
-```
-
-### **Complete User Journey - CRM User**
-```mermaid
-journey
-    title CRM User Complete Journey
-    section Client Management
-      Login to CRM: 5: CRM User
-      View client pipeline: 5: CRM User
-      Manage deals: 4: CRM User
-    section Deal Process
-      Qualify leads: 3: CRM User
-      Create proposals: 4: CRM User
-      Track negotiations: 4: CRM User
-    section Success
-      Close deals: 5: CRM User
-      Generate revenue: 5: CRM User
-      Client satisfaction: 5: CRM User
-```
-
-### **Complete User Journey - Sponsor**
-```mermaid
-journey
-    title Sponsor Complete Journey
-    section Discovery
-      Access sponsor portal: 5: Sponsor
-      Browse events: 4: Sponsor
-      AI recommendations: 5: Sponsor
-    section Engagement
-      Submit proposals: 4: Sponsor
-      Negotiate terms: 3: Sponsor
-      Sign contracts: 4: Sponsor
-    section Success
-      Track performance: 5: Sponsor
-      Measure ROI: 5: Sponsor
-      Renew partnerships: 5: Sponsor
-```
-
-### **Mobile User Experience Flow**
-```mermaid
-flowchart TD
-    A[Mobile User Opens App] --> B[Authentication Screen]
-    B --> C[Login Success]
-    C --> D[Dashboard Loads]
-    D --> E[Touch Hamburger Menu]
-    E --> F[Sidebar Slides In]
-    F --> G[User Selects Page]
-    G --> H[Navigation Occurs]
-    H --> I[Sidebar Slides Out]
-    I --> J[Page Content Loads]
-    J --> K[Touch Gestures Available]
-    K --> L[User Interacts]
-    L --> M[Data Updates]
-    M --> N[Success Feedback]
-    
-    style A fill:#8B5CF6,color:#fff
-    style D fill:#1E40AF,color:#fff
-    style J fill:#059669,color:#fff
-    style N fill:#DC2626,color:#fff
-```
-
-### **Cross-Platform Integration Flow**
-```mermaid
-graph TB
-    subgraph "Dashboard System"
-        A[Analytics Dashboard] --> B[Calendar View]
-        B --> C[Organizer Management]
-        C --> D[Venue Management]
-        D --> E[Settings]
-    end
-    
-    subgraph "CRM System"
-        F[CRM Dashboard] --> G[Client Management]
-        G --> H[Pipeline Board]
-        H --> I[Reports & Analytics]
-    end
-    
-    subgraph "Sponsor System"
-        J[Sponsor Dashboard] --> K[AI Discovery]
-        K --> L[Proposal Management]
-        L --> M[Contract Management]
-        M --> N[Performance Analytics]
-    end
-    
-    subgraph "Integration Points"
-        O[Shared Sidebar] --> P[Common Navigation]
-        P --> Q[Unified Search]
-        Q --> R[Cross-System Data]
-    end
-    
-    A --> F
-    F --> J
-    J --> O
-    
-    style A fill:#8B5CF6,color:#fff
-    style F fill:#1E40AF,color:#fff
-    style J fill:#059669,color:#fff
-    style O fill:#DC2626,color:#fff
-```
-
----
-
-## 🎯 **INTERACTION PATTERNS & USER EXPERIENCE**
-
-### **Touch Gesture Specifications**
-```
-Mobile Gestures:
-├── Swipe Left/Right → Navigate between sections
-├── Swipe Up → Open details (bottom sheet)
-├── Swipe Down → Pull-to-refresh data
-├── Pinch/Zoom → Zoom charts and analytics
-├── Long Press → Context menu for actions
-├── Double Tap → Quick actions
-├── Tap & Hold → Drag and drop (calendar, pipeline)
-└── Tap Hamburger [☰] → Toggle collapsible sidebar
-
-Mobile Sidebar Navigation:
-├── Tap [☰] → Open sidebar overlay (slide in from left)
-├── Tap [✕] → Close sidebar overlay (slide out to left)
-├── Tap Outside → Close sidebar (when open)
-├── Swipe Right → Open sidebar (from left edge)
-├── Swipe Left → Close sidebar (when open)
-└── Back Button → Close sidebar (Android)
-```
-
-### **Animation & Transition Specifications**
-```
-Page Transitions:
-├── Fade In/Out → 200ms ease-in-out
-├── Slide In → 300ms ease-out
-├── Scale Up → 250ms ease-out
-└── Stagger → 100ms delay between items
-
-Component Animations:
-├── Hover States → 150ms ease-in-out
-├── Loading Spinners → 1s linear infinite
-├── Progress Bars → 500ms ease-out
-└── Micro-interactions → 100ms ease-out
-```
+### **Organizer Detail Page Mock Data**
+- **Profile:** Sarah Johnson, Event Marketing Specialist, 8 years experience
+- **KPI Cards:** 24 total events, $125,400 revenue, 1,250 attendees, 4.8/5 rating
+- **Recent Events:** Tech Conference 2024, Startup Pitch Night, Corporate Workshop
+- **Activity Feed:** 3 new bookings this week, 2 venue confirmations, 1 payment received
+- **Mini Calendar:** 5 upcoming events in next 30 days
 
 ---
 
@@ -964,6 +380,8 @@ Component Animations:
 - [ ] **Hamburger menu [☰] works correctly on mobile**
 - [ ] **Sidebar slides in as overlay (not push) on mobile**
 - [ ] **Main content gets full width when sidebar is closed**
+- [ ] **Sidebar visible on all dashboard pages** (`/dashboard/analytics`, `/dashboard/calendar`, `/dashboard/organizers`, `/dashboard/venues`, `/dashboard/settings`)
+- [ ] **Active item highlighting works** - Current page highlighted in sidebar
 - [ ] Tablet layout is optimized (640-1024px) - TOUCH OPTIMIZED
 - [ ] Desktop layout is fully functional (> 1024px) - POWER USER FEATURES
 - [ ] No horizontal scroll at any breakpoint
