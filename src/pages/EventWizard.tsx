@@ -7,6 +7,8 @@ import { Badge } from "@/components/ui/badge";
 import { Progress } from "@/components/ui/progress";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
+import { CopilotKit } from "@copilotkit/react-core";
+import { CopilotSidebar } from "@copilotkit/react-ui";
 
 interface Message {
   id: string;
@@ -145,10 +147,11 @@ const EventWizard = () => {
     : 0;
 
   return (
-    <div className="min-h-screen flex flex-col bg-background">
-      <Navbar />
-      
-      <main className="flex-1 pt-24 pb-12">
+    <CopilotKit runtimeUrl="/api/copilotkit">
+      <div className="min-h-screen flex flex-col bg-background">
+        <Navbar />
+        
+        <main className="flex-1 pt-24 pb-12">
         <div className="container mx-auto px-4 h-full">
           {/* Desktop: Two panels side-by-side */}
           <div className="grid lg:grid-cols-2 gap-6 h-[calc(100vh-12rem)]">
@@ -368,8 +371,9 @@ const EventWizard = () => {
         </div>
       </main>
 
-      <Footer />
-    </div>
+        <Footer />
+      </div>
+    </CopilotKit>
   );
 };
 
