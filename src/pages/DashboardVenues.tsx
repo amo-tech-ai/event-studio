@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Badge } from "@/components/ui/badge";
 import { Search, MapPin, Users, DollarSign, Wifi, Utensils, Car, Monitor, Plus, Map } from "lucide-react";
+import { Link } from "react-router-dom";
 
 export default function DashboardVenues() {
   return (
@@ -147,7 +148,9 @@ function VenuesContent() {
               </div>
 
               <div className="flex gap-2 pt-2">
-                <Button className="flex-1">View Details</Button>
+                <Link to={`/dashboard/venues/${venue.id}`} className="flex-1">
+                  <Button className="w-full">View Details</Button>
+                </Link>
                 <Button variant="outline" className="flex-1">Contact</Button>
               </div>
             </div>
