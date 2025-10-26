@@ -48,6 +48,7 @@ import DashboardVenues from "./pages/DashboardVenues";
 import VenueDetail from "./pages/VenueDetail";
 import DashboardSettings from "./pages/DashboardSettings";
 import AIVenueSelection from "./pages/AIVenueSelection";
+import DatabaseTest from "./pages/DatabaseTest";
 import AITicketingSetup from "./pages/AITicketingSetup";
 import AIAgendaBuilder from "./pages/AIAgendaBuilder";
 import AIMarketingDashboard from "./pages/AIMarketingDashboard";
@@ -70,6 +71,7 @@ const App = () => (
             <Route path="/" element={<Home />} />
       <Route path="/events" element={<Events />} />
       <Route path="/event/:slug" element={<EventDetails />} />
+      <Route path="/database-test" element={<DatabaseTest />} />
       <Route path="/event/:slug/register" element={<EventRegistration />} />
       <Route path="/event/:slug/tickets" element={<TicketSelection />} />
       <Route path="/event/:slug/payment" element={<PaymentPage />} />

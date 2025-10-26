@@ -47,3 +47,5 @@ hi.events/
 # Environment Variables (DO NOT COMMIT)
 lovable-env-vars.txt
 LOVABLE-ENV-SETUP.md
+copilotkit-langgraph/
+copilotkit-working/

@@ -11,10 +11,8 @@ export interface DashboardStats {
 }
 
 /**
- * Hook to fetch dashboard statistics using secure SECURITY DEFINER function.
- *
- * Security: Uses get_dashboard_stats() function which only returns aggregated counts,
- * not individual record access. This prevents anonymous users from reading sensitive data.
+ * Hook to fetch dashboard statistics with direct database queries.
+ * Fetches aggregated counts from events, orders, and tickets tables.
  *
  * @returns Dashboard statistics with loading and error states
  */
@@ -22,13 +20,40 @@ export const useDashboardStats = (): DashboardStats => {
   const { data, isLoading, error, refetch } = useQuery({
     queryKey: ["dashboard", "stats"],
     queryFn: async () => {
-      // Call the secure SECURITY DEFINER function
-      const { data, error } = await supabase.rpc(
-        "get_dashboard_stats" as any
+      // Fetch all counts in parallel for better performance
+      const [eventsResult, ordersResult, ticketsResult] = await Promise.all([
+        // Count total events
+        supabase
+          .from('events')
+          .select('id', { count: 'exact', head: true }),
+
+        // Count total orders (bookings)
+        supabase
+          .from('orders')
+          .select('id', { count: 'exact', head: true }),
+
+        // Sum total tickets sold
+        supabase
+          .from('tickets')
+          .select('quantity_sold'),
+      ]);
+
+      // Handle errors
+      if (eventsResult.error) throw eventsResult.error;
+      if (ordersResult.error) throw ordersResult.error;
+      if (ticketsResult.error) throw ticketsResult.error;
+
+      // Calculate total tickets sold
+      const totalTicketsSold = (ticketsResult.data || []).reduce(
+        (sum, ticket) => sum + (ticket.quantity_sold || 0),
+        0
       );
 
-      if (error) throw error;
-      return data as any;
+      return {
+        total_events: eventsResult.count || 0,
+        total_orders: ordersResult.count || 0,
+        total_tickets: totalTicketsSold,
+      };
     },
     // Cache for 30 seconds to reduce database load
     staleTime: 30000,
@@ -37,9 +62,9 @@ export const useDashboardStats = (): DashboardStats => {
   });
 
   return {
-    totalEvents: (data as any)?.total_events || 0,
-    totalBookings: (data as any)?.total_orders || 0,
-    totalTickets: (data as any)?.total_tickets || 0,
+    totalEvents: data?.total_events || 0,
+    totalBookings: data?.total_orders || 0,
+    totalTickets: data?.total_tickets || 0,
     isLoading,
     error: error as Error | null,
     refetch: () => { refetch(); },
