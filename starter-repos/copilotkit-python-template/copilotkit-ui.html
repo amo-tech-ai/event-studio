@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CopilotKit Blaxel Demo</title>
+    <script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <script src="https://unpkg.com/@copilotkit/react-core/dist/index.umd.js"></script>
+    <script src="https://unpkg.com/@copilotkit/react-ui/dist/index.umd.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .app-container {
+            width: 100%;
+            max-width: 1200px;
+            height: 80vh;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+        }
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 20px 30px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        .header h1 {
+            font-size: 24px;
+            font-weight: 600;
+        }
+        .status {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 4px 12px;
+            background: rgba(255,255,255,0.2);
+            border-radius: 20px;
+            font-size: 14px;
+        }
+        .status-dot {
+            width: 8px;
+            height: 8px;
+            background: #4ade80;
+            border-radius: 50%;
+            animation: pulse 2s infinite;
+        }
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+        .main-content {
+            flex: 1;
+            display: flex;
+            overflow: hidden;
+        }
+        .info-panel {
+            width: 300px;
+            background: #f8fafc;
+            padding: 30px;
+            border-right: 1px solid #e2e8f0;
+            overflow-y: auto;
+        }
+        .info-panel h2 {
+            font-size: 18px;
+            color: #1e293b;
+            margin-bottom: 20px;
+        }
+        .info-panel p {
+            color: #64748b;
+            font-size: 14px;
+            line-height: 1.6;
+            margin-bottom: 15px;
+        }
+        .capabilities {
+            margin-top: 20px;
+        }
+        .capability {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 10px;
+            background: white;
+            border-radius: 8px;
+            margin-bottom: 8px;
+            font-size: 14px;
+            color: #475569;
+        }
+        .capability-icon {
+            font-size: 20px;
+        }
+        .chat-area {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+        }
+        #copilot-sidebar-container {
+            flex: 1;
+        }
+    </style>
+</head>
+<body>
+    <div class="app-container">
+        <div class="header">
+            <h1>🚀 CopilotKit × Blaxel Trip Booking Agent</h1>
+            <div class="status">
+                <span class="status-dot"></span>
+                Connected
+            </div>
+        </div>
+        <div class="main-content">
+            <div class="info-panel">
+                <h2>About</h2>
+                <p>This is a multi-agent conversational assistant built with CopilotKit and deployed on Blaxel.</p>
+                <p>It uses LangGraph, CrewAI, and Browserbase to handle complex trip booking workflows.</p>
+                
+                <div class="capabilities">
+                    <h2>Capabilities</h2>
+                    <div class="capability">
+                        <span class="capability-icon">✈️</span>
+                        <span>Flight Search & Booking</span>
+                    </div>
+                    <div class="capability">
+                        <span class="capability-icon">🏨</span>
+                        <span>Hotel Search & Reservations</span>
+                    </div>
+                    <div class="capability">
+                        <span class="capability-icon">🌐</span>
+                        <span>Web Scraping & Research</span>
+                    </div>
+                    <div class="capability">
+                        <span class="capability-icon">🤖</span>
+                        <span>Multi-Agent Coordination</span>
+                    </div>
+                </div>
+            </div>
+            <div class="chat-area">
+                <div id="copilot-sidebar-container"></div>
+            </div>
+        </div>
+    </div>
+
+    <script type="text/babel">
+        const { CopilotKit } = CopilotKitReactCore;
+        const { CopilotSidebar } = CopilotKitReactUI;
+
+        function App() {
+            return React.createElement(CopilotKit, {
+                runtimeUrl: "http://localhost:5000/copilotkit"
+            }, 
+                React.createElement(CopilotSidebar, {
+                    instructions: "You are a helpful AI assistant for booking flights and hotels. Help users plan their trips and find the best deals.",
+                    labels: {
+                        title: "Trip Booking Assistant",
+                        initial: "I can help you book flights and hotels. What would you like to do?",
+                    }
+                })
+            );
+        }
+
+        const root = ReactDOM.createRoot(document.getElementById('copilot-sidebar-container'));
+        root.render(React.createElement(App));
+    </script>
+</body>
+</html>

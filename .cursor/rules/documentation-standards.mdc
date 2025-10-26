@@ -1,0 +1,597 @@
+---
+description: Project-wide documentation standards, organization rules, and MVP documentation generator
+globs: **/*.md, **/*.txt, **/*.rst, **/*.doc, **/*.docx
+alwaysApply: true
+---
+
+# Project Documentation Standards
+
+## 🎯 **Core Documentation Principles**
+
+### **Sequential Numbering System**
+- **All planning docs**: Must use `01-name.md`, `02-name.md`, `03-name.md`, etc.
+- **Consistent Format**: Always use zero-padded numbers (01, 02, 03, not 1, 2, 3)
+- **Logical Order**: Number based on execution sequence, not creation date
+- **No Gaps**: Never skip numbers in a sequence
+
+### **Folder Organization Standards**
+```
+project-root/
+├── docs/                           # Main documentation
+│   ├── 01-PROJECT-OVERVIEW.md     # Start here
+│   ├── 02-SETUP-GUIDE.md          # Setup instructions
+│   ├── 03-ARCHITECTURE.md         # System design
+│   └── 04-IMPLEMENTATION.md       # Development guide
+├── planning/                       # Planning documents
+│   ├── 01-REQUIREMENTS.md         # Requirements
+│   ├── 02-DESIGN-SPEC.md          # Design specifications
+│   └── 03-TESTING-PLAN.md         # Testing strategy
+├── api/                           # API documentation
+│   ├── 01-ENDPOINTS.md            # API endpoints
+│   ├── 02-AUTHENTICATION.md       # Auth guide
+│   └── 03-EXAMPLES.md             # Usage examples
+└── deployment/                    # Deployment docs
+    ├── 01-ENVIRONMENT.md          # Environment setup
+    ├── 02-CONFIGURATION.md        # Configuration
+    └── 03-MONITORING.md           # Monitoring setup
+```
+
+## 📁 **Folder Structure Rules**
+
+### **Documentation Categories**
+| Folder | Purpose | Numbering | Example Files |
+|--------|---------|-----------|---------------|
+| `docs/` | Main project documentation | 01-99 | `01-README.md`, `02-SETUP.md` |
+| `planning/` | Project planning documents | 01-99 | `01-REQUIREMENTS.md`, `02-ROADMAP.md` |
+| `api/` | API documentation | 01-99 | `01-ENDPOINTS.md`, `02-AUTH.md` |
+| `deployment/` | Deployment guides | 01-99 | `01-ENVIRONMENT.md`, `02-CONFIG.md` |
+| `testing/` | Testing documentation | 01-99 | `01-STRATEGY.md`, `02-CASES.md` |
+| `troubleshooting/` | Problem-solving guides | 01-99 | `01-COMMON-ISSUES.md`, `02-SOLUTIONS.md` |
+
+### **Special Files (No Numbering)**
+- `README.md` - Project overview (always in root)
+- `CHANGELOG.md` - Version history
+- `CONTRIBUTING.md` - Contribution guidelines
+- `LICENSE` - License information
+- `INDEX.md` - Documentation index
+
+## 📝 **Naming Conventions**
+
+### **File Naming Rules**
+```bash
+# ✅ CORRECT Examples
+01-PROJECT-OVERVIEW.md
+02-SETUP-GUIDE.md
+03-API-ENDPOINTS.md
+04-DEPLOYMENT-STRATEGY.md
+05-TESTING-PLAN.md
+
+# ❌ INCORRECT Examples
+1-project-overview.md          # Missing zero padding
+project-overview.md            # Missing numbering
+01_project_overview.md         # Wrong separator
+01-Project-Overview.md         # Inconsistent case
+```
+
+### **Naming Standards**
+- **Numbers**: Always zero-padded (01, 02, 03, not 1, 2, 3)
+- **Separators**: Use hyphens (-) not underscores (_)
+- **Case**: Use UPPERCASE for main words, lowercase for connectors
+- **Descriptive**: Names should clearly indicate content
+- **Consistent**: Follow the same pattern throughout project
+
+## 🗂️ **Content Organization**
+
+### **Document Structure Template**
+```markdown
+# Document Title
+
+## 📅 **Metadata**
+- **Created**: YYYY-MM-DD
+- **Last Updated**: YYYY-MM-DD
+- **Status**: Draft/Review/Complete
+- **Author**: Name
+- **Reviewers**: Names
+
+## 🎯 **Purpose**
+Brief description of what this document covers and why it exists.
+
+## 📋 **Table of Contents**
+- [Section 1](#section-1)
+- [Section 2](#section-2)
+- [Section 3](#section-3)
+
+## 📖 **Content Sections**
+### Section 1
+Content here...
+
+### Section 2
+Content here...
+
+## ✅ **Action Items**
+- [ ] Task 1
+- [ ] Task 2
+- [ ] Task 3
+
+## 🔗 **Related Documents**
+- [Document 1](link)
+- [Document 2](link)
+
+---
+*Last Updated: YYYY-MM-DD*
+```
+
+## 🔄 **Maintenance Rules**
+
+### **Index Management**
+- **Always Update**: Update index files when adding/removing documents
+- **Cross-References**: Link related documents
+- **Status Tracking**: Keep document status current
+- **Version Control**: Track changes in git
+
+### **Numbering Management**
+- **Reserve Numbers**: Leave gaps for future documents
+- **Reorganize**: Renumber when sequence changes
+- **Consistency**: Maintain numbering across all folders
+- **Documentation**: Update all references when renumbering
+
+## 📊 **Quality Standards**
+
+### **Content Requirements**
+- **Clear Purpose**: Every document must have a clear purpose
+- **Complete Information**: Include all necessary details
+- **Up-to-Date**: Keep information current
+- **Actionable**: Provide clear next steps
+- **Searchable**: Use descriptive headings and keywords
+
+### **Formatting Standards**
+- **Markdown**: Use standard markdown formatting
+- **Headers**: Use proper heading hierarchy (H1, H2, H3)
+- **Lists**: Use consistent list formatting
+- **Code**: Use proper code blocks with language specification
+- **Links**: Use descriptive link text
+
+## 🚀 **Implementation Guidelines**
+
+### **New Document Checklist**
+- [ ] Determine correct folder based on content type
+- [ ] Assign next sequential number
+- [ ] Use proper naming convention
+- [ ] Include metadata section
+- [ ] Add to relevant index files
+- [ ] Link from related documents
+- [ ] Update any affected references
+
+### **Documentation Review Process**
+1. **Content Review**: Ensure information is accurate and complete
+2. **Format Review**: Check formatting and structure
+3. **Link Review**: Verify all links work and are relevant
+4. **Index Update**: Update all relevant index files
+5. **Cross-Reference**: Update related documents
+6. **Final Check**: Ensure document follows all standards
+
+## 🎯 **Best Practices**
+
+### **Planning Phase**
+- **Start with Overview**: Always begin with project overview
+- **Requirements First**: Document requirements before design
+- **Design Before Implementation**: Plan before building
+- **Testing Strategy**: Include testing in planning phase
+
+### **Development Phase**
+- **Document as You Go**: Don't wait until the end
+- **Keep Current**: Update docs with code changes
+- **Version Control**: Track documentation changes
+- **Review Regularly**: Schedule regular documentation reviews
+
+### **Maintenance Phase**
+- **Regular Updates**: Keep documentation current
+- **User Feedback**: Incorporate user feedback
+- **Continuous Improvement**: Regularly improve documentation
+- **Archive Old**: Archive outdated information
+
+## 📋 **Enforcement Rules**
+
+### **Mandatory Requirements**
+- **Sequential Numbering**: All planning docs must be numbered
+- **Proper Folders**: Documents must be in correct folders
+- **Consistent Naming**: Follow naming conventions exactly
+- **Index Updates**: Always update index files
+- **Metadata**: Include required metadata in all documents
+
+### **Quality Checks**
+- **Numbering Validation**: Verify sequential numbering
+- **Folder Placement**: Confirm correct folder location
+- **Naming Consistency**: Check naming conventions
+- **Link Validation**: Verify all links work
+- **Content Completeness**: Ensure all required sections present
+
+---
+
+## 🎯 **Quick Reference**
+
+### **File Naming Pattern**
+```
+NN-DESCRIPTIVE-NAME.md
+```
+
+### **Folder Structure**
+```
+project-root/
+├── docs/           # Main documentation (01-99)
+├── planning/       # Planning documents (01-99)
+├── api/           # API documentation (01-99)
+├── deployment/    # Deployment guides (01-99)
+├── testing/       # Testing documentation (01-99)
+└── troubleshooting/ # Problem-solving guides (01-99)
+```
+
+### **Numbering Rules**
+- Start with 01, not 1
+- Use zero-padding for single digits
+- Number based on execution sequence
+- Never skip numbers in sequence
+- Renumber when sequence changes
+
+---
+
+## 🎯 **Project Planning Best Practices**
+
+### **Planning Methodology Framework**
+
+#### **1. Project Initiation Phase**
+- **Stakeholder Analysis**: Identify all stakeholders and their needs
+- **Scope Definition**: Clearly define project boundaries and deliverables
+- **Success Criteria**: Establish measurable success metrics
+- **Risk Assessment**: Identify potential risks and mitigation strategies
+- **Resource Planning**: Determine required resources and budget
+
+#### **2. Requirements Gathering**
+- **Functional Requirements**: What the system must do
+- **Non-Functional Requirements**: Performance, security, scalability needs
+- **User Stories**: End-user perspective requirements
+- **Acceptance Criteria**: Clear definition of "done"
+- **Constraints**: Technical, business, and timeline limitations
+
+#### **3. Design & Architecture**
+- **System Architecture**: High-level system design
+- **Technical Specifications**: Detailed technical requirements
+- **Database Design**: Data models and relationships
+- **API Design**: Interface specifications
+- **Security Design**: Security measures and protocols
+
+#### **4. Implementation Planning**
+- **Work Breakdown Structure**: Decompose project into manageable tasks
+- **Task Dependencies**: Identify critical path and dependencies
+- **Resource Allocation**: Assign tasks to team members
+- **Timeline Development**: Create realistic project schedule
+- **Milestone Definition**: Key checkpoints and deliverables
+
+### **Planning Document Templates**
+
+#### **Project Charter Template**
+```markdown
+# 01-PROJECT-CHARTER.md
+
+## 📋 **Project Information**
+- **Project Name**: [Project Name]
+- **Project Manager**: [Name]
+- **Start Date**: [Date]
+- **End Date**: [Date]
+- **Budget**: [Amount]
+
+## 🎯 **Project Objectives**
+- [Objective 1]
+- [Objective 2]
+- [Objective 3]
+
+## 📊 **Success Criteria**
+- [Criteria 1]
+- [Criteria 2]
+- [Criteria 3]
+
+## 👥 **Stakeholders**
+- **Sponsor**: [Name/Role]
+- **Users**: [User Groups]
+- **Team**: [Team Members]
+
+## ⚠️ **Risks & Assumptions**
+- **Risks**: [Risk List]
+- **Assumptions**: [Assumption List]
+```
+
+#### **Requirements Document Template**
+```markdown
+# 02-REQUIREMENTS.md
+
+## 📋 **Functional Requirements**
+### FR-001: [Requirement Name]
+- **Description**: [Detailed description]
+- **Priority**: High/Medium/Low
+- **Acceptance Criteria**: [Clear criteria]
+
+### FR-002: [Requirement Name]
+- **Description**: [Detailed description]
+- **Priority**: High/Medium/Low
+- **Acceptance Criteria**: [Clear criteria]
+
+## 📊 **Non-Functional Requirements**
+### NFR-001: Performance
+- **Response Time**: < 2 seconds
+- **Throughput**: 1000+ concurrent users
+- **Availability**: 99.9% uptime
+
+### NFR-002: Security
+- **Authentication**: Required for all endpoints
+- **Authorization**: Role-based access control
+- **Data Protection**: Encryption at rest and in transit
+```
+
+#### **Architecture Document Template**
+```markdown
+# 03-ARCHITECTURE.md
+
+## 🏗️ **System Overview**
+[High-level system description]
+
+## 🎯 **Architecture Principles**
+- [Principle 1]
+- [Principle 2]
+- [Principle 3]
+
+## 📊 **System Components**
+### Frontend
+- **Technology**: [Tech Stack]
+- **Responsibilities**: [Component responsibilities]
+
+### Backend
+- **Technology**: [Tech Stack]
+- **Responsibilities**: [Component responsibilities]
+
+### Database
+- **Technology**: [Database Type]
+- **Schema**: [Database design]
+
+## 🔄 **Data Flow**
+[Data flow diagrams and descriptions]
+
+## 🔒 **Security Architecture**
+[Security measures and protocols]
+```
+
+### **Planning Best Practices**
+
+#### **1. Stakeholder Management**
+- **Identify Early**: Identify all stakeholders at project start
+- **Regular Communication**: Schedule regular stakeholder updates
+- **Expectation Management**: Set clear expectations from the beginning
+- **Feedback Loops**: Establish feedback mechanisms
+- **Change Management**: Have processes for handling scope changes
+
+#### **2. Risk Management**
+- **Risk Identification**: Brainstorm potential risks early
+- **Risk Assessment**: Evaluate probability and impact
+- **Mitigation Strategies**: Develop plans for high-priority risks
+- **Contingency Planning**: Prepare backup plans
+- **Regular Review**: Review and update risks regularly
+
+#### **3. Quality Planning**
+- **Quality Standards**: Define quality criteria upfront
+- **Testing Strategy**: Plan testing approach early
+- **Review Processes**: Establish code and design review processes
+- **Quality Metrics**: Define measurable quality indicators
+- **Continuous Improvement**: Plan for ongoing quality enhancement
+
+#### **4. Communication Planning**
+- **Communication Matrix**: Define who communicates with whom
+- **Meeting Schedules**: Regular team and stakeholder meetings
+- **Reporting Structure**: Progress reporting format and frequency
+- **Escalation Procedures**: How to handle issues and blockers
+- **Documentation Standards**: Consistent documentation practices
+
+### **Planning Tools & Techniques**
+
+#### **1. Work Breakdown Structure (WBS)**
+```
+Project
+├── Phase 1: Planning
+│   ├── 1.1 Requirements Gathering
+│   ├── 1.2 Architecture Design
+│   └── 1.3 Resource Planning
+├── Phase 2: Development
+│   ├── 2.1 Frontend Development
+│   ├── 2.2 Backend Development
+│   └── 2.3 Integration
+└── Phase 3: Testing & Deployment
+    ├── 3.1 Testing
+    ├── 3.2 Deployment
+    └── 3.3 Go-Live
+```
+
+#### **2. Gantt Chart Planning**
+- **Task Dependencies**: Map task relationships
+- **Critical Path**: Identify longest path through project
+- **Resource Allocation**: Assign resources to tasks
+- **Milestone Tracking**: Set key project milestones
+- **Progress Monitoring**: Track actual vs. planned progress
+
+#### **3. Risk Register**
+| Risk ID | Description | Probability | Impact | Mitigation | Owner |
+|---------|-------------|-------------|--------|------------|-------|
+| R-001 | Key team member leaves | Medium | High | Cross-training, documentation | PM |
+| R-002 | Technology changes | Low | Medium | Prototype early, flexible design | Tech Lead |
+| R-003 | Scope creep | High | Medium | Change control process | PM |
+
+#### **4. Communication Plan**
+| Stakeholder | Information Need | Frequency | Format | Owner |
+|-------------|------------------|-----------|--------|-------|
+| Sponsor | Project status | Weekly | Executive summary | PM |
+| Team | Task updates | Daily | Standup meeting | Scrum Master |
+| Users | Progress updates | Bi-weekly | Demo sessions | Product Owner |
+
+### **Planning Quality Checklist**
+
+#### **Project Initiation Checklist**
+- [ ] Stakeholders identified and engaged
+- [ ] Project charter approved
+- [ ] Budget and resources allocated
+- [ ] Success criteria defined
+- [ ] Initial risk assessment completed
+
+#### **Requirements Checklist**
+- [ ] Functional requirements documented
+- [ ] Non-functional requirements specified
+- [ ] User stories written and prioritized
+- [ ] Acceptance criteria defined
+- [ ] Requirements reviewed and approved
+
+#### **Design Checklist**
+- [ ] System architecture designed
+- [ ] Technical specifications complete
+- [ ] Database design finalized
+- [ ] API specifications documented
+- [ ] Security requirements defined
+
+#### **Implementation Checklist**
+- [ ] Work breakdown structure created
+- [ ] Task dependencies mapped
+- [ ] Resource allocation planned
+- [ ] Timeline developed and approved
+- [ ] Milestones defined and communicated
+
+### **Planning Success Metrics**
+
+#### **Planning Quality Metrics**
+- **Requirements Coverage**: % of requirements with clear acceptance criteria
+- **Stakeholder Satisfaction**: Stakeholder approval of planning documents
+- **Risk Identification**: % of actual issues that were identified in planning
+- **Timeline Accuracy**: Actual vs. planned timeline variance
+- **Resource Utilization**: Planned vs. actual resource usage
+
+#### **Project Success Metrics**
+- **On-Time Delivery**: % of milestones delivered on time
+- **On-Budget Delivery**: Actual vs. planned budget variance
+- **Quality Metrics**: Defect rates, rework percentage
+- **Stakeholder Satisfaction**: End-user satisfaction scores
+- **Team Satisfaction**: Team member satisfaction and retention
+
+### **Common Planning Pitfalls & Solutions**
+
+#### **Pitfall 1: Incomplete Requirements**
+- **Problem**: Requirements not fully defined
+- **Solution**: Use requirements templates, stakeholder interviews, prototyping
+
+#### **Pitfall 2: Unrealistic Timelines**
+- **Problem**: Overly optimistic project schedules
+- **Solution**: Use historical data, include buffer time, involve team in estimation
+
+#### **Pitfall 3: Poor Risk Management**
+- **Problem**: Risks not identified or managed
+- **Solution**: Regular risk reviews, mitigation planning, contingency reserves
+
+#### **Pitfall 4: Scope Creep**
+- **Problem**: Project scope expanding without control
+- **Solution**: Change control process, stakeholder education, regular scope reviews
+
+#### **Pitfall 5: Communication Gaps**
+- **Problem**: Poor communication leading to misunderstandings
+- **Solution**: Communication plan, regular meetings, documentation standards
+
+---
+
+## 🎯 **EventOS MVP Documentation Generator**
+
+### **Purpose**
+Generate comprehensive, numbered documentation sets (001-009) for EventOS MVP projects using the docs-architect persona.
+
+### **Core MVP Documentation Set**
+| No. | Document Name | Purpose |
+|-----|---------------|---------|
+| **001-overview.md** | Executive summary of MVP, goals, and architecture vision |
+| **002-architecture.md** | System boundaries, major components, flow diagrams |
+| **003-setup-guide.md** | Environment setup, Supabase, CLI, dependencies |
+| **004-core-features.md** | Core MVP features, logic, and code explanations |
+| **005-intermediate-workflows.md** | Automations, Supabase triggers, data flow |
+| **006-advanced-features.md** | AI agents, Claude skills, Playwright/Chrome MCP |
+| **007-best-practices.md** | Naming, folder structure, RLS, safety, consistency |
+| **008-success-criteria.md** | Functional, performance, and reliability goals |
+| **009-workflow-checklist.md** | Task steps, testing order, progress tracking |
+
+### **Generation Guidelines**
+
+#### **Each Document Must Include:**
+1. **Purpose Summary** – what the doc covers and why it matters
+2. **Key Steps / Features** – numbered for clarity
+3. **Real-World Example** – short practical example or command
+4. **Flow Diagram (Mermaid)** – show sequence or data flow
+5. **Implementation Tips** – from best practices or common pitfalls
+6. **Success Validation** – how to confirm completion or correctness
+
+#### **Document Standards:**
+- **Format:** Markdown with consistent headers
+- **Length:** ≤ 2 pages for MVP phase clarity
+- **Language:** Simple, instructional, developer-friendly
+- **Structure:** Clear hierarchy with ##, ### levels
+- **Content:** Tables, bullet lists, diagrams, code examples
+
+### **Usage Instructions**
+
+#### **Generate Complete MVP Documentation:**
+```
+Generate EventOS MVP documentation set (001-009):
+Create comprehensive documentation following the docs-architect structure,
+including all required sections, examples, diagrams, and validation steps.
+Output to docs/mvp/ directory with proper cross-references.
+```
+
+#### **Generate Individual Documents:**
+```
+Generate [document-number] for EventOS MVP:
+Create [document-name] following the docs-architect guidelines,
+including purpose summary, key steps, real-world examples,
+flow diagrams, implementation tips, and success validation.
+```
+
+### **Quality Standards**
+
+#### **Success Criteria:**
+- ✅ All 9 documents generated with proper structure
+- ✅ Cross-references between documents working
+- ✅ Mermaid diagrams rendering correctly
+- ✅ Code examples functional and tested
+- ✅ Implementation tips actionable
+- ✅ Success validation steps measurable
+
+#### **Validation Commands:**
+```bash
+# Check documentation structure
+ls docs/mvp/ | grep -E "00[1-9]-.*\.md$"
+
+# Validate markdown syntax
+npm run lint:docs
+
+# Test code examples
+npm run test:docs-examples
+
+# Generate documentation report
+npm run docs:report
+```
+
+### **Integration with EventOS**
+
+#### **Documentation Features:**
+- **Supabase Integration** - Database schemas, RLS policies, triggers
+- **Claude Skills** - AI agent configurations and workflows
+- **MCP Servers** - Playwright, Chrome DevTools, Task Master integration
+- **React Patterns** - Component architecture, hooks, state management
+- **Testing Strategies** - Unit, integration, E2E testing approaches
+
+#### **Cross-References:**
+- Documents reference each other with `[filename](filename.md)` links
+- Code examples reference actual project files
+- Diagrams show real system architecture
+- Validation steps use actual project commands
+
+---
+
+*This comprehensive rule ensures consistent, organized, and maintainable documentation across the entire project while providing detailed planning best practices, methodologies, and MVP documentation generation capabilities.*

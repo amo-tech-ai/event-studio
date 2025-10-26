@@ -23,9 +23,7 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
-.cursor/
-.claude/
-.claude-plugin/
+
 
 dev-debug.log
 

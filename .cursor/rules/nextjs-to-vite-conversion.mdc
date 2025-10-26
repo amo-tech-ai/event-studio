@@ -1,0 +1,712 @@
+---
+description: Best practices and standards for converting Next.js applications to Vite
+globs: **/*.ts, **/*.tsx, **/*.js, **/*.jsx, **/*.json, **/*.html, **/*.css
+alwaysApply: true
+---
+
+# Next.js to Vite Conversion Best Practices
+
+## 🎯 **Core Conversion Principles**
+
+### **Simplicity First - Keep It Simple**
+- **Start with Foundation**: Convert basic structure first, add complexity gradually
+- **Avoid Over-Engineering**: Don't add unnecessary Vite plugins or configurations
+- **Progressive Enhancement**: Convert one feature at a time, test thoroughly
+- **Clear Documentation**: Document all changes and reasoning
+- **Focus on Value**: Prioritize features that provide immediate benefits
+
+### **Official Documentation & Standards**
+- **Always Reference Official Docs**: Use official Vite, React, and TypeScript documentation
+- **Follow Best Practices**: Adhere to established Vite patterns and conventions
+- **Version Control**: Track all configuration changes and dependencies
+- **Community Standards**: Follow industry best practices for Vite projects
+- **Reference Links**: Always link to official sources for technical decisions
+
+### **MCP CopilotKit Integration**
+- **MCP-First Approach**: Use MCP server commands for all database operations
+- **CopilotKit Components**: Ensure CopilotKit works seamlessly with Vite
+- **LangGraph Integration**: Maintain LangGraph agent communication
+- **Real-Time Features**: Preserve all real-time capabilities
+- **AI Agent Development**: Maintain AI agent functionality
+
+### **Iterative Conversion Process**
+- **Foundation First**: Convert core structure before advanced features
+- **Incremental Development**: Convert one component at a time, test thoroughly
+- **Continuous Integration**: Test changes frequently to avoid conflicts
+- **User Feedback**: Test with real users throughout conversion
+- **Rapid Prototyping**: Build quick prototypes to validate concepts
+
+### **Continuous Testing Strategy**
+- **Test-Driven Conversion**: Write tests before converting features
+- **Automated Testing**: Use automated testing for regression prevention
+- **Integration Testing**: Test all components working together
+- **User Acceptance Testing**: Regular testing with actual users
+- **Performance Testing**: Monitor performance throughout conversion
+
+## 🏗️ **Conversion Architecture**
+
+### **Project Structure Transformation**
+```typescript
+// ✅ DO: Vite Project Structure
+src/
+├── main.tsx                 # Entry point
+├── App.tsx                 # Main app component
+├── components/             # React components
+├── pages/                  # Page components
+├── lib/                    # Utilities
+├── hooks/                  # Custom hooks
+├── types/                  # TypeScript types
+└── styles/                 # CSS files
+
+// ❌ DON'T: Next.js App Router Structure
+app/
+├── layout.tsx              # Next.js specific
+├── page.tsx                # Next.js specific
+├── api/                    # Next.js API routes
+└── globals.css             # Next.js specific
+```
+
+### **Entry Point Conversion**
+```typescript
+// ✅ DO: Vite Entry Point
+// src/main.tsx
+import React from 'react'
+import ReactDOM from 'react-dom/client'
+import App from './App'
+import './index.css'
+
+ReactDOM.createRoot(document.getElementById('root')!).render(
+  <React.StrictMode>
+    <App />
+  </React.StrictMode>
+)
+
+// ❌ DON'T: Next.js App Router
+// app/layout.tsx
+export default function RootLayout({
+  children,
+}: {
+  children: React.ReactNode
+}) {
+  return (
+    <html lang="en">
+      <body>{children}</body>
+    </html>
+  )
+}
+```
+
+### **HTML Template Conversion**
+```html
+<!-- ✅ DO: Vite HTML Template -->
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>EventOS AI Event Wizard</title>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>
+
+<!-- ❌ DON'T: Next.js App Router -->
+<!-- Next.js generates HTML automatically -->
+```
+
+## ⚙️ **Configuration Best Practices**
+
+### **Vite Configuration**
+```typescript
+// ✅ DO: Comprehensive Vite Config
+// vite.config.ts
+import { defineConfig } from 'vite'
+import react from '@vitejs/plugin-react'
+import { resolve } from 'path'
+
+export default defineConfig({
+  plugins: [
+    react({
+      // Enable React Fast Refresh
+      fastRefresh: true,
+      // Enable JSX runtime
+      jsxRuntime: 'automatic'
+    })
+  ],
+  resolve: {
+    alias: {
+      '@': resolve(__dirname, './src'),
+      '@components': resolve(__dirname, './src/components'),
+      '@lib': resolve(__dirname, './src/lib'),
+      '@hooks': resolve(__dirname, './src/hooks'),
+      '@types': resolve(__dirname, './src/types')
+    }
+  },
+  server: {
+    port: 5173,
+    host: true,
+    proxy: {
+      '/api': {
+        target: 'http://localhost:8124',
+        changeOrigin: true,
+        rewrite: (path) => path.replace(/^\/api/, '')
+      }
+    }
+  },
+  build: {
+    outDir: 'dist',
+    sourcemap: true,
+    rollupOptions: {
+      output: {
+        manualChunks: {
+          vendor: ['react', 'react-dom'],
+          copilotkit: ['@copilotkit/react-core', '@copilotkit/react-ui']
+        }
+      }
+    }
+  },
+  optimizeDeps: {
+    include: ['react', 'react-dom', '@copilotkit/react-core']
+  }
+})
+
+// ❌ DON'T: Minimal Config Without Optimization
+export default defineConfig({
+  plugins: [react()]
+})
+```
+
+### **TypeScript Configuration**
+```json
+// ✅ DO: Vite-Optimized TypeScript Config
+// tsconfig.json
+{
+  "compilerOptions": {
+    "target": "ES2020",
+    "useDefineForClassFields": true,
+    "lib": ["ES2020", "DOM", "DOM.Iterable"],
+    "module": "ESNext",
+    "skipLibCheck": true,
+    "moduleResolution": "bundler",
+    "allowImportingTsExtensions": true,
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "noEmit": true,
+    "jsx": "react-jsx",
+    "strict": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "noFallthroughCasesInSwitch": true,
+    "baseUrl": ".",
+    "paths": {
+      "@/*": ["./src/*"],
+      "@components/*": ["./src/components/*"],
+      "@lib/*": ["./src/lib/*"],
+      "@hooks/*": ["./src/hooks/*"],
+      "@types/*": ["./src/types/*"]
+    }
+  },
+  "include": ["src"],
+  "references": [{ "path": "./tsconfig.node.json" }]
+}
+
+// ❌ DON'T: Next.js TypeScript Config
+{
+  "compilerOptions": {
+    "target": "es5",
+    "lib": ["dom", "dom.iterable", "es6"],
+    "allowJs": true,
+    "skipLibCheck": true,
+    "strict": true,
+    "noEmit": true,
+    "esModuleInterop": true,
+    "module": "esnext",
+    "moduleResolution": "bundler",
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "jsx": "preserve",
+    "incremental": true,
+    "plugins": [
+      {
+        "name": "next"
+      }
+    ],
+    "paths": {
+      "@/*": ["./*"]
+    }
+  }
+}
+```
+
+### **Package.json Scripts**
+```json
+// ✅ DO: Vite Scripts
+{
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc && vite build",
+    "preview": "vite preview",
+    "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
+    "type-check": "tsc --noEmit",
+    "test": "vitest",
+    "test:ui": "vitest --ui",
+    "test:coverage": "vitest --coverage"
+  }
+}
+
+// ❌ DON'T: Next.js Scripts
+{
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint"
+  }
+}
+```
+
+## 🔄 **API Routes Conversion**
+
+### **Development Proxy Configuration**
+```typescript
+// ✅ DO: Vite Proxy for Development
+// vite.config.ts
+export default defineConfig({
+  server: {
+    proxy: {
+      '/api/copilotkit': {
+        target: 'http://localhost:8124',
+        changeOrigin: true,
+        rewrite: (path) => path.replace(/^\/api\/copilotkit/, '/copilotkit')
+      },
+      '/api/langgraph': {
+        target: 'http://localhost:8124',
+        changeOrigin: true,
+        rewrite: (path) => path.replace(/^\/api\/langgraph/, '/langgraph')
+      }
+    }
+  }
+})
+
+// ❌ DON'T: Next.js API Routes
+// app/api/copilotkit/route.ts
+export async function POST(request: Request) {
+  // Next.js specific API route
+}
+```
+
+### **Production API Server**
+```typescript
+// ✅ DO: Express Server for Production
+// server/index.ts
+import express from 'express';
+import { CopilotRuntime } from "@copilotkit/react-core";
+import { LangGraphAgent } from "@copilotkit/langgraph";
+
+const app = express();
+app.use(express.json());
+
+const runtime = new CopilotRuntime({
+  agents: {
+    starterAgent: new LangGraphAgent({
+      deploymentUrl: process.env.LANGGRAPH_DEPLOYMENT_URL || "http://localhost:8124",
+      graphId: "starterAgent",
+      langsmithApiKey: process.env.LANGSMITH_API_KEY || "",
+    })
+  }
+});
+
+app.post('/api/copilotkit', async (req, res) => {
+  try {
+    const response = await runtime.response(req);
+    const data = await response.json();
+    res.json(data);
+  } catch (error) {
+    console.error('API Error:', error);
+    res.status(500).json({ error: 'Internal Server Error' });
+  }
+});
+
+app.listen(3001, () => {
+  console.log('API server running on port 3001');
+});
+
+// ❌ DON'T: Next.js API Routes in Production
+// app/api/copilotkit/route.ts
+export async function POST(request: Request) {
+  // This won't work in Vite
+}
+```
+
+## 🧪 **Testing Strategy**
+
+### **Test Configuration**
+```typescript
+// ✅ DO: Vitest Configuration
+// vitest.config.ts
+import { defineConfig } from 'vitest/config'
+import react from '@vitejs/plugin-react'
+
+export default defineConfig({
+  plugins: [react()],
+  test: {
+    globals: true,
+    environment: 'jsdom',
+    setupFiles: ['./src/test/setup.ts'],
+    coverage: {
+      reporter: ['text', 'json', 'html'],
+      exclude: [
+        'node_modules/',
+        'src/test/',
+        '**/*.d.ts',
+        '**/*.config.*'
+      ]
+    }
+  }
+})
+
+// ❌ DON'T: Next.js Testing Setup
+// jest.config.js
+const nextJest = require('next/jest')
+const createJestConfig = nextJest({
+  dir: './',
+})
+const customJestConfig = {
+  setupFilesAfterEnv: ['<rootDir>/jest.setup.js'],
+  moduleNameMapping: {
+    '^@/components/(.*)$': '<rootDir>/components/$1',
+  },
+  testEnvironment: 'jest-environment-jsdom',
+}
+module.exports = createJestConfig(customJestConfig)
+```
+
+### **Component Testing**
+```typescript
+// ✅ DO: Vitest Component Tests
+// src/components/__tests__/EventWizard.test.tsx
+import { render, screen } from '@testing-library/react'
+import { describe, it, expect } from 'vitest'
+import EventWizard from '../EventWizard'
+
+describe('EventWizard', () => {
+  it('renders chat interface', () => {
+    render(<EventWizard />)
+    expect(screen.getByText('EventOS Chat Wizard')).toBeInTheDocument()
+  })
+
+  it('handles user input', async () => {
+    render(<EventWizard />)
+    const input = screen.getByPlaceholderText('Type your message…')
+    // Test user interaction
+  })
+})
+
+// ❌ DON'T: Next.js Specific Testing
+// This won't work in Vite
+```
+
+## 📦 **Dependency Management**
+
+### **Package.json Dependencies**
+```json
+// ✅ DO: Vite Dependencies
+{
+  "dependencies": {
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "@copilotkit/react-core": "^1.0.0",
+    "@copilotkit/react-ui": "^1.0.0",
+    "@copilotkit/langgraph": "^1.0.0"
+  },
+  "devDependencies": {
+    "@types/react": "^18.2.0",
+    "@types/react-dom": "^18.2.0",
+    "@vitejs/plugin-react": "^4.0.0",
+    "vite": "^5.0.0",
+    "typescript": "^5.0.0",
+    "vitest": "^1.0.0",
+    "@testing-library/react": "^14.0.0",
+    "@testing-library/jest-dom": "^6.0.0"
+  }
+}
+
+// ❌ DON'T: Next.js Dependencies
+{
+  "dependencies": {
+    "next": "14.0.0",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0"
+  }
+}
+```
+
+### **Import Path Updates**
+```typescript
+// ✅ DO: Vite Import Paths
+import { Button } from '@/components/ui/button'
+import { Card } from '@/components/ui/card'
+import { useCopilotAction } from '@copilotkit/react-core'
+import { CopilotKit } from '@copilotkit/react-core'
+
+// ❌ DON'T: Next.js Import Paths
+import { Button } from '@/components/ui/button'
+import { Card } from '@/components/ui/card'
+import { useRouter } from 'next/navigation'
+import { headers } from 'next/headers'
+```
+
+## 🚀 **Performance Optimization**
+
+### **Build Optimization**
+```typescript
+// ✅ DO: Optimized Vite Build
+// vite.config.ts
+export default defineConfig({
+  build: {
+    rollupOptions: {
+      output: {
+        manualChunks: {
+          vendor: ['react', 'react-dom'],
+          copilotkit: ['@copilotkit/react-core', '@copilotkit/react-ui'],
+          langgraph: ['@copilotkit/langgraph']
+        }
+      }
+    },
+    chunkSizeWarningLimit: 1000,
+    sourcemap: true
+  },
+  optimizeDeps: {
+    include: [
+      'react',
+      'react-dom',
+      '@copilotkit/react-core',
+      '@copilotkit/react-ui',
+      '@copilotkit/langgraph'
+    ]
+  }
+})
+
+// ❌ DON'T: Default Vite Build
+export default defineConfig({
+  plugins: [react()]
+})
+```
+
+### **Development Optimization**
+```typescript
+// ✅ DO: Optimized Dev Server
+// vite.config.ts
+export default defineConfig({
+  server: {
+    hmr: {
+      overlay: true
+    },
+    fs: {
+      strict: false
+    }
+  },
+  optimizeDeps: {
+    force: true
+  }
+})
+
+// ❌ DON'T: Basic Dev Server
+export default defineConfig({
+  server: {
+    port: 5173
+  }
+})
+```
+
+## 🔧 **Common Conversion Patterns**
+
+### **Routing Conversion**
+```typescript
+// ✅ DO: React Router for Vite
+// src/App.tsx
+import { BrowserRouter, Routes, Route } from 'react-router-dom'
+import EventWizard from './pages/EventWizard'
+import Dashboard from './pages/Dashboard'
+
+function App() {
+  return (
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<EventWizard />} />
+        <Route path="/dashboard" element={<Dashboard />} />
+      </Routes>
+    </BrowserRouter>
+  )
+}
+
+// ❌ DON'T: Next.js App Router
+// app/page.tsx
+export default function Home() {
+  return <EventWizard />
+}
+```
+
+### **Environment Variables**
+```typescript
+// ✅ DO: Vite Environment Variables
+// .env.local
+VITE_LANGGRAPH_DEPLOYMENT_URL=http://localhost:8124
+VITE_LANGSMITH_API_KEY=your_api_key
+
+// src/lib/config.ts
+export const config = {
+  langgraphUrl: import.meta.env.VITE_LANGGRAPH_DEPLOYMENT_URL,
+  langsmithApiKey: import.meta.env.VITE_LANGSMITH_API_KEY
+}
+
+// ❌ DON'T: Next.js Environment Variables
+// .env.local
+LANGGRAPH_DEPLOYMENT_URL=http://localhost:8124
+LANGSMITH_API_KEY=your_api_key
+
+// app/api/copilotkit/route.ts
+const langgraphUrl = process.env.LANGGRAPH_DEPLOYMENT_URL
+```
+
+## 📋 **Conversion Checklist**
+
+### **Pre-Conversion**
+- [ ] **Backup Current Setup**: Create backup branch
+- [ ] **Document Current State**: List all features and dependencies
+- [ ] **Test Current Functionality**: Ensure everything works
+- [ ] **Identify API Routes**: List all Next.js API routes
+- [ ] **Document Dependencies**: List all packages and versions
+
+### **Core Conversion**
+- [ ] **Install Vite Dependencies**: Add Vite and React dependencies
+- [ ] **Create Vite Configuration**: Set up vite.config.ts
+- [ ] **Update Project Structure**: Move files to Vite structure
+- [ ] **Convert Entry Points**: Create main.tsx and index.html
+- [ ] **Update Package.json**: Change scripts and dependencies
+
+### **API Conversion**
+- [ ] **Set Up Vite Proxy**: Configure development proxy
+- [ ] **Create Express Server**: Set up production API server
+- [ ] **Test API Routes**: Ensure all endpoints work
+- [ ] **Update Environment Variables**: Convert to Vite format
+
+### **Testing & Validation**
+- [ ] **Test All Features**: Verify functionality works
+- [ ] **Performance Testing**: Check build times and HMR
+- [ ] **Integration Testing**: Test all integrations
+- [ ] **User Testing**: Test with real users
+- [ ] **Documentation Update**: Update all documentation
+
+### **Post-Conversion**
+- [ ] **Clean Up Next.js Files**: Remove Next.js specific files
+- [ ] **Update Documentation**: Update all references
+- [ ] **Deploy**: Update deployment configuration
+- [ ] **Monitor**: Watch for any issues
+- [ ] **Team Training**: Train team on new setup
+
+## 🎯 **Success Metrics**
+
+### **Technical Metrics**
+- **Build Time**: < 30 seconds (vs Next.js ~60 seconds)
+- **HMR Speed**: < 100ms for changes
+- **Bundle Size**: 20% smaller than Next.js build
+- **Startup Time**: < 2 seconds for dev server
+
+### **Functional Metrics**
+- **All Features Working**: 100% feature parity
+- **Performance**: Same or better than Next.js
+- **Stability**: No crashes or errors
+- **User Experience**: Seamless transition
+
+### **Development Metrics**
+- **Setup Time**: < 15 minutes for new developers
+- **Debugging**: Easier error resolution
+- **Configuration**: Simpler maintenance
+- **Team Adoption**: Smooth transition for team
+
+## 🧪 **Testing Success Criteria**
+
+### **Pre-Conversion Testing**
+- [ ] **Current Functionality Baseline**: Document all working features before conversion
+- [ ] **Performance Baseline**: Record current build times, bundle sizes, and startup times
+- [ ] **User Journey Testing**: Test all critical user paths and workflows
+- [ ] **API Endpoint Testing**: Verify all API routes and integrations work
+- [ ] **Database Connection Testing**: Ensure Supabase and MCP connections are stable
+
+### **Conversion Testing**
+- [ ] **Incremental Testing**: Test each converted component individually
+- [ ] **Integration Testing**: Verify components work together after conversion
+- [ ] **API Proxy Testing**: Ensure Vite proxy correctly routes to backend services
+- [ ] **Environment Variable Testing**: Confirm all env vars work with Vite format
+- [ ] **Build Process Testing**: Verify production builds work correctly
+
+### **Post-Conversion Validation**
+- [ ] **Feature Parity**: 100% of original features work identically
+- [ ] **Performance Improvement**: Build time reduced by at least 30%
+- [ ] **HMR Functionality**: Hot module replacement works for all file types
+- [ ] **Production Build**: Optimized build generates correctly
+- [ ] **Deployment Testing**: Application deploys successfully to production
+
+### **Quality Assurance Checklist**
+- [ ] **No Console Errors**: Zero JavaScript errors in browser console
+- [ ] **No TypeScript Errors**: All type checking passes
+- [ ] **No Linting Errors**: ESLint passes with zero warnings
+- [ ] **Accessibility Testing**: All ARIA labels and keyboard navigation work
+- [ ] **Cross-Browser Testing**: Works in Chrome, Firefox, Safari, Edge
+
+### **Performance Benchmarks**
+- [ ] **Build Time**: < 30 seconds (target: 50% improvement over Next.js)
+- [ ] **Bundle Size**: < 2MB total (target: 20% reduction)
+- [ ] **First Contentful Paint**: < 1.5 seconds
+- [ ] **Largest Contentful Paint**: < 2.5 seconds
+- [ ] **Time to Interactive**: < 3 seconds
+
+### **User Experience Testing**
+- [ ] **Navigation**: All routes work correctly
+- [ ] **Forms**: All form submissions work
+- [ ] **Authentication**: Login/logout flows work
+- [ ] **Real-time Features**: WebSocket connections and live updates work
+- [ ] **Mobile Responsiveness**: All breakpoints work correctly
+
+### **AI Integration Testing**
+- [ ] **CopilotKit Components**: All AI chat interfaces work
+- [ ] **LangGraph Agents**: AI agents respond correctly
+- [ ] **MCP Server Connections**: All MCP tools function properly
+- [ ] **Real-time Search**: Tavily integration works for research
+- [ ] **Database Operations**: All CRUD operations work through AI
+
+### **Regression Testing**
+- [ ] **Critical Paths**: All main user journeys work
+- [ ] **Edge Cases**: Error handling and edge cases work
+- [ ] **Data Persistence**: All data saves and loads correctly
+- [ ] **State Management**: Application state works correctly
+- [ ] **Third-party Integrations**: All external services work
+
+### **Security Testing**
+- [ ] **Authentication**: User sessions work correctly
+- [ ] **Authorization**: Role-based access control works
+- [ ] **API Security**: All API endpoints are properly secured
+- [ ] **Environment Variables**: No sensitive data exposed
+- [ ] **CORS Configuration**: Cross-origin requests work correctly
+
+### **Documentation Testing**
+- [ ] **Setup Instructions**: New developers can follow setup guide
+- [ ] **Configuration**: All configuration options are documented
+- [ ] **Troubleshooting**: Common issues have documented solutions
+- [ ] **API Documentation**: All endpoints are documented
+- [ ] **Code Comments**: All complex logic is commented
+
+### **Success Criteria Summary**
+- **✅ Zero Breaking Changes**: All existing functionality preserved
+- **✅ Performance Improved**: 30% faster builds, 20% smaller bundles
+- **✅ Developer Experience**: Easier setup, better debugging, faster HMR
+- **✅ Production Ready**: Stable, secure, and scalable
+- **✅ Team Adoption**: Smooth transition with minimal learning curve
+
+---
+
+*This comprehensive rule ensures successful Next.js to Vite conversion while maintaining all functionality, improving performance, and following best practices.*

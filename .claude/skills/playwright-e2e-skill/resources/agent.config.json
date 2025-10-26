@@ -1,0 +1,222 @@
+{
+  "$schema": "https://anthropic.com/schemas/agent-config.json",
+  "agent": {
+    "name": "eventos-playwright-agent",
+    "version": "1.0.0",
+    "description": "EventOS Playwright E2E testing agent for browser automation",
+    "type": "test_automation"
+  },
+  "model": {
+    "provider": "anthropic",
+    "name": "claude-sonnet-4-5",
+    "temperature": 0.0,
+    "max_tokens": 8000
+  },
+  "tools": {
+    "mcp": {
+      "required": true,
+      "servers": [
+        {
+          "name": "playwright",
+          "type": "stdio",
+          "command": "npx",
+          "args": ["@playwright/mcp@latest"],
+          "env": {
+            "PLAYWRIGHT_BROWSER": "${PLAYWRIGHT_BROWSER:-chromium}",
+            "PLAYWRIGHT_HEADLESS": "${PLAYWRIGHT_HEADLESS:-true}"
+          }
+        }
+      ]
+    },
+    "allowed": [
+      "browser_navigate",
+      "browser_snapshot",
+      "browser_click",
+      "browser_fill",
+      "browser_fill_form",
+      "browser_type",
+      "browser_select_option",
+      "wait_for",
+      "browser_take_screenshot",
+      "browser_network_requests",
+      "browser_console_messages",
+      "browser_drag",
+      "browser_upload_file",
+      "browser_evaluate_script",
+      "browser_handle_dialog",
+      "browser_hover",
+      "browser_resize_page",
+      "browser_tabs",
+      "browser_navigate_back",
+      "browser_close",
+      "browser_press_key"
+    ]
+  },
+  "context": {
+    "base_url": "https://event-studio-rho.vercel.app",
+    "application": {
+      "name": "EventOS",
+      "type": "event_management_platform",
+      "stack": {
+        "frontend": "React + TypeScript + Vite",
+        "ui": "shadcn/ui + Tailwind CSS",
+        "backend": "Supabase (PostgreSQL + RLS)",
+        "auth": "Supabase Auth (can be disabled with VITE_DISABLE_AUTH=true)",
+        "state": "TanStack Query + Zustand",
+        "routing": "React Router v6"
+      }
+    },
+    "critical_paths": [
+      {
+        "name": "Dashboard Load",
+        "route": "/dashboard",
+        "requires_auth": false,
+        "critical": true,
+        "validation": "Stats cards display (Total Events, Bookings, Tickets)"
+      },
+      {
+        "name": "Event Creation",
+        "route": "/events/new",
+        "requires_auth": true,
+        "critical": true,
+        "validation": "Form submits and shows success message"
+      },
+      {
+        "name": "Booking Flow",
+        "route": "/events/:id/book",
+        "requires_auth": false,
+        "critical": true,
+        "validation": "Booking completes without RLS errors"
+      }
+    ],
+    "known_issues": [
+      {
+        "issue": "RLS policies blocking anonymous users",
+        "affected": ["dashboard", "event list"],
+        "workaround": "Check network requests for 401/403 errors",
+        "fix_status": "Migration created: 20251019000000_allow_public_dashboard_counts.sql"
+      },
+      {
+        "issue": "Auth bypass not working in production",
+        "affected": ["protected routes"],
+        "workaround": "Verify VITE_DISABLE_AUTH env var in Vercel",
+        "fix_status": "Environment variables added to all environments"
+      }
+    ]
+  },
+  "testing": {
+    "strategy": "accessibility_tree",
+    "browser_preferences": {
+      "default": "chromium",
+      "alternatives": ["firefox", "webkit"]
+    },
+    "modes": {
+      "ci": {
+        "headless": true,
+        "timeout": 30000,
+        "retries": 2
+      },
+      "local": {
+        "headless": false,
+        "timeout": 60000,
+        "retries": 0
+      }
+    },
+    "priorities": {
+      "p0_smoke": [
+        "Dashboard loads without 401/403",
+        "Navigation works (home → dashboard → events)",
+        "Event list displays"
+      ],
+      "p1_features": [
+        "Event creation wizard completes",
+        "Booking flow end-to-end",
+        "Form validation works"
+      ],
+      "p2_edge_cases": [
+        "Multi-browser compatibility",
+        "Responsive layouts",
+        "File upload flows"
+      ]
+    }
+  },
+  "prompts": {
+    "system": "You are an expert QA automation engineer testing the EventOS event management platform. Your goal is to validate critical user journeys, catch RLS policy issues, and provide actionable debugging evidence. Always: 1) Take snapshot before interacting, 2) Monitor network on auth-sensitive pages, 3) Capture screenshots on failures, 4) Use accessibility refs from snapshot.",
+    "playbook_instructions": {
+      "smoke": "Run fast smoke tests covering critical paths. Focus on: dashboard loads, navigation works, no auth errors. Fail fast on first error.",
+      "auth": "Test authentication flows thoroughly. Validate: login/signup forms, protected routes redirect, session persistence. Check for RLS policy errors.",
+      "wizard": "Test multi-step wizard forms. Validate: step progression, form state persistence, file uploads, drag-drop interactions. Screenshot each step."
+    }
+  },
+  "output": {
+    "format": "structured_json",
+    "include": {
+      "test_results": true,
+      "screenshots": true,
+      "network_logs": true,
+      "console_errors": true,
+      "timing_metrics": true
+    },
+    "artifacts": {
+      "screenshots_dir": "test-results/screenshots",
+      "network_logs_dir": "test-results/network",
+      "reports_dir": "test-results/reports"
+    }
+  },
+  "error_handling": {
+    "on_timeout": "capture_screenshot_and_logs",
+    "on_element_not_found": "take_snapshot_and_retry",
+    "on_network_error": "log_request_details",
+    "max_retries": 2,
+    "retry_delay_ms": 1000
+  },
+  "integrations": {
+    "ci_cd": {
+      "github_actions": {
+        "enabled": true,
+        "workflow_file": ".github/workflows/playwright-tests.yml"
+      },
+      "vercel": {
+        "enabled": true,
+        "post_deploy_hook": "npm run test:smoke"
+      }
+    },
+    "notifications": {
+      "slack": {
+        "enabled": false,
+        "webhook_url": "${SLACK_WEBHOOK_URL}"
+      },
+      "github": {
+        "enabled": true,
+        "comment_on_pr": true
+      }
+    }
+  },
+  "environment": {
+    "required": [
+      "PLAYWRIGHT_BASE_URL"
+    ],
+    "optional": [
+      "PLAYWRIGHT_BROWSER",
+      "PLAYWRIGHT_HEADLESS",
+      "PLAYWRIGHT_TIMEOUT",
+      "SLACK_WEBHOOK_URL"
+    ],
+    "defaults": {
+      "PLAYWRIGHT_BROWSER": "chromium",
+      "PLAYWRIGHT_HEADLESS": "true",
+      "PLAYWRIGHT_TIMEOUT": "30000"
+    }
+  },
+  "metadata": {
+    "created": "2025-10-19",
+    "last_updated": "2025-10-19",
+    "author": "EventOS Team",
+    "license": "MIT",
+    "compatibility": {
+      "claude_code": ">=1.0.0",
+      "playwright_mcp": ">=0.0.43",
+      "node": ">=18.0.0"
+    }
+  }
+}

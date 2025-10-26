@@ -1,0 +1,440 @@
+---
+description: Comprehensive project management standards, methodologies, and best practices for EventOS
+globs: **/*.md, **/*.json, **/*.yml, **/*.yaml, **/*.toml
+alwaysApply: true
+---
+
+# Project Management Standards
+
+## 🎯 **Core Project Management Principles**
+
+### **Simplicity First - Keep It Simple**
+- **Start Simple**: Begin with basic functionality, add complexity gradually
+- **Avoid Over-Engineering**: Don't build features that aren't immediately needed
+- **Progressive Enhancement**: Build foundation first, then add advanced features
+- **Clear Communication**: Use simple language, avoid jargon and complexity
+- **Focus on Value**: Prioritize features that deliver immediate business value
+
+### **Official Documentation & Standards**
+- **Always Reference Official Docs**: Use official CopilotKit, LangGraph, Supabase documentation
+- **Follow Best Practices**: Adhere to established patterns and conventions
+- **Version Control**: Track documentation versions and updates
+- **Community Standards**: Follow industry best practices and community guidelines
+- **Reference Links**: Always link to official sources for technical decisions
+
+### **MCP CopilotKit Integration**
+- **MCP-First Approach**: Use MCP server commands before manual implementations
+- **CopilotKit Components**: Leverage official CopilotKit UI components and patterns
+- **LangGraph Integration**: Use LangGraph for complex AI workflows
+- **Real-Time Features**: Implement real-time capabilities with CopilotKit
+- **AI Agent Development**: Build AI agents using official CopilotKit patterns
+
+### **Iterative Building Process**
+- **Foundation First**: Build core infrastructure before advanced features
+- **Incremental Development**: Add features one at a time, test thoroughly
+- **Continuous Integration**: Integrate changes frequently to avoid conflicts
+- **User Feedback**: Gather feedback early and often from stakeholders
+- **Rapid Prototyping**: Build quick prototypes to validate concepts
+
+### **Continuous Testing Strategy**
+- **Test-Driven Development**: Write tests before implementing features
+- **Automated Testing**: Use automated testing for regression prevention
+- **Integration Testing**: Test all components working together
+- **User Acceptance Testing**: Regular testing with actual users
+- **Performance Testing**: Monitor system performance continuously
+
+### **Project Lifecycle Management**
+- **Initiation**: Define project scope, stakeholders, and success criteria
+- **Planning**: Create detailed project plans with timelines and resources
+- **Execution**: Implement project activities with monitoring and control
+- **Monitoring & Control**: Track progress, manage risks, and ensure quality
+- **Closure**: Complete deliverables, conduct lessons learned, and archive
+
+### **Stakeholder Management**
+- **Stakeholder Identification**: Map all project stakeholders and their interests
+- **Communication Planning**: Define communication needs and frequency
+- **Expectation Management**: Set clear expectations and manage changes
+- **Engagement Strategies**: Tailor approaches for different stakeholder types
+- **Feedback Loops**: Establish regular feedback mechanisms
+
+### **Risk Management**
+- **Risk Identification**: Proactively identify potential project risks
+- **Risk Assessment**: Evaluate probability and impact of risks
+- **Risk Mitigation**: Develop strategies to reduce or eliminate risks
+- **Contingency Planning**: Prepare backup plans for high-impact risks
+- **Risk Monitoring**: Continuously monitor and update risk register
+
+## 📋 **Project Management Methodologies**
+
+### **Agile Project Management**
+- **Sprint Planning**: 2-week sprints with clear deliverables
+- **Daily Standups**: 15-minute daily team synchronization
+- **Sprint Reviews**: Demo completed work to stakeholders
+- **Retrospectives**: Continuous improvement through team feedback
+- **Backlog Management**: Prioritized and groomed product backlog
+
+### **Waterfall Project Management**
+- **Phase Gates**: Clear milestones between project phases
+- **Documentation**: Comprehensive documentation at each phase
+- **Change Control**: Formal process for scope changes
+- **Quality Assurance**: Testing and validation at each phase
+- **Sign-off Process**: Stakeholder approval at phase completion
+
+### **Hybrid Approach**
+- **Agile for Development**: Use agile for software development
+- **Waterfall for Planning**: Use waterfall for project initiation and planning
+- **Flexible Execution**: Adapt methodology based on project needs
+- **Tool Integration**: Combine agile and waterfall tools effectively
+
+## 🛠️ **Project Management Tools & Techniques**
+
+### **Planning Tools**
+- **Work Breakdown Structure (WBS)**: Hierarchical decomposition of project work
+- **Gantt Charts**: Visual timeline with task dependencies
+- **Critical Path Method (CPM)**: Identify longest path through project
+- **PERT Charts**: Program Evaluation and Review Technique
+- **Resource Allocation**: Assign and track resource usage
+
+### **Tracking & Monitoring**
+- **Burndown Charts**: Track sprint progress and velocity
+- **Velocity Tracking**: Measure team productivity over time
+- **Earned Value Management**: Track project performance against baseline
+- **Milestone Tracking**: Monitor key project milestones
+- **Budget Tracking**: Monitor actual vs. planned costs
+
+### **Communication Tools**
+- **Project Dashboards**: Real-time project status visualization
+- **Status Reports**: Regular progress updates to stakeholders
+- **Meeting Management**: Effective meeting planning and execution
+- **Documentation Systems**: Centralized project documentation
+- **Collaboration Platforms**: Team communication and file sharing
+
+## 📊 **Project Management Templates**
+
+### **Project Charter Template**
+```markdown
+# Project Charter
+
+## 📋 **Project Information**
+- **Project Name**: [Project Name]
+- **Project Manager**: [Name]
+- **Start Date**: [Date]
+- **End Date**: [Date]
+- **Budget**: [Amount]
+- **Project Sponsor**: [Name/Title]
+
+## 🎯 **Project Objectives**
+- [Primary Objective 1]
+- [Primary Objective 2]
+- [Primary Objective 3]
+
+## 📊 **Success Criteria**
+- [Measurable Success Criteria 1]
+- [Measurable Success Criteria 2]
+- [Measurable Success Criteria 3]
+
+## 👥 **Stakeholders**
+- **Project Sponsor**: [Name/Role]
+- **Project Manager**: [Name/Role]
+- **Team Members**: [List of team members]
+- **End Users**: [User groups]
+- **External Stakeholders**: [Vendors, partners, etc.]
+
+## ⚠️ **Risks & Assumptions**
+- **High-Risk Items**: [List of major risks]
+- **Key Assumptions**: [Critical assumptions]
+- **Dependencies**: [External dependencies]
+
+## 📈 **Project Scope**
+- **In Scope**: [What is included]
+- **Out of Scope**: [What is explicitly excluded]
+- **Deliverables**: [Key project deliverables]
+```
+
+### **Project Plan Template**
+```markdown
+# Project Plan
+
+## 📅 **Project Timeline**
+- **Phase 1**: [Phase name] - [Start date] to [End date]
+- **Phase 2**: [Phase name] - [Start date] to [End date]
+- **Phase 3**: [Phase name] - [Start date] to [End date]
+
+## 🎯 **Key Milestones**
+| Milestone | Date | Deliverable | Owner |
+|-----------|------|-------------|-------|
+| M1 | [Date] | [Deliverable] | [Owner] |
+| M2 | [Date] | [Deliverable] | [Owner] |
+| M3 | [Date] | [Deliverable] | [Owner] |
+
+## 👥 **Resource Allocation**
+| Role | Name | Allocation | Start Date | End Date |
+|------|------|------------|------------|----------|
+| [Role] | [Name] | [%] | [Date] | [Date] |
+| [Role] | [Name] | [%] | [Date] | [Date] |
+
+## 💰 **Budget Breakdown**
+| Category | Budgeted | Actual | Variance |
+|----------|----------|--------|----------|
+| [Category] | $[Amount] | $[Amount] | $[Amount] |
+| [Category] | $[Amount] | $[Amount] | $[Amount] |
+```
+
+### **Risk Register Template**
+```markdown
+# Risk Register
+
+| Risk ID | Description | Probability | Impact | Risk Level | Mitigation Strategy | Owner | Status |
+|---------|-------------|-------------|--------|------------|-------------------|-------|--------|
+| R-001 | [Risk description] | High/Medium/Low | High/Medium/Low | [Level] | [Mitigation plan] | [Owner] | Active/Mitigated/Closed |
+| R-002 | [Risk description] | High/Medium/Low | High/Medium/Low | [Level] | [Mitigation plan] | [Owner] | Active/Mitigated/Closed |
+```
+
+## 🎯 **Project Management Best Practices**
+
+### **Project Initiation**
+- **Stakeholder Analysis**: Complete stakeholder mapping and analysis
+- **Scope Definition**: Clear, detailed project scope statement
+- **Success Criteria**: Measurable and achievable success criteria
+- **Resource Planning**: Accurate resource estimation and allocation
+- **Risk Assessment**: Comprehensive initial risk identification
+
+### **Project Planning**
+- **Detailed Work Breakdown**: Complete task decomposition
+- **Realistic Timelines**: Achievable schedules with buffer time
+- **Resource Planning**: Proper resource allocation and availability
+- **Communication Plan**: Clear communication protocols
+- **Quality Planning**: Quality standards and testing strategies
+
+### **Project Execution**
+- **Regular Monitoring**: Daily/weekly progress tracking
+- **Stakeholder Communication**: Regular status updates
+- **Issue Management**: Proactive issue identification and resolution
+- **Change Control**: Formal change management process
+- **Team Management**: Effective team leadership and motivation
+
+### **Project Control**
+- **Progress Tracking**: Regular progress measurement
+- **Budget Control**: Cost monitoring and variance analysis
+- **Quality Control**: Continuous quality assurance
+- **Risk Management**: Ongoing risk monitoring and mitigation
+- **Performance Management**: Team and individual performance tracking
+
+## 📈 **Project Metrics & KPIs**
+
+### **Schedule Metrics**
+- **Schedule Performance Index (SPI)**: EV / PV
+- **Schedule Variance (SV)**: EV - PV
+- **Milestone Achievement**: % of milestones completed on time
+- **Critical Path Performance**: Critical path task completion rate
+
+### **Cost Metrics**
+- **Cost Performance Index (CPI)**: EV / AC
+- **Cost Variance (CV)**: EV - AC
+- **Budget Variance**: Planned vs. actual costs
+- **Resource Utilization**: Resource efficiency metrics
+
+### **Quality Metrics**
+- **Defect Rate**: Defects per deliverable
+- **Rework Percentage**: % of work requiring rework
+- **Customer Satisfaction**: Stakeholder satisfaction scores
+- **Quality Gates**: % of quality gates passed
+
+### **Team Metrics**
+- **Velocity**: Story points completed per sprint
+- **Team Satisfaction**: Team member satisfaction scores
+- **Turnover Rate**: Team member retention
+- **Skill Development**: Team capability improvement
+
+## 🚨 **Common Project Management Pitfalls**
+
+### **Pitfall 1: Poor Scope Management**
+- **Problem**: Scope creep leading to project delays and cost overruns
+- **Solution**: Clear scope definition, change control process, stakeholder education
+- **Prevention**: Regular scope reviews, formal change requests, impact analysis
+
+### **Pitfall 2: Inadequate Risk Management**
+- **Problem**: Unidentified risks causing project failures
+- **Solution**: Comprehensive risk identification, regular risk reviews, mitigation planning
+- **Prevention**: Risk workshops, expert input, historical data analysis
+
+### **Pitfall 3: Communication Breakdown**
+- **Problem**: Poor communication leading to misunderstandings and delays
+- **Solution**: Communication plan, regular meetings, clear documentation
+- **Prevention**: Stakeholder analysis, communication matrix, feedback mechanisms
+
+### **Pitfall 4: Resource Constraints**
+- **Problem**: Insufficient resources causing project delays
+- **Solution**: Resource planning, capacity management, external resources
+- **Prevention**: Resource estimation, availability tracking, backup plans
+
+### **Pitfall 5: Quality Issues**
+- **Problem**: Poor quality deliverables requiring rework
+- **Solution**: Quality planning, testing strategies, review processes
+- **Prevention**: Quality standards, training, continuous improvement
+
+## 🎯 **EventOS-Specific Project Management**
+
+### **Development Principles**
+- **Keep It Simple**: Start with basic functionality, avoid over-engineering
+- **Official Docs First**: Always reference CopilotKit, LangGraph, Supabase documentation
+- **MCP Integration**: Use MCP server commands for all database operations
+- **Iterative Building**: Build foundation first, then add features incrementally
+- **Continuous Testing**: Test every change, maintain high test coverage
+- **User-Centric**: Focus on user needs, gather feedback early and often
+
+### **EventOS Project Structure**
+```
+event-studio/
+├── docs/                    # Project documentation
+├── planning/                # Project planning documents
+├── src/                     # Source code
+├── supabase/               # Database and backend
+├── tests/                  # Testing documentation
+├── deployment/             # Deployment guides
+└── .cursor/rules/          # Project management rules
+```
+
+### **EventOS Project Phases**
+1. **Phase 1: Foundation** - Core platform setup (Supabase, basic UI)
+2. **Phase 2: MVP Development** - Essential features (event creation, basic CRUD)
+3. **Phase 3: AI Integration** - CopilotKit LangGraph integration (AI wizard)
+4. **Phase 4: Advanced Features** - Advanced AI capabilities (multi-agent workflows)
+5. **Phase 5: Production** - Production deployment and optimization
+
+### **EventOS Stakeholders**
+- **Event Organizers**: Primary users of the platform
+- **Venues**: Venue management and booking
+- **Sponsors**: Sponsorship management
+- **Attendees**: Event participants
+- **Technical Team**: Development and maintenance
+- **Business Stakeholders**: Revenue and growth
+
+### **EventOS Success Metrics**
+- **User Adoption**: Number of active users
+- **Revenue Growth**: Monthly recurring revenue
+- **Feature Usage**: AI feature adoption rates
+- **Performance**: System response times
+- **Quality**: Bug rates and user satisfaction
+
+### **Development Best Practices**
+- **Start Simple**: Begin with basic event creation, add AI features later
+- **Use Official Patterns**: Follow CopilotKit and LangGraph best practices
+- **Test Continuously**: Write tests for every feature, maintain coverage
+- **Document Everything**: Keep docs updated, reference official sources
+- **User Feedback**: Test with real users, iterate based on feedback
+- **Performance First**: Optimize for speed and reliability from day one
+
+## 🔄 **Project Management Workflow**
+
+### **Development Workflow (EventOS-Specific)**
+1. **Start with Foundation**: Build core infrastructure first (Supabase, basic UI)
+2. **Reference Official Docs**: Always check CopilotKit, LangGraph, Supabase documentation
+3. **Use MCP Commands**: Leverage MCP server commands for database operations
+4. **Iterative Development**: Add one feature at a time, test thoroughly
+5. **Continuous Testing**: Run tests after each change, maintain test coverage
+6. **Documentation**: Update docs as you build, reference official sources
+7. **User Feedback**: Test with real users early and often
+
+### **Development Process (Step-by-Step)**
+1. **Foundation Phase**:
+   - Set up Supabase database and basic schema
+   - Create basic React UI with shadcn-ui components
+   - Implement basic authentication and user management
+   - Test core functionality thoroughly
+
+2. **MVP Development**:
+   - Build basic event creation and management
+   - Implement CRUD operations for events, venues, attendees
+   - Add basic UI for event management
+   - Test all MVP features with real users
+
+3. **AI Integration**:
+   - Integrate CopilotKit for AI-powered features
+   - Add LangGraph for complex AI workflows
+   - Implement AI event wizard with real-time research
+   - Test AI features thoroughly with users
+
+4. **Advanced Features**:
+   - Add multi-agent workflows
+   - Implement advanced AI capabilities
+   - Add real-time collaboration features
+   - Test advanced features with power users
+
+5. **Production Deployment**:
+   - Optimize performance and security
+   - Deploy to production environment
+   - Monitor system performance and user feedback
+   - Continuously improve based on usage data
+
+### **Daily Workflow**
+1. **Morning Standup**: Team synchronization
+2. **Task Review**: Review and update task status
+3. **Issue Management**: Address any blockers
+4. **Progress Update**: Update project status
+5. **Communication**: Stakeholder updates as needed
+
+### **Weekly Workflow**
+1. **Sprint Planning**: Plan upcoming work
+2. **Progress Review**: Review weekly progress
+3. **Risk Assessment**: Review and update risks
+4. **Stakeholder Updates**: Send status reports
+5. **Team Retrospective**: Team improvement discussion
+
+### **Monthly Workflow**
+1. **Project Review**: Comprehensive project assessment
+2. **Budget Review**: Financial performance analysis
+3. **Stakeholder Meeting**: Major stakeholder updates
+4. **Risk Review**: Comprehensive risk assessment
+5. **Planning Update**: Update project plans
+
+## 📋 **Project Management Checklist**
+
+### **Development Checklist (EventOS-Specific)**
+- [ ] **Foundation Setup**: Supabase database configured, basic UI created
+- [ ] **Official Docs**: CopilotKit, LangGraph, Supabase documentation reviewed
+- [ ] **MCP Integration**: MCP server commands tested and working
+- [ ] **Basic Testing**: Core functionality tested with real users
+- [ ] **Documentation**: All changes documented with official references
+- [ ] **User Feedback**: Early user testing completed and feedback incorporated
+- [ ] **Performance**: Basic performance testing completed
+
+### **Project Initiation Checklist**
+- [ ] Project charter approved
+- [ ] Stakeholders identified and engaged
+- [ ] Project scope defined
+- [ ] Success criteria established
+- [ ] Initial risk assessment completed
+- [ ] Resource requirements identified
+- [ ] Budget approved
+
+### **Project Planning Checklist**
+- [ ] Work breakdown structure created
+- [ ] Project schedule developed
+- [ ] Resource allocation planned
+- [ ] Risk register created
+- [ ] Communication plan established
+- [ ] Quality plan defined
+- [ ] Change control process established
+
+### **Project Execution Checklist**
+- [ ] Team assembled and trained
+- [ ] Project kickoff completed
+- [ ] Regular status meetings scheduled
+- [ ] Progress tracking system implemented
+- [ ] Issue management process active
+- [ ] Quality assurance processes in place
+- [ ] Stakeholder communication active
+
+### **Project Closure Checklist**
+- [ ] All deliverables completed
+- [ ] Quality acceptance obtained
+- [ ] Stakeholder sign-off received
+- [ ] Project documentation archived
+- [ ] Lessons learned documented
+- [ ] Team recognition completed
+- [ ] Project closure report created
+
+---
+
+*This comprehensive project management rule ensures effective project delivery through proven methodologies, best practices, and EventOS-specific guidance.*

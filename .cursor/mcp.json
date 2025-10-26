@@ -1,0 +1,59 @@
+{
+	"mcpServers": {
+	  "desktop-commander": {
+		"command": "npx",
+		"args": ["-y", "@wonderwhy-er/desktop-commander@latest"]
+	  },
+	  "chrome-devtools": {
+		"command": "npx",
+		"args": ["-y", "chrome-devtools-mcp@latest"],
+		"optional": true
+	  },
+	  "playwright": {
+		"command": "npx",
+		"args": ["-y", "@playwright/mcp@latest"]
+	  },
+	  "supabase": {
+		"url": "https://mcp.supabase.com/mcp?project_ref=asrzdtpyrdgyggqdfwwl&features=docs%2Caccount%2Cdatabase%2Cdebugging%2Cdevelopment%2Cfunctions%2Cbranching%2Cstorage",
+		"headers": {
+		  "Authorization": "Bearer ${SUPABASE_SERVICE_ROLE_KEY}"
+		}
+	  },
+	  "vercel-event-studio": {
+		"url": "https://mcp.vercel.com/team_TeHIwY6B3VCdOC8Q5Z5x4ddU/prj_eZNKbF0PgqrfxIselumGOM2PCt8M",
+		"headers": {
+		  "Authorization": "Bearer ${VERCEL_TOKEN}"
+		}
+	  },
+	  "context7": {
+		"url": "https://mcp.context7.com/mcp",
+		"headers": {
+		  "Authorization": "Bearer ${CONTEXT7_API_KEY}"
+		}
+	  },
+	  "firecrawl": {
+		"command": "npx",
+		"args": ["-y", "firecrawl-mcp"],
+		"env": {
+		  "FIRECRAWL_API_KEY": "${FIRECRAWL_API_KEY}"
+		}
+	  },
+	  "copilotkit-vibe-coding": {
+		"type": "sse",
+		"url": "https://mcp.copilotkit.ai/sse",
+		"headers": {
+		  "Accept": "text/event-stream",
+		  "Cache-Control": "no-cache"
+		},
+		"comment": "Vibe Coding MCP: Structured access to CopilotKit docs and examples"
+	  },
+	  "browserOS": {
+		"command": "npx",
+		"args": ["mcp-remote", "http://127.0.0.1:9100/mcp"]
+	  },
+	  "blaxel-docs": {
+		"url": "https://docs.blaxel.ai/mcp"
+	  }
+	}
+  }
+  

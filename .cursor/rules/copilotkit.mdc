@@ -1,0 +1,418 @@
+---
+description: CopilotKit LangGraph with Tavily integration rules for EventOS AI system
+globs: src/**/*.tsx, src/**/*.ts, copilotkit-langgraph-js/**/*, supabase/**/*.sql
+alwaysApply: true
+---
+
+# CopilotKit LangGraph with Tavily Integration Rules
+
+## 🎯 **Core Principles**
+
+### **AI-First Development**
+- **Conversational Interface**: Replace forms with natural language AI interactions
+- **Real-Time Intelligence**: Use Tavily for live research and data collection
+- **Multi-Agent Workflows**: Implement specialized AI agents for different event aspects
+- **Human Oversight**: Include approval workflows for critical AI decisions
+
+### **EventOS Integration Patterns**
+- **Supabase Integration**: All AI actions must integrate with existing database schema
+- **Stakeholder Focus**: Design AI features for organizers, venues, sponsors, attendees
+- **Revenue Impact**: Every AI feature should drive toward $75K/month target
+- **User Experience**: Maintain EventOS design patterns and component library
+
+### **Documentation Standards**
+- **Sequential Numbering**: All planning docs must use `01-name.md`, `02-name.md`, etc.
+- **Proper Folder Placement**: Place docs in correct folders based on content type
+- **Consistent Naming**: Use descriptive names with proper case formatting
+- **Index Maintenance**: Always update documentation index when adding new files
+
+## 🏗️ **Architecture Guidelines**
+
+### **CopilotKit Integration**
+```typescript
+// ✅ DO: Use CopilotKit for conversational interfaces
+import { CopilotKit } from "@copilotkit/react-core";
+import { CopilotSidebar } from "@copilotkit/react-ui";
+
+// ✅ DO: Implement AI actions with proper typing
+const createEventAction = useCopilotAction({
+  name: "createEvent",
+  description: "Create a new event with AI assistance",
+  parameters: z.object({
+    title: z.string(),
+    date: z.string(),
+    location: z.string(),
+    capacity: z.number()
+  }),
+  handler: async ({ title, date, location, capacity }) => {
+    // Implementation
+  }
+});
+
+// ❌ DON'T: Use CopilotKit without proper error handling
+const badAction = useCopilotAction({
+  name: "badAction",
+  handler: async () => {
+    // Missing error handling and validation
+  }
+});
+```
+
+### **LangGraph Workflow Patterns**
+```typescript
+// ✅ DO: Implement stateful multi-agent workflows
+import { StateGraph, END } from "@langchain/langgraph";
+
+const eventPlanningWorkflow = new StateGraph({
+  channels: {
+    userInput: { value: (x: string) => x },
+    eventData: { value: (x: EventData) => x },
+    researchResults: { value: (x: ResearchData) => x },
+    recommendations: { value: (x: Recommendation[]) => x }
+  }
+});
+
+// ✅ DO: Include human-in-the-loop nodes
+const humanApprovalNode = async (state: WorkflowState) => {
+  // Send to human for approval
+  return { ...state, needsApproval: true };
+};
+
+// ❌ DON'T: Create workflows without proper state management
+const badWorkflow = new StateGraph({
+  // Missing proper state channels
+});
+```
+
+### **Tavily Search Integration**
+```typescript
+// ✅ DO: Use Tavily for real-time research
+import { TavilySearchResults } from "@langchain/community";
+
+const researchVenues = async (query: string) => {
+  const tavily = new TavilySearchResults({
+    apiKey: process.env.TAVILY_API_KEY,
+    maxResults: 10
+  });
+  
+  const results = await tavily.invoke(query);
+  return results;
+};
+
+// ✅ DO: Implement search result processing
+const processSearchResults = (results: any[]) => {
+  return results.map(result => ({
+    title: result.title,
+    url: result.url,
+    content: result.content,
+    relevance: result.score
+  }));
+};
+
+// ❌ DON'T: Use Tavily without proper error handling
+const badSearch = async (query: string) => {
+  // Missing error handling and validation
+  return await tavily.invoke(query);
+};
+```
+
+## 🎪 **EventOS-Specific Patterns**
+
+### **Event Creation Workflow**
+```typescript
+// ✅ DO: Implement complete event creation workflow
+const eventCreationWorkflow = {
+  // 1. User input processing
+  processUserInput: async (input: string) => {
+    // Extract event requirements from natural language
+  },
+  
+  // 2. Research phase
+  researchVenues: async (requirements: EventRequirements) => {
+    // Use Tavily to find suitable venues
+  },
+  
+  // 3. AI recommendations
+  generateRecommendations: async (researchData: ResearchData) => {
+    // Use LangGraph to analyze and recommend
+  },
+  
+  // 4. Human approval
+  requestApproval: async (recommendations: Recommendation[]) => {
+    // Send to user for approval
+  },
+  
+  // 5. Database integration
+  createEvent: async (approvedData: EventData) => {
+    // Save to Supabase
+  }
+};
+```
+
+### **Stakeholder-Specific AI Features**
+
+#### **Event Organizers**
+```typescript
+// ✅ DO: Implement organizer-specific AI features
+const organizerAI = {
+  // Smart venue research
+  findVenues: async (requirements: VenueRequirements) => {
+    const searchQuery = `event venues ${requirements.location} capacity ${requirements.capacity}`;
+    return await tavilySearch(searchQuery);
+  },
+  
+  // Speaker discovery
+  findSpeakers: async (eventType: string, topic: string) => {
+    const searchQuery = `speakers ${eventType} ${topic} conference`;
+    return await tavilySearch(searchQuery);
+  },
+  
+  // Budget optimization
+  optimizeBudget: async (eventData: EventData) => {
+    // AI analysis of pricing and recommendations
+  }
+};
+```
+
+#### **Venues**
+```typescript
+// ✅ DO: Implement venue-specific AI features
+const venueAI = {
+  // Smart pricing
+  calculateOptimalPrice: async (venueData: VenueData, marketData: MarketData) => {
+    // AI-powered pricing optimization
+  },
+  
+  // Event matching
+  findCompatibleEvents: async (venueCapabilities: VenueCapabilities) => {
+    // Match venues with suitable events
+  },
+  
+  // Performance analytics
+  analyzePerformance: async (venueId: string) => {
+    // AI analysis of venue performance
+  }
+};
+```
+
+#### **Sponsors**
+```typescript
+// ✅ DO: Implement sponsor-specific AI features
+const sponsorAI = {
+  // Event discovery
+  findRelevantEvents: async (sponsorProfile: SponsorProfile) => {
+    // AI matching of sponsors with events
+  },
+  
+  // ROI prediction
+  predictROI: async (sponsorship: Sponsorship) => {
+    // AI prediction of sponsorship ROI
+  },
+  
+  // Proposal generation
+  generateProposal: async (eventData: EventData, sponsorData: SponsorData) => {
+    // AI-generated sponsorship proposals
+  }
+};
+```
+
+## 🔧 **Technical Implementation**
+
+### **Database Integration**
+```typescript
+// ✅ DO: Integrate AI actions with Supabase
+const createEventWithAI = async (eventData: EventData) => {
+  const { data, error } = await supabase
+    .from('events')
+    .insert({
+      title: eventData.title,
+      start_date: eventData.startDate,
+      venue_id: eventData.venueId,
+      created_by: eventData.userId
+    })
+    .select()
+    .single();
+    
+  if (error) throw new Error(`Failed to create event: ${error.message}`);
+  return data;
+};
+
+// ✅ DO: Implement proper error handling
+const handleAIError = (error: Error) => {
+  console.error('AI Error:', error);
+  // Log to monitoring system
+  // Send user-friendly error message
+  return { success: false, message: 'AI service temporarily unavailable' };
+};
+```
+
+### **Real-Time Updates**
+```typescript
+// ✅ DO: Implement real-time AI updates
+const useAIUpdates = () => {
+  const [aiStatus, setAIStatus] = useState('idle');
+  
+  useEffect(() => {
+    const subscription = supabase
+      .channel('ai-updates')
+      .on('postgres_changes', {
+        event: 'UPDATE',
+        schema: 'public',
+        table: 'events',
+        filter: 'ai_processing = true'
+      }, (payload) => {
+        setAIStatus(payload.new.ai_status);
+      })
+      .subscribe();
+      
+    return () => subscription.unsubscribe();
+  }, []);
+  
+  return aiStatus;
+};
+```
+
+### **Performance Optimization**
+```typescript
+// ✅ DO: Implement caching for AI responses
+const useAICache = () => {
+  const cache = useMemo(() => new Map(), []);
+  
+  const getCachedResponse = (key: string) => {
+    return cache.get(key);
+  };
+  
+  const setCachedResponse = (key: string, value: any) => {
+    cache.set(key, value);
+  };
+  
+  return { getCachedResponse, setCachedResponse };
+};
+
+// ✅ DO: Implement rate limiting
+const rateLimitAIRequests = async (userId: string) => {
+  const requests = await redis.get(`ai_requests_${userId}`);
+  if (requests && parseInt(requests) > 100) {
+    throw new Error('Rate limit exceeded');
+  }
+  await redis.incr(`ai_requests_${userId}`);
+};
+```
+
+## 🎯 **EventOS-Specific Use Cases**
+
+### **AI Event Wizard**
+```typescript
+// ✅ DO: Implement conversational event creation
+const EventWizardAI = () => {
+  const { sendMessage } = useCopilotChat();
+  
+  const handleUserInput = async (input: string) => {
+    // Process user input through AI
+    const response = await sendMessage(input);
+    
+    // Update event data based on AI response
+    if (response.includes('venue')) {
+      // Trigger venue research
+      await researchVenues(response);
+    }
+  };
+  
+  return (
+    <CopilotSidebar>
+      <CopilotChat />
+    </CopilotSidebar>
+  );
+};
+```
+
+### **Smart Venue Matching**
+```typescript
+// ✅ DO: Implement AI-powered venue matching
+const useVenueMatching = () => {
+  const findBestVenues = async (requirements: VenueRequirements) => {
+    // Use Tavily to research venues
+    const searchResults = await tavilySearch(`
+      event venues ${requirements.location} 
+      capacity ${requirements.capacity}
+      price range ${requirements.budget}
+    `);
+    
+    // Use LangGraph to analyze and rank
+    const rankedVenues = await analyzeVenues(searchResults, requirements);
+    
+    return rankedVenues;
+  };
+  
+  return { findBestVenues };
+};
+```
+
+### **Sponsor Discovery**
+```typescript
+// ✅ DO: Implement AI sponsor discovery
+const useSponsorDiscovery = () => {
+  const findPotentialSponsors = async (eventData: EventData) => {
+    // Research potential sponsors
+    const sponsors = await tavilySearch(`
+      ${eventData.industry} sponsors
+      ${eventData.location} companies
+      event sponsorship opportunities
+    `);
+    
+    // Analyze sponsor compatibility
+    const compatibleSponsors = await analyzeSponsorCompatibility(
+      sponsors, 
+      eventData
+    );
+    
+    return compatibleSponsors;
+  };
+  
+  return { findPotentialSponsors };
+};
+```
+
+## 🚨 **Common Mistakes to Avoid**
+
+### **❌ DON'T:**
+- Use CopilotKit without proper error handling
+- Implement AI features without human oversight
+- Skip database integration for AI actions
+- Use Tavily without result processing
+- Create workflows without proper state management
+- Ignore performance optimization for AI requests
+- Skip user feedback collection for AI improvements
+
+### **✅ DO:**
+- Implement comprehensive error handling for all AI features
+- Include human approval workflows for critical decisions
+- Integrate all AI actions with Supabase database
+- Process and validate Tavily search results
+- Use proper state management in LangGraph workflows
+- Implement caching and rate limiting for AI requests
+- Collect user feedback to improve AI accuracy
+
+## 📊 **Success Metrics**
+
+### **Technical Metrics**
+- AI response time < 3 seconds
+- AI accuracy > 90%
+- System uptime > 99.9%
+- User satisfaction > 8.5/10
+
+### **Business Metrics**
+- 60% increase in AI feature usage
+- 40% reduction in manual tasks
+- $75K/month revenue target
+- 80% user adoption rate
+
+### **User Experience Metrics**
+- 80% task completion rate
+- 60% time savings
+- 5+ minutes average session time
+- 70% feature adoption rate
+
+---
+
+*These rules ensure proper integration of CopilotKit LangGraph with Tavily in the EventOS AI system, maintaining code quality, user experience, and business objectives.*
