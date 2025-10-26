@@ -49,3 +49,8 @@ lovable-env-vars.txt
 LOVABLE-ENV-SETUP.md
 copilotkit-langgraph/
 copilotkit-working/
+
+# Backup files with secrets
+.env.backup
+.env.backup-secrets
+.env.vercel
